@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#1a3a6b"/>
+<meta name="description" content="FLN Reading & Competency Mastery Lab - Aligned with NEP 2020, NCF 2023, PARAKH"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="FLN Lab"/>
+<link rel="manifest" href="manifest.json"/>
+<title>FLN Reading & Competency Mastery Lab</title>
+<style>
+/* ===== RESET & ROOT ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a1628;--navy2:#0f2044;--blue:#1a3a6b;--blue2:#1e4a8a;
+  --accent:#c9a227;--accent2:#e8b830;--white:#f0f4ff;--text:#d0daf0;
+  --muted:#7a90b8;--green:#2ecc71;--amber:#f39c12;--red:#e74c3c;
+  --card:#111d35;--card2:#152240;--border:#1e3560;
+  --font-head:'Georgia',serif;--font-body:'Segoe UI',system-ui,sans-serif;
+  --radius:12px;--shadow:0 4px 24px rgba(0,0,0,0.4);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--font-head);color:var(--white)}
+a{color:var(--accent);text-decoration:none}
+button{cursor:pointer;font-family:var(--font-body)}
+input,textarea,select{font-family:var(--font-body)}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--blue2);border-radius:3px}
+
+/* ===== PAGE SYSTEM ===== */
+.page{display:none;min-height:100vh;animation:fadeIn 0.3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== NAV ===== */
+#main-nav{
+  position:sticky;top:0;z-index:999;
+  background:linear-gradient(90deg,var(--navy2),var(--blue));
+  border-bottom:2px solid var(--accent);
+  padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:56px;box-shadow:var(--shadow);
+}
+#main-nav .nav-title{
+  font-family:var(--font-head);font-size:1rem;font-weight:bold;
+  color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:200px;
+}
+#nav-toggle{
+  background:none;border:2px solid var(--accent);color:var(--accent);
+  border-radius:8px;padding:6px 10px;font-size:1.2rem;
+}
+#nav-menu{
+  position:fixed;top:56px;left:0;width:280px;height:calc(100vh - 56px);
+  background:var(--navy2);border-right:2px solid var(--border);
+  overflow-y:auto;z-index:998;
+  transform:translateX(-100%);transition:transform 0.3s ease;
+  padding:12px 0;
+}
+#nav-menu.open{transform:translateX(0)}
+.nav-section-title{
+  padding:12px 20px 6px;font-size:0.7rem;font-weight:bold;
+  color:var(--accent);text-transform:uppercase;letter-spacing:2px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;color:var(--text);font-size:0.9rem;
+  cursor:pointer;border-left:3px solid transparent;
+  transition:all 0.2s;
+}
+.nav-item:hover,.nav-item.active{
+  background:var(--card);border-left-color:var(--accent);color:var(--white);
+}
+.nav-item .icon{font-size:1.1rem;width:24px;text-align:center}
+#nav-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:997;
+}
+#nav-overlay.show{display:block}
+
+/* ===== CONTAINERS ===== */
+.container{max-width:860px;margin:0 auto;padding:20px 16px}
+.page-header{
+  background:linear-gradient(135deg,var(--blue),var(--navy2));
+  border-bottom:3px solid var(--accent);
+  padding:24px 20px;text-align:center;
+}
+.page-header h1{font-size:1.6rem;color:var(--white);margin-bottom:6px}
+.page-header p{color:var(--muted);font-size:0.9rem}
+
+/* ===== CARDS ===== */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card h3{color:var(--accent);font-size:1.1rem;margin-bottom:10px}
+.card p{line-height:1.7;color:var(--text);font-size:0.95rem}
+.card ul{padding-left:20px;line-height:2}
+.card ul li{color:var(--text);font-size:0.9rem}
+.info-box{
+  background:var(--card2);border-left:4px solid var(--accent);
+  border-radius:0 8px 8px 0;padding:14px 18px;margin:12px 0;
+}
+.info-box.green{border-left-color:var(--green)}
+.info-box.amber{border-left-color:var(--amber)}
+.info-box.red{border-left-color:var(--red)}
+.tag{
+  display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:0.75rem;font-weight:bold;margin:3px;
+  background:var(--blue2);color:var(--accent2);border:1px solid var(--accent);
+}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:8px;font-size:0.9rem;font-weight:600;
+  border:none;transition:all 0.2s;
+}
+.btn-primary{background:var(--accent);color:var(--navy)}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:2px solid var(--accent);color:var(--accent)}
+.btn-outline:hover{background:var(--accent);color:var(--navy)}
+.btn-green{background:var(--green);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.btn-sm{padding:6px 14px;font-size:0.8rem}
+.btn-block{display:flex;width:100%;justify-content:center;margin:8px 0}
+
+/* ===== GRID ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:600px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* ===== TITLE PAGE ===== */
+#page-title{
+  min-height:100vh;
+  background:linear-gradient(160deg,var(--navy) 0%,var(--blue) 50%,var(--navy2) 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:30px 20px;
+  position:relative;overflow:hidden;
+}
+#page-title::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a3a6b' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.title-logo{
+  width:90px;height:90px;border-radius:50%;
+  border:3px solid var(--accent);
+  background:var(--blue2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;margin-bottom:20px;
+  box-shadow:0 0 40px rgba(201,162,39,0.3);
+  animation:pulse 3s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 20px rgba(201,162,39,0.2)}50%{box-shadow:0 0 50px rgba(201,162,39,0.5)}}
+.title-main{font-size:1.8rem;color:var(--accent);font-family:var(--font-head);line-height:1.3;margin-bottom:8px}
+.title-sub{font-size:1rem;color:var(--white);margin-bottom:4px}
+.title-author{color:var(--muted);font-size:0.85rem;margin-bottom:20px}
+.policy-badge{
+  background:rgba(26,58,107,0.8);border:1px solid var(--accent);
+  border-radius:20px;padding:8px 18px;font-size:0.75rem;color:var(--accent2);
+  margin-bottom:30px;
+}
+.title-divider{
+  width:80px;height:2px;background:var(--accent);margin:16px auto;
+  position:relative;
+}
+
+/* ===== LETTER LAB ===== */
+.letter-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:16px 0}
+@media(max-width:480px){.letter-grid{grid-template-columns:repeat(4,1fr)}}
+.letter-card{
+  background:var(--card2);border:2px solid var(--border);
+  border-radius:10px;padding:12px 6px;text-align:center;
+  cursor:pointer;transition:all 0.2s;
+}
+.letter-card:hover,.letter-card.active{
+  border-color:var(--accent);background:var(--blue2);
+  transform:scale(1.05);
+}
+.letter-card.mastered{border-color:var(--green);background:rgba(46,204,113,0.1)}
+.letter-card .ltr{font-size:1.6rem;font-weight:bold;color:var(--white)}
+.letter-card .snd{font-size:0.75rem;color:var(--accent);margin-top:4px}
+.letter-sound-display{
+  background:var(--card2);border:2px solid var(--accent);
+  border-radius:var(--radius);padding:20px;text-align:center;margin:16px 0;
+  display:none;
+}
+.letter-sound-display.show{display:block}
+.sound-big{font-size:4rem;color:var(--accent)}
+.sound-label{font-size:1rem;color:var(--white);margin-top:8px}
+
+/* ===== PHONICS ===== */
+.phonics-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.phoneme{
+  background:var(--card2);border:2px solid var(--border);
+  border-radius:8px;padding:10px 16px;cursor:pointer;
+  font-size:1.1rem;font-weight:bold;color:var(--white);
+  transition:all 0.2s;user-select:none;
+}
+.phoneme.selected{border-color:var(--accent);background:var(--blue2);color:var(--accent)}
+.blend-result{
+  background:var(--navy2);border:2px solid var(--accent2);
+  border-radius:var(--radius);padding:16px;text-align:center;
+  margin:16px 0;font-size:2rem;color:var(--accent2);min-height:60px;
+}
+
+/* ===== SIGHT WORDS ===== */
+.sight-word-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+@media(max-width:480px){.sight-word-grid{grid-template-columns:repeat(3,1fr)}}
+.sight-word{
+  background:var(--card2);border:2px solid var(--border);
+  border-radius:8px;padding:10px;text-align:center;
+  cursor:pointer;font-size:0.9rem;font-weight:600;color:var(--white);
+  transition:all 0.2s;
+}
+.sight-word.mastered{
+  border-color:var(--green);background:rgba(46,204,113,0.15);
+  color:var(--green);text-decoration:line-through;
+}
+
+/* ===== DRAG DROP ===== */
+.sentence-workspace{min-height:60px;background:var(--navy2);border:2px dashed var(--border);border-radius:var(--radius);padding:12px;display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.drag-word{
+  background:var(--blue2);border:2px solid var(--accent);
+  border-radius:6px;padding:8px 14px;cursor:grab;
+  font-size:0.95rem;color:var(--white);user-select:none;
+}
+.drag-word:active{cursor:grabbing;opacity:0.8}
+.sentence-workspace .drag-word{background:var(--card2);border-color:var(--green)}
+
+/* ===== PROGRESS CHARTS ===== */
+.wpm-input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.wpm-input-row input{
+  background:var(--card2);border:2px solid var(--border);
+  border-radius:8px;padding:8px 12px;color:var(--white);
+  width:100px;font-size:1rem;
+}
+.chart-container{background:var(--card2);border-radius:var(--radius);padding:16px;margin:12px 0}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:150px;padding:10px 0}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chart-bar{
+  width:100%;border-radius:4px 4px 0 0;
+  background:linear-gradient(to top,var(--blue2),var(--accent));
+  transition:height 0.5s ease;min-height:4px;
+}
+.chart-bar-label{font-size:0.65rem;color:var(--muted);text-align:center}
+.chart-bar-val{font-size:0.7rem;color:var(--accent);font-weight:bold}
+
+/* ===== MCQ ===== */
+.mcq-option{
+  background:var(--card2);border:2px solid var(--border);
+  border-radius:8px;padding:12px 16px;margin:8px 0;
+  cursor:pointer;color:var(--text);transition:all 0.2s;
+}
+.mcq-option:hover{border-color:var(--accent);color:var(--white)}
+.mcq-option.correct{border-color:var(--green);background:rgba(46,204,113,0.15);color:var(--green)}
+.mcq-option.wrong{border-color:var(--red);background:rgba(231,76,60,0.15);color:var(--red)}
+.passage-box{
+  background:var(--navy2);border-left:4px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:16px;margin-bottom:16px;line-height:1.8;
+  color:var(--text);font-size:0.95rem;
+}
+
+/* ===== VOCABULARY ===== */
+.vocab-card{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;margin:8px 0;
+  cursor:pointer;
+}
+.vocab-word{font-size:1.2rem;color:var(--accent);font-weight:bold}
+.vocab-meaning{color:var(--text);font-size:0.9rem;margin-top:8px;display:none}
+.vocab-card.revealed .vocab-meaning{display:block}
+.vocab-card.revealed{border-color:var(--accent)}
+
+/* ===== LEVEL LADDER ===== */
+.level-card{
+  background:var(--card2);border:2px solid var(--border);
+  border-radius:var(--radius);padding:16px;margin:10px 0;
+  transition:all 0.2s;
+}
+.level-card.unlocked{border-color:var(--green)}
+.level-card.current{border-color:var(--accent);box-shadow:0 0 20px rgba(201,162,39,0.2)}
+.level-card.locked{opacity:0.5}
+.level-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--blue2);border:2px solid var(--accent);
+  font-weight:bold;color:var(--accent);font-size:1.1rem;margin-right:12px;
+}
+
+/* ===== RAG SELF-EVAL ===== */
+.rag-item{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px;margin:8px 0;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.rag-label{color:var(--text);font-size:0.9rem;flex:1}
+.rag-btns{display:flex;gap:8px}
+.rag-btn{
+  width:32px;height:32px;border-radius:50%;border:2px solid;
+  cursor:pointer;font-size:0.7rem;font-weight:bold;
+  transition:all 0.2s;background:transparent;
+}
+.rag-btn.r{border-color:var(--red);color:var(--red)}
+.rag-btn.r.sel{background:var(--red);color:#fff}
+.rag-btn.a{border-color:var(--amber);color:var(--amber)}
+.rag-btn.a.sel{background:var(--amber);color:#fff}
+.rag-btn.g{border-color:var(--green);color:var(--green)}
+.rag-btn.g.sel{background:var(--green);color:#fff}
+
+/* ===== TEACHER TOOLS ===== */
+.test-question{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;margin:10px 0;
+}
+.test-question .q-num{
+  font-size:0.75rem;color:var(--accent);font-weight:bold;margin-bottom:6px;
+}
+.test-question .q-text{color:var(--text);font-size:0.95rem;margin-bottom:10px}
+.test-question .q-ans{color:var(--muted);font-size:0.8rem;font-style:italic}
+
+.form-group{margin-bottom:14px}
+.form-group label{display:block;color:var(--accent);font-size:0.8rem;font-weight:bold;margin-bottom:6px;text-transform:uppercase}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;background:var(--card2);border:2px solid var(--border);
+  border-radius:8px;padding:10px 14px;color:var(--white);font-size:0.9rem;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  outline:none;border-color:var(--accent);
+}
+.form-group textarea{height:90px;resize:vertical}
+
+/* ===== DASHBOARD ===== */
+.stat-card{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;text-align:center;
+}
+.stat-val{font-size:2rem;font-weight:bold;color:var(--accent)}
+.stat-label{font-size:0.8rem;color:var(--muted);margin-top:4px}
+
+.progress-bar-wrap{margin:10px 0}
+.progress-bar-wrap .pb-label{display:flex;justify-content:space-between;font-size:0.8rem;color:var(--muted);margin-bottom:4px}
+.pb{height:10px;background:var(--border);border-radius:5px;overflow:hidden}
+.pb-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--blue2),var(--accent));transition:width 0.5s ease}
+
+/* ===== ACTIVITY BANK ===== */
+.activity-item{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px;margin:8px 0;
+}
+.activity-item h4{color:var(--accent2);font-size:0.95rem;margin-bottom:6px}
+.activity-item p{color:var(--text);font-size:0.85rem;line-height:1.6}
+.activity-tag{
+  display:inline-block;background:var(--blue);border:1px solid var(--accent);
+  color:var(--accent);border-radius:12px;padding:2px 10px;font-size:0.7rem;margin:3px 2px;
+}
+
+/* ===== PRINT ===== */
+@media print{
+  #main-nav,#nav-menu,#nav-overlay,.btn,.no-print{display:none!important}
+  .page{display:block!important}
+  body{background:#fff;color:#000}
+  .card,.info-box{border-color:#ccc;background:#f9f9f9}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  .title-main{font-size:1.4rem}
+  .page-header h1{font-size:1.3rem}
+  .container{padding:16px 12px}
+  .letter-grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV OVERLAY -->
+<div id="nav-overlay" onclick="closeNav()"></div>
+
+<!-- MAIN NAV -->
+<nav id="main-nav" style="display:none">
+  <div class="nav-title">📚 FLN Lab</div>
+  <button id="nav-toggle" onclick="toggleNav()">☰</button>
+</nav>
+
+<!-- SIDEBAR MENU -->
+<div id="nav-menu">
+  <div class="nav-section-title">🏠 Home</div>
+  <div class="nav-item" onclick="showPage('page-title')"><span class="icon">🎓</span>Title Page</div>
+
+  <div class="nav-section-title">📋 Policy Foundation</div>
+  <div class="nav-item" onclick="showPage('page1')"><span class="icon">📜</span>NEP 2020 Overview</div>
+  <div class="nav-item" onclick="showPage('page2')"><span class="icon">📘</span>NCF 2023 FLN</div>
+  <div class="nav-item" onclick="showPage('page3')"><span class="icon">📊</span>PARAKH Principles</div>
+  <div class="nav-item" onclick="showPage('page4')"><span class="icon">⚖️</span>Competency vs Marks</div>
+  <div class="nav-item" onclick="showPage('page5')"><span class="icon">📋</span>Progress Card Framework</div>
+
+  <div class="nav-section-title">📖 Reading Modules</div>
+  <div class="nav-item" onclick="showPage('page6')"><span class="icon">🔤</span>Letter Recognition Lab</div>
+  <div class="nav-item" onclick="showPage('page7')"><span class="icon">🔊</span>Phonics Builder</div>
+  <div class="nav-item" onclick="showPage('page8')"><span class="icon">👁️</span>Sight Word Studio</div>
+  <div class="nav-item" onclick="showPage('page9')"><span class="icon">✏️</span>Sentence Builder</div>
+  <div class="nav-item" onclick="showPage('page10')"><span class="icon">📈</span>Fluency Tracker</div>
+
+  <div class="nav-section-title">🧠 Competency Modules</div>
+  <div class="nav-item" onclick="showPage('page11')"><span class="icon">❓</span>Comprehension Sets</div>
+  <div class="nav-item" onclick="showPage('page12')"><span class="icon">👂</span>Listening Module</div>
+  <div class="nav-item" onclick="showPage('page13')"><span class="icon">📝</span>Vocabulary Builder</div>
+  <div class="nav-item" onclick="showPage('page14')"><span class="icon">🪜</span>Reading Ladder</div>
+  <div class="nav-item" onclick="showPage('page15')"><span class="icon">🔴</span>Self-Evaluation</div>
+
+  <div class="nav-section-title">🧰 Teacher Toolkit</div>
+  <div class="nav-item" onclick="showPage('page16')"><span class="icon">🧪</span>Diagnostic Test</div>
+  <div class="nav-item" onclick="showPage('page17')"><span class="icon">🎯</span>Activity Bank</div>
+  <div class="nav-item" onclick="showPage('page18')"><span class="icon">📄</span>Progress Card</div>
+
+  <div class="nav-section-title">📊 Dashboard</div>
+  <div class="nav-item" onclick="showPage('page19')"><span class="icon">📉</span>Class Overview</div>
+  <div class="nav-item" onclick="showPage('page20')"><span class="icon">💾</span>Export / Backup</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TITLE PAGE -->
+<!-- ============================================================ -->
+<div id="page-title" class="page active">
+  <div style="min-height:100vh;background:linear-gradient(160deg,#0a1628 0%,#1a3a6b 50%,#0a1628 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 20px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;opacity:0.05;background-image:repeating-linear-gradient(0deg,transparent,transparent 50px,rgba(201,162,39,0.5) 50px,rgba(201,162,39,0.5) 51px),repeating-linear-gradient(90deg,transparent,transparent 50px,rgba(201,162,39,0.5) 50px,rgba(201,162,39,0.5) 51px);"></div>
+
+    <div style="width:100px;height:100px;border-radius:50%;border:3px solid #c9a227;background:#1a3a6b;display:flex;align-items:center;justify-content:center;font-size:2.8rem;margin-bottom:20px;box-shadow:0 0 50px rgba(201,162,39,0.4);animation:pulse 3s ease-in-out infinite;">📚</div>
+
+    <div style="background:rgba(201,162,39,0.15);border:1px solid #c9a227;border-radius:30px;padding:6px 18px;font-size:0.7rem;color:#c9a227;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">School Education Department, Kashmir</div>
+
+    <h1 style="font-size:clamp(1.4rem,5vw,2.2rem);color:#c9a227;font-family:Georgia,serif;line-height:1.3;margin-bottom:8px;max-width:600px;">FLN Reading &amp; Competency<br>Mastery Lab</h1>
+
+    <div style="width:80px;height:3px;background:linear-gradient(90deg,transparent,#c9a227,transparent);margin:14px auto;"></div>
+
+    <p style="color:#d0daf0;font-size:1rem;margin-bottom:6px;max-width:500px;">A Complete Foundational Literacy &amp; Numeracy<br>Learning System for Grades 1–3</p>
+
+    <div style="margin:16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <img src="author.jpg" alt="Dr. Mateen Yousuf" onerror="this.style.display='none'" style="width:60px;height:60px;border-radius:50%;border:2px solid #c9a227;object-fit:cover;">
+      <div style="text-align:left;">
+        <div style="color:#f0f4ff;font-weight:bold;font-size:0.95rem;">Dr. Mateen Yousuf</div>
+        <div style="color:#7a90b8;font-size:0.8rem;">Teacher, School Education Department Kashmir</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(26,58,107,0.8);border:1px solid #c9a227;border-radius:20px;padding:10px 22px;font-size:0.75rem;color:#e8b830;margin:16px 0;max-width:400px;">
+      ✅ Aligned with NEP 2020 | NCF 2023 | PARAKH Principles
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;">
+      <span style="background:#152240;border:1px solid #1e3560;border-radius:8px;padding:6px 14px;font-size:0.75rem;color:#7a90b8;">📱 Works Offline</span>
+      <span style="background:#152240;border:1px solid #1e3560;border-radius:8px;padding:6px 14px;font-size:0.75rem;color:#7a90b8;">💾 No Internet Needed</span>
+      <span style="background:#152240;border:1px solid #1e3560;border-radius:8px;padding:6px 14px;font-size:0.75rem;color:#7a90b8;">🔒 No Login Required</span>
+    </div>
+
+    <button onclick="showPage('page1')" style="margin-top:28px;padding:14px 40px;background:#c9a227;color:#0a1628;border:none;border-radius:10px;font-size:1.1rem;font-weight:bold;cursor:pointer;font-family:Georgia,serif;box-shadow:0 4px 20px rgba(201,162,39,0.4);transition:all 0.2s;" onmouseover="this.style.background='#e8b830'" onmouseout="this.style.background='#c9a227'">
+      🚀 Start Learning
+    </button>
+
+    <div style="margin-top:20px;color:#7a90b8;font-size:0.8rem;">20 Modules • Interactive Activities • Offline Progress Tracking</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 1: NEP 2020 -->
+<!-- ============================================================ -->
+<div id="page1" class="page">
+  <nav id="main-nav" style="display:flex"></nav>
+  <div class="page-header">
+    <h1>📜 NEP 2020 – Foundational Stage Explained</h1>
+    <p>National Education Policy 2020 | Section 1 of 5</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>What is NEP 2020?</h3>
+      <p>The National Education Policy 2020 represents India's most comprehensive educational reform since 1986. It replaces the earlier 10+2 structure with a new 5+3+3+4 curricular framework that recognises the critical importance of early childhood learning and foundational literacy.</p>
+      <div class="info-box">
+        <strong>The 5+3+3+4 Framework:</strong>
+        <ul style="margin-top:8px">
+          <li><strong>Foundational Stage (5 yrs):</strong> Ages 3–8 | Pre-primary + Grades 1–2</li>
+          <li><strong>Preparatory Stage (3 yrs):</strong> Grades 3–5 | Ages 8–11</li>
+          <li><strong>Middle Stage (3 yrs):</strong> Grades 6–8 | Ages 11–14</li>
+          <li><strong>Secondary Stage (4 yrs):</strong> Grades 9–12 | Ages 14–18</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Foundational Literacy & Numeracy (FLN) Mission</h3>
+      <p>NEP 2020 declares that achieving universal Foundational Literacy and Numeracy for all children by Grade 3 (by 2025) is the <em>highest priority</em> of the education system. The policy explicitly states that if a child cannot read, write, and perform basic arithmetic by Grade 3, all further schooling becomes compromised.</p>
+      <div class="info-box green">
+        <strong>NIPUN Bharat Mission:</strong> Launched in 2021, the National Initiative for Proficiency in Reading with Understanding and Numeracy aims to ensure every child achieves grade-level competencies in reading and arithmetic by the end of Grade 3.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📌 Key Principles of NEP 2020 for Foundational Stage</h3>
+      <ul>
+        <li><strong>Play-based learning:</strong> Activity and exploration-centred pedagogy for early years</li>
+        <li><strong>Mother tongue instruction:</strong> Teaching in home/regional language until at least Grade 5</li>
+        <li><strong>No bag, no homework:</strong> Joyful environment in early years</li>
+        <li><strong>Holistic assessment:</strong> Progress based on competencies, not exams</li>
+        <li><strong>Teacher capacity:</strong> Specialised training for foundational stage teachers</li>
+        <li><strong>Integration:</strong> Seamless link between Anganwadi/preschool and primary school</li>
+        <li><strong>Multilingualism:</strong> Three-language formula with emphasis on linguistic flexibility</li>
+        <li><strong>Digital literacy:</strong> Age-appropriate introduction to digital tools from Grade 1</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🏫 Classroom Implications for Grade 1–3 Teachers</h3>
+      <p>NEP 2020 demands a fundamental shift in how foundational classrooms operate. The shift is from rote memorisation to conceptual understanding; from summative exams to formative, competency-based assessment; and from teacher-centric delivery to child-centric exploration.</p>
+      <div class="info-box amber">
+        <strong>What this means in practice:</strong> Teachers must shift from asking "What did the child memorise?" to "What can the child do independently?" This is the essence of competency-based education at the foundational level.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💬 Teacher Reflection Questions</h3>
+      <ul>
+        <li>How are you currently assessing reading progress — by marks or by demonstrated ability?</li>
+        <li>Are your Grade 1 students learning in their mother tongue before transitioning to Hindi/English?</li>
+        <li>What play-based activities do you use to teach phonics and letter recognition?</li>
+        <li>How do you track individual competency milestones without formal exams?</li>
+        <li>Do your classroom practices align with the joy-centred philosophy of NEP 2020?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 2: NCF 2023 -->
+<!-- ============================================================ -->
+<div id="page2" class="page">
+  <div class="page-header">
+    <h1>📘 NCF 2023 – FLN Competency Structure</h1>
+    <p>National Curriculum Framework for Foundational Stage</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>What is NCF 2023?</h3>
+      <p>The National Curriculum Framework for the Foundational Stage (NCF-FS) 2022/2023 is the first ever standalone curriculum framework for children aged 3–8 in India. It operationalises the vision of NEP 2020 by providing specific competency targets, pedagogical approaches, and assessment strategies for the foundational stage.</p>
+      <div class="info-box">
+        <strong>Five Developmental Domains in NCF-FS:</strong>
+        <ul style="margin-top:8px">
+          <li>🧠 Cognitive Development (thinking, problem-solving)</li>
+          <li>🗣️ Language & Literacy Development</li>
+          <li>📐 Mathematical Thinking</li>
+          <li>🌱 Social & Emotional Development</li>
+          <li>💪 Physical Development & Motor Skills</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📖 FLN Competency Structure in NCF 2023</h3>
+      <p>NCF 2023 organises literacy competencies into clear, observable, and measurable learning outcomes. These are not tied to grade levels rigidly but to developmental progression.</p>
+      <div class="info-box green">
+        <strong>Core Literacy Competencies:</strong>
+        <ul style="margin-top:8px">
+          <li><strong>Oral Language:</strong> Speaking clearly, listening with comprehension, vocabulary building</li>
+          <li><strong>Phonological Awareness:</strong> Recognising sounds, rhyming, syllables</li>
+          <li><strong>Print Awareness:</strong> Book handling, directionality, letter recognition</li>
+          <li><strong>Decoding:</strong> Phonics, blending, word recognition</li>
+          <li><strong>Reading Fluency:</strong> Speed, accuracy, expression</li>
+          <li><strong>Reading Comprehension:</strong> Meaning-making, inference, critical thinking</li>
+          <li><strong>Writing:</strong> Pre-writing, copying, independent writing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎓 Pedagogical Approach in NCF 2023</h3>
+      <p>NCF 2023 emphasises a structured literacy approach combined with meaning-focused instruction. It recommends explicit teaching of phonics alongside rich exposure to stories, poems, and meaningful texts in the child's mother tongue.</p>
+      <div class="info-box amber">
+        <strong>The Balanced Literacy Model:</strong>
+        <ul style="margin-top:8px">
+          <li>Explicit phonics instruction (systematic, structured)</li>
+          <li>Shared reading with big books and stories</li>
+          <li>Guided reading in small groups</li>
+          <li>Independent reading time (free choice)</li>
+          <li>Read-alouds by teachers for modelling fluency</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Competency Progression Levels</h3>
+      <p>NCF 2023 describes competency attainment across three stages: <em>Emerging</em> (the child is beginning to show the skill), <em>Developing</em> (the skill is inconsistent but improving), and <em>Mastered</em> (the child demonstrates the competency consistently and independently).</p>
+      <div class="grid-2">
+        <div class="info-box" style="border-left-color:#e74c3c"><strong style="color:#e74c3c">🔴 Emerging</strong><br>Needs significant support. Skill not yet demonstrated independently.</div>
+        <div class="info-box" style="border-left-color:#f39c12"><strong style="color:#f39c12">🟡 Developing</strong><br>Demonstrates skill with teacher support or inconsistently.</div>
+        <div class="info-box green"><strong style="color:#2ecc71">🟢 Mastered</strong><br>Demonstrates skill independently, accurately, and consistently.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💬 Teacher Reflection Questions</h3>
+      <ul>
+        <li>How do you track each child's position on the competency progression ladder?</li>
+        <li>Are you providing both explicit phonics instruction AND meaning-rich reading experiences?</li>
+        <li>How do you differentiate instruction for children at different competency levels in the same class?</li>
+        <li>What mother tongue texts are you using in your classroom library?</li>
+        <li>How do you involve parents in supporting literacy at home?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 3: PARAKH -->
+<!-- ============================================================ -->
+<div id="page3" class="page">
+  <div class="page-header">
+    <h1>📊 PARAKH – Diagnostic Assessment Principles</h1>
+    <p>Performance Assessment, Review & Analysis of Knowledge for Holistic Development</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>What is PARAKH?</h3>
+      <p>PARAKH (Performance Assessment, Review and Analysis of Knowledge for Holistic Development) is the National Assessment Centre established under NCERT as per NEP 2020. Its mandate is to standardise assessment norms across all school boards in India, shifting the focus from high-stakes examinations to holistic, formative, and competency-based assessment practices.</p>
+      <div class="info-box">
+        <strong>PARAKH's Core Mission:</strong> To ensure that assessments across India assess not just content knowledge but higher-order thinking skills, application, and values — creating a diagnostic rather than ranking function.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Types of Assessment in PARAKH Framework</h3>
+      <div class="grid-2">
+        <div class="info-box green">
+          <strong>Formative Assessment</strong><br>
+          Ongoing, during learning. Purpose: to guide teaching. Examples: observation, portfolios, peer-talk.
+        </div>
+        <div class="info-box amber">
+          <strong>Summative Assessment</strong><br>
+          End of term. Purpose: to certify learning. Should be competency-based, not rote-recall.
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:10px">
+        <strong>Diagnostic Assessment</strong><br>
+        Before teaching. Purpose: to identify gaps and learning needs. Forms the basis for remediation planning.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📝 Assessment Principles for Foundational Stage</h3>
+      <ul>
+        <li><strong>No written exams for Grades 1–2:</strong> Assessment must be through observation, activity, and oral interaction</li>
+        <li><strong>Portfolio-based evidence:</strong> Collect samples of student work over time</li>
+        <li><strong>Teacher observation records:</strong> Systematic anecdotal records of competency demonstration</li>
+        <li><strong>Student self-assessment:</strong> Age-appropriate reflection using visual tools (smiley faces, RAG)</li>
+        <li><strong>Peer assessment:</strong> Collaborative learning through buddy reading and peer feedback</li>
+        <li><strong>Parent feedback integration:</strong> Home literacy reports included in holistic assessment</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🚫 What Assessment Should NOT Be</h3>
+      <div class="info-box red">
+        <ul>
+          <li>❌ Not about ranking children against each other</li>
+          <li>❌ Not about identifying "weak" students publicly</li>
+          <li>❌ Not about memorisation-only tests</li>
+          <li>❌ Not about single-sitting high-stakes exams in early grades</li>
+          <li>❌ Not about labelling children as failures</li>
+          <li>❌ Not about marks or percentages in Grades 1–3</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💬 Teacher Reflection Questions</h3>
+      <ul>
+        <li>Are your current assessments diagnostic (informing your teaching) or merely summative (recording results)?</li>
+        <li>How do you document individual child progress without formal written tests?</li>
+        <li>Do your assessments capture the full range of a child's abilities or only academic recall?</li>
+        <li>How do you use assessment data to plan remedial sessions?</li>
+        <li>Are parents informed about competency progress rather than just marks?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 4: COMPETENCY vs MARKS -->
+<!-- ============================================================ -->
+<div id="page4" class="page">
+  <div class="page-header">
+    <h1>⚖️ Competency vs Marks-Based Learning</h1>
+    <p>Understanding the paradigm shift in education</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>The Fundamental Shift</h3>
+      <p>For decades, Indian education has been governed by a marks-based paradigm where success is measured by scores on standardised tests. NEP 2020, NCF 2023, and PARAKH collectively demand a shift to competency-based education (CBE), where success is measured by what a child can actually do.</p>
+    </div>
+
+    <div class="card">
+      <h3>📊 Comparison Table</h3>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem">
+          <tr style="background:var(--blue2)">
+            <th style="padding:10px;text-align:left;color:var(--accent);border:1px solid var(--border)">Aspect</th>
+            <th style="padding:10px;text-align:left;color:#e74c3c;border:1px solid var(--border)">Marks-Based</th>
+            <th style="padding:10px;text-align:left;color:var(--green);border:1px solid var(--border)">Competency-Based</th>
+          </tr>
+          <tr><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Focus</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Content recall</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Skill application</td></tr>
+          <tr style="background:var(--card2)"><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Assessment</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Written exams</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Observation, tasks, portfolios</td></tr>
+          <tr><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Progress</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">A, B, C, D grades</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Emerging/Developing/Mastered</td></tr>
+          <tr style="background:var(--card2)"><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Failure</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Possible, punitive</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">No failure — only pace difference</td></tr>
+          <tr><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Teacher role</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Examiner</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Facilitator & observer</td></tr>
+          <tr style="background:var(--card2)"><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Child role</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Passive receiver</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Active constructor of knowledge</td></tr>
+          <tr><td style="padding:10px;border:1px solid var(--border);color:var(--muted)">Goal</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Pass the test</td><td style="padding:10px;border:1px solid var(--border);color:var(--text)">Master the skill</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Benefits of Competency-Based Education</h3>
+      <ul>
+        <li>Every child progresses at their own pace without being labelled as a "failure"</li>
+        <li>Teaching becomes targeted — teachers know exactly what each child needs next</li>
+        <li>Assessment is ongoing and formative, not just end-of-year</li>
+        <li>Children develop intrinsic motivation and confidence</li>
+        <li>It supports inclusion of children with diverse learning needs</li>
+        <li>It prepares children for real-life skills, not just test-taking strategies</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>💬 Teacher Reflection Questions</h3>
+      <ul>
+        <li>When you give a child 45/100, do you know exactly which competencies they are missing?</li>
+        <li>How do you track whether a child who scored 70% has actually mastered phonics?</li>
+        <li>What would your classroom look like if you assessed children daily through observation rather than weekly tests?</li>
+        <li>How would you explain competency-based progress to parents who ask "how many marks did my child get?"</li>
+        <li>Can a child with 80% marks still be an "emerging" reader? How would you know?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 5: HOLISTIC PROGRESS CARD -->
+<!-- ============================================================ -->
+<div id="page5" class="page">
+  <div class="page-header">
+    <h1>📋 Holistic Progress Card Framework</h1>
+    <p>Moving beyond marks to meaningful reporting</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>What is a Holistic Progress Card (HPC)?</h3>
+      <p>A Holistic Progress Card replaces the traditional marks-based report card with a competency-based record that captures the whole child — cognitive abilities, social-emotional development, physical development, creative expression, and values. It is designed to communicate growth to parents in a meaningful, actionable way.</p>
+      <div class="info-box">
+        <strong>HPC vs Traditional Report Card:</strong>
+        <ul style="margin-top:8px">
+          <li>HPC uses descriptors (Emerging/Developing/Mastered) instead of percentages</li>
+          <li>HPC includes all five developmental domains, not just academics</li>
+          <li>HPC is generated 2–3 times per year, not just at year-end</li>
+          <li>HPC includes teacher observations, not just test scores</li>
+          <li>HPC has space for child self-assessment and parent comments</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🗂️ Components of an Effective HPC</h3>
+      <div class="grid-2">
+        <div class="info-box green"><strong>📖 Language & Literacy</strong><br>Letter recognition, phonics, reading fluency, comprehension, writing</div>
+        <div class="info-box" style="border-left-color:#9b59b6"><strong>🔢 Mathematical Thinking</strong><br>Number sense, operations, shapes, patterns</div>
+        <div class="info-box amber"><strong>🌍 Socio-Emotional</strong><br>Self-regulation, empathy, teamwork, confidence</div>
+        <div class="info-box" style="border-left-color:#3498db"><strong>🏃 Physical Development</strong><br>Gross motor, fine motor, health habits</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔢 Rating Scale Options</h3>
+      <p>Different schools use different systems. PARAKH recommends:</p>
+      <div class="info-box">
+        <ul>
+          <li><strong style="color:#e74c3c">🔴 Not Yet (NY):</strong> Competency not yet demonstrated</li>
+          <li><strong style="color:#f39c12">🟡 Developing (D):</strong> With support or inconsistently demonstrated</li>
+          <li><strong style="color:#2ecc71">🟢 Achieved (A):</strong> Consistently and independently demonstrated</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>💬 Teacher Reflection Questions</h3>
+      <ul>
+        <li>Does your current progress report capture the child's growth as a whole person or only as an academic performer?</li>
+        <li>How do you explain to parents what "Developing" means for their child's reading competency?</li>
+        <li>What evidence do you collect to fill in a holistic progress card honestly?</li>
+        <li>How often do you share progress information with families — termly, monthly, or on request only?</li>
+        <li>How can you make HPCs accessible to parents with low literacy levels?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 6: LETTER RECOGNITION LAB -->
+<!-- ============================================================ -->
+<div id="page6" class="page">
+  <div class="page-header">
+    <h1>🔤 Letter Recognition Lab</h1>
+    <p>Interactive letter learning with phonics sounds</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>📖 How to Use</h3>
+      <p>Click any letter to see its name, sound, and example word. Mark letters as <strong style="color:var(--green)">Mastered</strong> when a student can recognise and name them confidently.</p>
+    </div>
+
+    <div class="letter-sound-display" id="letter-display">
+      <div class="sound-big" id="letter-big">A</div>
+      <div class="sound-label" id="letter-info">Name: A (Ay) | Sound: /æ/ | Example: Apple 🍎</div>
+      <button class="btn btn-green btn-sm" style="margin-top:12px" onclick="masterCurrentLetter()">✅ Mark as Mastered</button>
+    </div>
+
+    <div class="card">
+      <h3>Uppercase Letters</h3>
+      <div class="letter-grid" id="upper-grid"></div>
+    </div>
+    <div class="card">
+      <h3>Lowercase Letters</h3>
+      <div class="letter-grid" id="lower-grid"></div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Mastery Progress</h3>
+      <div id="letter-progress-bar" class="progress-bar-wrap">
+        <div class="pb-label"><span>Letters Mastered</span><span id="letter-count">0 / 52</span></div>
+        <div class="pb"><div class="pb-fill" id="letter-pb" style="width:0%"></div></div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:10px" onclick="resetLetters()">🔄 Reset All</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 7: PHONICS BUILDER -->
+<!-- ============================================================ -->
+<div id="page7" class="page">
+  <div class="page-header">
+    <h1>🔊 Phonics Builder</h1>
+    <p>Combine sounds to build words</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>🔡 Step 1: Select Consonant</h3>
+      <div class="phonics-row" id="phonics-consonants"></div>
+      <h3 style="margin-top:16px">🔤 Step 2: Select Vowel</h3>
+      <div class="phonics-row" id="phonics-vowels"></div>
+      <h3 style="margin-top:16px">🔡 Step 3: Select Ending</h3>
+      <div class="phonics-row" id="phonics-endings"></div>
+    </div>
+
+    <div class="card">
+      <h3>🔮 Blended Word</h3>
+      <div class="blend-result" id="blend-result">Select sounds above to blend a word →</div>
+      <div id="blend-meaning" style="color:var(--muted);font-size:0.85rem;margin-top:8px;text-align:center"></div>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="blendSounds()">🔊 Blend!</button>
+        <button class="btn btn-outline btn-sm" onclick="clearBlend()">🗑️ Clear</button>
+        <button class="btn btn-green btn-sm" onclick="saveBlend()">💾 Save Word</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📚 Word Practice List</h3>
+      <div id="blends-saved" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+        <span style="color:var(--muted);font-size:0.85rem">Saved words will appear here...</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📖 Common CVC Word Families</h3>
+      <div class="grid-3" id="word-families"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 8: SIGHT WORDS -->
+<!-- ============================================================ -->
+<div id="page8" class="page">
+  <div class="page-header">
+    <h1>👁️ Sight Word Practice Studio</h1>
+    <p>100 high-frequency words for fluent reading</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          <h3>Instructions</h3>
+          <p style="font-size:0.85rem">Tap a word to mark it as <strong style="color:var(--green)">Mastered</strong>. Tap again to unmark.</p>
+        </div>
+        <div style="text-align:right">
+          <div class="stat-val" id="sw-count">0</div>
+          <div style="font-size:0.75rem;color:var(--muted)">Mastered / 100</div>
+        </div>
+      </div>
+      <div class="progress-bar-wrap" style="margin-top:12px">
+        <div class="pb"><div class="pb-fill" id="sw-pb" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="btn btn-sm btn-outline" onclick="filterSW('all')">All</button>
+      <button class="btn btn-sm" style="background:rgba(46,204,113,0.2);border:1px solid var(--green);color:var(--green)" onclick="filterSW('mastered')">✅ Mastered</button>
+      <button class="btn btn-sm" style="background:rgba(231,76,60,0.2);border:1px solid var(--red);color:var(--red)" onclick="filterSW('pending')">📌 To Learn</button>
+      <button class="btn btn-outline btn-sm" onclick="resetSightWords()">🔄 Reset</button>
+    </div>
+
+    <div class="sight-word-grid" id="sight-word-grid"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 9: SENTENCE BUILDER -->
+<!-- ============================================================ -->
+<div id="page9" class="page">
+  <div class="page-header">
+    <h1>✏️ Sentence Construction Builder</h1>
+    <p>Drag and arrange words to form sentences</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>📋 Exercise <span id="sent-num">1</span> of <span id="sent-total">8</span></h3>
+      <p id="sent-instruction" style="color:var(--accent);margin:8px 0;font-size:0.9rem">Arrange the words to make a correct sentence:</p>
+      <div id="word-bank" class="phonics-row"></div>
+
+      <h3 style="margin-top:16px">Drop Words Here:</h3>
+      <div class="sentence-workspace" id="sentence-drop" onclick="handleDropArea(event)"></div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn btn-primary btn-sm" onclick="checkSentence()">✅ Check Answer</button>
+        <button class="btn btn-outline btn-sm" onclick="clearSentence()">🗑️ Clear</button>
+        <button class="btn btn-outline btn-sm" onclick="nextSentence()">➡️ Next Exercise</button>
+      </div>
+      <div id="sent-feedback" style="margin-top:12px;font-size:0.9rem;font-weight:bold"></div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Exercise Progress</h3>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Completed</span><span id="sent-progress">0 / 8</span></div>
+        <div class="pb"><div class="pb-fill" id="sent-pb" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 10: FLUENCY TRACKER -->
+<!-- ============================================================ -->
+<div id="page10" class="page">
+  <div class="page-header">
+    <h1>📈 Reading Fluency Tracker</h1>
+    <p>Track Words Per Minute (WPM) progress over time</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>📝 Record New Reading Session</h3>
+      <div class="wpm-input-row">
+        <div class="form-group" style="margin:0">
+          <label>Student Name</label>
+          <input type="text" id="wpm-name" placeholder="e.g. Aisha" style="width:150px"/>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>WPM Score</label>
+          <input type="number" id="wpm-score" placeholder="e.g. 45" min="0" max="300" style="width:100px"/>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label>Date</label>
+          <input type="date" id="wpm-date" style="width:160px"/>
+        </div>
+        <button class="btn btn-primary btn-sm" style="margin-top:20px" onclick="addWPM()">➕ Add</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Class WPM Chart</h3>
+      <div class="chart-container">
+        <div class="chart-bars" id="wpm-chart">
+          <div style="color:var(--muted);font-size:0.85rem;align-self:center">No data yet. Add reading records above.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📋 Reading Records</h3>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem" id="wpm-table">
+          <tr style="background:var(--blue2)">
+            <th style="padding:8px;text-align:left;color:var(--accent);border:1px solid var(--border)">Student</th>
+            <th style="padding:8px;text-align:left;color:var(--accent);border:1px solid var(--border)">WPM</th>
+            <th style="padding:8px;text-align:left;color:var(--accent);border:1px solid var(--border)">Date</th>
+            <th style="padding:8px;text-align:left;color:var(--accent);border:1px solid var(--border)">Level</th>
+            <th style="padding:8px;text-align:left;color:var(--accent);border:1px solid var(--border)">Action</th>
+          </tr>
+        </table>
+        <div id="wpm-empty" style="color:var(--muted);text-align:center;padding:20px;font-size:0.85rem">No records yet.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📏 WPM Benchmarks (Grade 1–3)</h3>
+      <div class="grid-3">
+        <div class="info-box red"><strong>Grade 1</strong><br>Target: 30–60 WPM<br>Oral reading rate</div>
+        <div class="info-box amber"><strong>Grade 2</strong><br>Target: 60–90 WPM<br>With expression</div>
+        <div class="info-box green"><strong>Grade 3</strong><br>Target: 90–120 WPM<br>Fluent reading</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 11: COMPREHENSION -->
+<!-- ============================================================ -->
+<div id="page11" class="page">
+  <div class="page-header">
+    <h1>❓ Comprehension Practice Sets</h1>
+    <p>Reading passages with auto-checked questions</p>
+  </div>
+  <div class="container">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="passage-tabs"></div>
+    <div id="passage-area"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 12: LISTENING -->
+<!-- ============================================================ -->
+<div id="page12" class="page">
+  <div class="page-header">
+    <h1>👂 Listening Comprehension</h1>
+    <p>Teacher reads aloud — students answer</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>📢 How to Use This Module</h3>
+      <div class="info-box amber">
+        <strong>Teacher Instructions:</strong> Read the passage aloud to students at a normal pace (not too fast). Read it twice if needed. Then ask students the comprehension questions orally or in writing.
+      </div>
+    </div>
+
+    <div id="listening-passages"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 13: VOCABULARY -->
+<!-- ============================================================ -->
+<div id="page13" class="page">
+  <div class="page-header">
+    <h1>📝 Vocabulary Growth Builder</h1>
+    <p>Word bank with meanings and practice quiz</p>
+  </div>
+  <div class="container">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="btn btn-outline btn-sm" onclick="vocabMode('cards')">📚 Word Cards</button>
+      <button class="btn btn-outline btn-sm" onclick="vocabMode('quiz')">🧪 Quiz Mode</button>
+      <select id="vocab-category" onchange="loadVocabCategory()" style="background:var(--card2);border:2px solid var(--border);color:var(--white);border-radius:8px;padding:6px 12px;font-size:0.85rem">
+        <option value="nature">🌿 Nature</option>
+        <option value="school">🏫 School</option>
+        <option value="animals">🐾 Animals</option>
+        <option value="food">🍎 Food</option>
+        <option value="body">🧍 Body Parts</option>
+        <option value="colours">🎨 Colours</option>
+      </select>
+    </div>
+
+    <div id="vocab-cards-view"></div>
+    <div id="vocab-quiz-view" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 14: READING LADDER -->
+<!-- ============================================================ -->
+<div id="page14" class="page">
+  <div class="page-header">
+    <h1>🪜 Reading Difficulty Ladder</h1>
+    <p>5-level progression from emergent to fluent reader</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>🎓 How the Ladder Works</h3>
+      <p>Complete the quiz at each level. Score 70% or above to unlock the next level. Your progress is saved locally.</p>
+    </div>
+    <div id="ladder-levels"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 15: SELF-EVALUATION -->
+<!-- ============================================================ -->
+<div id="page15" class="page">
+  <div class="page-header">
+    <h1>🔴 Micro-Competency Self-Evaluation</h1>
+    <p>Red / Amber / Green self-assessment for teachers</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>📋 Instructions</h3>
+      <p>Rate each competency for each student: <strong style="color:var(--red)">🔴 Red</strong> = Not yet, <strong style="color:var(--amber)">🟡 Amber</strong> = Developing, <strong style="color:var(--green)">🟢 Green</strong> = Mastered. Progress is saved locally.</p>
+      <div class="form-group" style="margin-top:12px">
+        <label>Student Name</label>
+        <input type="text" id="rag-student" placeholder="Enter student name..." style="max-width:300px"/>
+      </div>
+    </div>
+    <div id="rag-sheet"></div>
+    <button class="btn btn-primary btn-block" onclick="saveRAG()" style="margin-top:10px">💾 Save Evaluation</button>
+
+    <div class="card" style="margin-top:16px">
+      <h3>📋 Saved Evaluations</h3>
+      <div id="rag-saved-list" style="color:var(--muted);font-size:0.85rem">No evaluations saved yet.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 16: DIAGNOSTIC TEST -->
+<!-- ============================================================ -->
+<div id="page16" class="page">
+  <div class="page-header">
+    <h1>🧪 Diagnostic Test Generator</h1>
+    <p>Randomised questions from preloaded question bank</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Grade Level</label>
+          <select id="diag-grade" style="width:100%;background:var(--card2);border:2px solid var(--border);color:var(--white);border-radius:8px;padding:8px 12px">
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Number of Questions</label>
+          <select id="diag-count" style="width:100%;background:var(--card2);border:2px solid var(--border);color:var(--white);border-radius:8px;padding:8px 12px">
+            <option value="5">5 Questions</option>
+            <option value="10" selected>10 Questions</option>
+            <option value="15">15 Questions</option>
+            <option value="20">20 Questions</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="generateTest()">🎲 Generate Test</button>
+      <button class="btn btn-outline" style="margin-left:8px" onclick="printTest()">🖨️ Print Test</button>
+    </div>
+    <div id="test-output"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 17: ACTIVITY BANK -->
+<!-- ============================================================ -->
+<div id="page17" class="page">
+  <div class="page-header">
+    <h1>🎯 Remedial Activity Bank</h1>
+    <p>Play-based and peer learning strategies</p>
+  </div>
+  <div class="container">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="btn btn-outline btn-sm" onclick="filterActivities('all')">All</button>
+      <button class="btn btn-sm" style="background:rgba(52,152,219,0.2);border:1px solid #3498db;color:#3498db" onclick="filterActivities('phonics')">Phonics</button>
+      <button class="btn btn-sm" style="background:rgba(46,204,113,0.2);border:1px solid var(--green);color:var(--green)" onclick="filterActivities('fluency')">Fluency</button>
+      <button class="btn btn-sm" style="background:rgba(155,89,182,0.2);border:1px solid #9b59b6;color:#9b59b6" onclick="filterActivities('comprehension')">Comprehension</button>
+      <button class="btn btn-sm" style="background:rgba(230,126,34,0.2);border:1px solid #e67e22;color:#e67e22" onclick="filterActivities('vocabulary')">Vocabulary</button>
+      <button class="btn btn-sm" style="background:rgba(231,76,60,0.2);border:1px solid var(--red);color:var(--red)" onclick="filterActivities('home')">Home Activities</button>
+    </div>
+    <div id="activity-list"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 18: PROGRESS CARD GENERATOR -->
+<!-- ============================================================ -->
+<div id="page18" class="page">
+  <div class="page-header">
+    <h1>📄 Holistic Progress Card Generator</h1>
+    <p>Fill and generate printable student progress cards</p>
+  </div>
+  <div class="container">
+    <div class="card no-print">
+      <h3>📝 Student Details</h3>
+      <div class="grid-2">
+        <div class="form-group"><label>Student Name</label><input type="text" id="pc-name" placeholder="Full name"/></div>
+        <div class="form-group"><label>Class / Grade</label><input type="text" id="pc-grade" placeholder="e.g. Grade 2"/></div>
+        <div class="form-group"><label>Section</label><input type="text" id="pc-section" placeholder="e.g. A"/></div>
+        <div class="form-group"><label>Academic Year</label><input type="text" id="pc-year" placeholder="2025–26"/></div>
+        <div class="form-group"><label>Teacher Name</label><input type="text" id="pc-teacher" placeholder="Teacher name"/></div>
+        <div class="form-group"><label>School Name</label><input type="text" id="pc-school" placeholder="School name"/></div>
+      </div>
+    </div>
+
+    <div class="card no-print">
+      <h3>📖 Literacy Competencies</h3>
+      <div id="pc-literacy-fields"></div>
+    </div>
+
+    <div class="card no-print">
+      <h3>🌱 Socio-Emotional & Other</h3>
+      <div id="pc-social-fields"></div>
+    </div>
+
+    <div class="card no-print">
+      <h3>📝 Teacher Remarks</h3>
+      <div class="form-group"><label>Overall Comments</label><textarea id="pc-remarks" placeholder="Write your observations about this student's overall progress..."></textarea></div>
+      <div class="form-group"><label>Areas of Strength</label><textarea id="pc-strengths" placeholder="What does this child do well?"></textarea></div>
+      <div class="form-group"><label>Areas for Growth</label><textarea id="pc-growth" placeholder="What should the child focus on next?"></textarea></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px" class="no-print">
+      <button class="btn btn-primary" onclick="previewCard()">👁️ Preview Card</button>
+      <button class="btn btn-outline" onclick="printCard()">🖨️ Print Card</button>
+      <button class="btn btn-outline" onclick="resetCard()">🔄 Reset</button>
+    </div>
+
+    <div id="progress-card-preview" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 19: CLASS DASHBOARD -->
+<!-- ============================================================ -->
+<div id="page19" class="page">
+  <div class="page-header">
+    <h1>📉 Class Progress Overview</h1>
+    <p>Offline progress dashboard — all data stored locally</p>
+  </div>
+  <div class="container">
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="stat-card"><div class="stat-val" id="dash-letters">0%</div><div class="stat-label">Letters Mastered</div></div>
+      <div class="stat-card"><div class="stat-val" id="dash-words">0%</div><div class="stat-label">Sight Words Done</div></div>
+      <div class="stat-card"><div class="stat-val" id="dash-sessions">0</div><div class="stat-label">WPM Sessions</div></div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Module Completion</h3>
+      <div id="module-progress-bars"></div>
+    </div>
+
+    <div class="card">
+      <h3>📋 Recent WPM Records</h3>
+      <div id="dash-wpm-recent" style="color:var(--muted);font-size:0.85rem">No WPM data recorded yet.</div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Achievements Unlocked</h3>
+      <div id="dash-achievements" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGE 20: EXPORT/BACKUP -->
+<!-- ============================================================ -->
+<div id="page20" class="page">
+  <div class="page-header">
+    <h1>💾 Export / Backup Tool</h1>
+    <p>Download, import, and manage your local data</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h3>📤 Export Data</h3>
+      <p>Download all your progress data as a JSON file for backup or transfer to another device.</p>
+      <button class="btn btn-primary btn-block" onclick="exportData()" style="margin-top:12px">⬇️ Download Backup (JSON)</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Import Data</h3>
+      <p>Restore from a previously exported backup file.</p>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)"/>
+      <button class="btn btn-outline btn-block" onclick="document.getElementById('import-file').click()" style="margin-top:12px">📂 Select Backup File</button>
+      <div id="import-status" style="margin-top:10px;font-size:0.85rem;color:var(--green)"></div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Current Data Summary</h3>
+      <div id="data-summary"></div>
+    </div>
+
+    <div class="card" style="border-color:var(--red)">
+      <h3 style="color:var(--red)">⚠️ Reset All Data</h3>
+      <p>This will permanently delete all progress, records, and saved data.</p>
+      <button class="btn btn-red btn-block" onclick="resetAllData()" style="margin-top:12px">🗑️ Reset Everything</button>
+    </div>
+
+    <div class="card">
+      <h3>📱 PWA & APK Conversion Guide</h3>
+      <div class="info-box">
+        <strong>Step 1: Export Static Build</strong>
+        <ul style="margin-top:6px">
+          <li>The entire app is already a static HTML file — no build needed!</li>
+          <li>Folder: <code style="background:var(--navy);padding:2px 6px;border-radius:4px;font-family:monospace">fln-reading-app/</code> containing index.html, manifest.json, service-worker.js, author.jpg</li>
+        </ul>
+      </div>
+      <div class="info-box green" style="margin-top:10px">
+        <strong>Step 2: Host as PWA</strong>
+        <ul style="margin-top:6px">
+          <li>Upload to GitHub Pages: Create repo → push files → enable Pages in Settings</li>
+          <li>Upload to Netlify: Drag folder to netlify.com/drop</li>
+          <li>Upload to Cloudflare Pages: Free hosting with global CDN</li>
+          <li>Use VS Code Live Server for local testing</li>
+        </ul>
+      </div>
+      <div class="info-box amber" style="margin-top:10px">
+        <strong>Step 3: Convert to APK (TWA Method)</strong>
+        <ul style="margin-top:6px">
+          <li>1. Host your PWA at a public HTTPS URL</li>
+          <li>2. Install Android Studio + Bubblewrap CLI: <code style="background:var(--navy);padding:2px 6px;border-radius:4px;font-family:monospace">npm install -g @bubblewrap/cli</code></li>
+          <li>3. Run: <code style="background:var(--navy);padding:2px 6px;border-radius:4px;font-family:monospace">bubblewrap init --manifest https://yoursite.com/manifest.json</code></li>
+          <li>4. Build APK: <code style="background:var(--navy);padding:2px 6px;border-radius:4px;font-family:monospace">bubblewrap build</code></li>
+          <li>5. Sign with keystore and distribute</li>
+        </ul>
+      </div>
+      <div class="info-box" style="margin-top:10px;border-left-color:#9b59b6">
+        <strong>Step 3 Alternative: WebView APK</strong>
+        <ul style="margin-top:6px">
+          <li>1. Create Android Studio project</li>
+          <li>2. Add WebView to MainActivity: <code style="background:var(--navy);padding:2px 4px;border-radius:4px;font-family:monospace;font-size:0.75rem">webView.loadUrl("file:///android_asset/index.html")</code></li>
+          <li>3. Copy HTML files to <code style="background:var(--navy);padding:2px 4px;border-radius:4px;font-family:monospace;font-size:0.75rem">app/src/main/assets/</code></li>
+          <li>4. Enable JavaScript: <code style="background:var(--navy);padding:2px 4px;border-radius:4px;font-family:monospace;font-size:0.75rem">webView.settings.javaScriptEnabled = true</code></li>
+          <li>5. Build → Generate Signed APK → Distribute via WhatsApp or email</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+// ===== DATA CONSTANTS =====
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const LETTER_DATA = {
+  A:{name:'A (Ay)',sound:'/æ/',example:'Apple 🍎'},B:{name:'B (Bee)',sound:'/b/',example:'Ball ⚽'},
+  C:{name:'C (See)',sound:'/k/',example:'Cat 🐱'},D:{name:'D (Dee)',sound:'/d/',example:'Dog 🐶'},
+  E:{name:'E (Ee)',sound:'/ɛ/',example:'Elephant 🐘'},F:{name:'F (Ef)',sound:'/f/',example:'Fish 🐟'},
+  G:{name:'G (Jee)',sound:'/g/',example:'Goat 🐐'},H:{name:'H (Aych)',sound:'/h/',example:'Hat 🎩'},
+  I:{name:'I (Eye)',sound:'/ɪ/',example:'Ink ✒️'},J:{name:'J (Jay)',sound:'/dʒ/',example:'Jar 🫙'},
+  K:{name:'K (Kay)',sound:'/k/',example:'Kite 🪁'},L:{name:'L (El)',sound:'/l/',example:'Lion 🦁'},
+  M:{name:'M (Em)',sound:'/m/',example:'Mango 🥭'},N:{name:'N (En)',sound:'/n/',example:'Nest 🪺'},
+  O:{name:'O (Oh)',sound:'/ɒ/',example:'Orange 🍊'},P:{name:'P (Pee)',sound:'/p/',example:'Pen ✏️'},
+  Q:{name:'Q (Cue)',sound:'/kw/',example:'Queen 👑'},R:{name:'R (Ar)',sound:'/r/',example:'Rain 🌧️'},
+  S:{name:'S (Es)',sound:'/s/',example:'Sun ☀️'},T:{name:'T (Tee)',sound:'/t/',example:'Tree 🌳'},
+  U:{name:'U (Yoo)',sound:'/ʊ/',example:'Umbrella ☂️'},V:{name:'V (Vee)',sound:'/v/',example:'Van 🚐'},
+  W:{name:'W (Double-u)',sound:'/w/',example:'Water 💧'},X:{name:'X (Ex)',sound:'/ks/',example:'Xylophone 🎵'},
+  Y:{name:'Y (Wye)',sound:'/j/',example:'Yak 🦬'},Z:{name:'Z (Zee)',sound:'/z/',example:'Zebra 🦓'}
+};
+
+const SIGHT_WORDS = [
+  'the','and','a','to','said','in','he','I','of','it',
+  'was','you','they','on','she','is','for','at','his','but',
+  'that','with','all','we','can','are','up','had','my','her',
+  'what','there','out','this','have','went','be','like','some','so',
+  'not','then','were','go','little','as','no','mum','one','them',
+  'do','me','down','dad','big','when','it\'s','see','looked','very',
+  'look','don\'t','come','will','into','back','from','children','him','Mr',
+  'get','just','now','came','oh','about','got','their','people','your',
+  'put','could','house','old','too','by','day','made','time','I\'m',
+  'if','help','Mrs','called','here','off','asked','saw','make','an'
+];
+
+const COMPREHENSION_PASSAGES = [
+  {
+    title:'The Helpful Dog',
+    level:'Level 1 – Grade 1',
+    text:`Raju has a dog named Tommy. Tommy is brown and small. Every day, Raju goes to school. Tommy waits at the door. When Raju comes back, Tommy wags his tail. Tommy is a very good dog. He is Raju's best friend.`,
+    questions:[
+      {q:"What is the dog's name?",opts:['Tommy','Jimmy','Rocky','Max'],ans:0},
+      {q:'What colour is the dog?',opts:['Black','White','Brown','Grey'],ans:2},
+      {q:'What does Tommy do when Raju comes back?',opts:['Sleeps','Wags his tail','Runs away','Barks'],ans:1},
+      {q:'Where does Raju go every day?',opts:['Market','Temple','School','Park'],ans:2}
+    ]
+  },
+  {
+    title:'The Rain and the Tree',
+    level:'Level 2 – Grade 1',
+    text:`It was a hot summer day. The tree was very thirsty. The birds sat on the branches and waited. Suddenly, dark clouds came. Rain fell from the sky. The tree drank the water with its roots. The birds sang happily. The flowers opened their petals. Everyone was happy because of the rain.`,
+    questions:[
+      {q:'What kind of day was it?',opts:['Cold winter','Hot summer','Cloudy morning','Rainy evening'],ans:1},
+      {q:'How did the tree drink water?',opts:['Through leaves','Through trunk','Through roots','Through branches'],ans:2},
+      {q:'What did the birds do after rain?',opts:['Flew away','Sang happily','Hid in nests','Ate seeds'],ans:1},
+      {q:'What opened their petals?',opts:['Trees','Birds','Clouds','Flowers'],ans:3}
+    ]
+  },
+  {
+    title:'Asha Helps Grandmother',
+    level:'Level 3 – Grade 2',
+    text:`Asha lived with her grandmother in a small village. One morning, her grandmother was not feeling well. She had a headache and could not cook breakfast. Asha decided to help. She washed the rice, lit the stove carefully, and made porridge. She brought the bowl to her grandmother with a glass of warm water. Her grandmother smiled and said, "You are growing up, my dear." Asha felt proud and happy.`,
+    questions:[
+      {q:'Where did Asha live?',opts:['A city','A town','A village','A farm'],ans:2},
+      {q:'Why could the grandmother not cook?',opts:['She was busy','She had a headache','She was sleeping','She went out'],ans:1},
+      {q:'What did Asha cook for her grandmother?',opts:['Bread','Eggs','Porridge','Soup'],ans:2},
+      {q:'How did Asha feel at the end?',opts:['Sad and tired','Angry and scared','Proud and happy','Bored and hungry'],ans:2}
+    ]
+  }
+];
+
+const VOCABULARY_DATA = {
+  nature:['river','forest','mountain','cloud','sunset','breeze','harvest','soil','stream','pebble'].map((w,i)=>{
+    const m={river:'A natural flow of water moving toward the sea 💧',forest:'A large area covered with trees 🌲',mountain:'A very high landform rising above its surroundings ⛰️',cloud:'A mass of water droplets floating in the sky ☁️',sunset:'The time when the sun goes below the horizon 🌅',breeze:'A gentle wind 🍃',harvest:'The process of gathering crops 🌾',soil:'The top layer of earth in which plants grow 🌱',stream:'A small narrow river 🏞️',pebble:'A small rounded stone 🪨'};
+    return{word:w,meaning:m[w]||'A nature word'};
+  }),
+  school:['textbook','classroom','blackboard','lesson','homework','notebook','pencil','teacher','student','library'].map(w=>{
+    const m={textbook:'A book used for studying a subject 📖',classroom:'A room where lessons take place 🏫',blackboard:'A dark board teachers write on with chalk 📋',lesson:'A period of learning about a topic 📝',homework:'Work given to students to do at home 🏠',notebook:'A book used for writing notes 📓',pencil:'A writing tool with a graphite tip ✏️',teacher:'A person who teaches others 👩‍🏫',student:'A person who is learning 👦',library:'A room or building with many books 📚'};
+    return{word:w,meaning:m[w]||'A school word'};
+  }),
+  animals:['elephant','giraffe','dolphin','butterfly','crocodile','parrot','tortoise','leopard','peacock','squirrel'].map(w=>{
+    const m={elephant:'The largest land animal with a trunk 🐘',giraffe:'The tallest animal with a very long neck 🦒',dolphin:'A clever sea animal that loves to jump 🐬',butterfly:'A flying insect with colourful wings 🦋',crocodile:'A large reptile that lives near water 🐊',parrot:'A colourful bird that can mimic sounds 🦜',tortoise:'A slow-moving reptile with a hard shell 🐢',leopard:'A big spotted cat that climbs trees 🐆',peacock:'A beautiful bird with a colourful tail 🦚',squirrel:'A small animal that collects nuts 🐿️'};
+    return{word:w,meaning:m[w]||'An animal'};
+  }),
+  food:['vegetable','harvest','nutrition','ingredient','recipe','flavour','texture','cuisine','protein','vitamin'].map(w=>{
+    const m={vegetable:'A plant or part of plant eaten as food 🥦',harvest:'Gathering of food crops from fields 🌾',nutrition:'The process of getting nutrients from food 🥗',ingredient:'One of the items used in a recipe 🧅',recipe:'Instructions for preparing a dish 👩‍🍳',flavour:'The taste of food 😋',texture:'How food feels in the mouth 🍽️',cuisine:'A style of cooking from a region 🍛',protein:'A nutrient that builds and repairs body tissue 🥚',vitamin:'A nutrient needed in small amounts for health 🍊'};
+    return{word:w,meaning:m[w]||'A food word'};
+  }),
+  body:['shoulder','elbow','wrist','ankle','forehead','eyebrow','nostril','knuckle','thumb','spine'].map(w=>{
+    const m={shoulder:'The joint connecting arm to the body 💪',elbow:'The joint in the middle of the arm 🦾',wrist:'The joint between hand and forearm ✋',ankle:'The joint connecting foot to leg 🦵',forehead:'The part of the face above the eyebrows 🧠',eyebrow:'The strip of hair above the eye 👁️',nostril:'One of the two openings of the nose 👃',knuckle:'A finger joint 🤜',thumb:'The short thick finger on the hand 👍',spine:'The column of bones running down your back 🦴'};
+    return{word:w,meaning:m[w]||'A body part'};
+  }),
+  colours:['crimson','turquoise','violet','amber','indigo','scarlet','beige','maroon','azure','ivory'].map(w=>{
+    const m={crimson:'A deep vivid red colour 🔴',turquoise:'A blue-green colour like the sea 🌊',violet:'A purplish-blue colour seen in rainbows 🟣',amber:'A warm yellow-orange colour 🟡',indigo:'A deep blue-purple colour 💙',scarlet:'A bright red colour 🎀',beige:'A pale sandy yellowish-brown colour 🏜️',maroon:'A dark brownish-red colour 🍷',azure:'A bright sky-blue colour ☀️',ivory:'A creamy white colour 🤍'};
+    return{word:w,meaning:m[w]||'A colour'};
+  })
+};
+
+const SENTENCES = [
+  {words:['The','cat','sat','on','the','mat','.'],correct:'The cat sat on the mat .'},
+  {words:['She','went','to','the','market','today','.'],correct:'She went to the market today .'},
+  {words:['Birds','fly','high','in','the','sky','.'],correct:'Birds fly high in the sky .'},
+  {words:['I','like','to','read','books','.'],correct:'I like to read books .'},
+  {words:['The','sun','rises','in','the','east','.'],correct:'The sun rises in the east .'},
+  {words:['My','mother','cooks','delicious','food','.'],correct:'My mother cooks delicious food .'},
+  {words:['Children','play','in','the','park','.'],correct:'Children play in the park .'},
+  {words:['The','dog','barked','at','the','stranger','.'],correct:'The dog barked at the stranger .'}
+];
+
+const DIAGNOSTIC_QUESTIONS = {
+  1:[
+    {q:'Which letter makes the /m/ sound?',opts:['N','M','B','P'],ans:1,type:'phonics'},
+    {q:'What sound does "cat" start with?',opts:['/c/','  /t/','  /a/','  /k/'],ans:3,type:'phonics'},
+    {q:'How many words are in this sentence: "I see a cat."',opts:['2','3','4','5'],ans:2,type:'sentence'},
+    {q:'Which word rhymes with "bat"?',opts:['Dog','Hat','Bed','Run'],ans:1,type:'phonics'},
+    {q:'What is the first letter in the word "sun"?',opts:['N','U','S','A'],ans:2,type:'letter'},
+    {q:'Which word means a baby dog?',opts:['Kitten','Calf','Puppy','Foal'],ans:2,type:'vocabulary'},
+    {q:'Circle the sight word: "the"',opts:['cat','dog','the','run'],ans:2,type:'sightword'},
+    {q:'How many letters are in "book"?',opts:['3','4','5','6'],ans:1,type:'phonics'},
+    {q:'Which word has the short /a/ sound?',opts:['Cake','Rain','Hat','Bike'],ans:2,type:'phonics'},
+    {q:'What comes after B in the alphabet?',opts:['A','D','C','E'],ans:2,type:'letter'},
+    {q:'Which word is a colour?',opts:['Happy','Red','Jump','Soft'],ans:1,type:'vocabulary'},
+    {q:'How many syllables in "butterfly"?',opts:['1','2','3','4'],ans:2,type:'phonics'},
+    {q:'Which sentence is correct?',opts:['the cat is big.','The cat is big.','The Cat Is Big.','THE cat is big.'],ans:1,type:'sentence'},
+    {q:'What sound does the letter "p" make?',opts:['/b/','/p/','/d/','/q/'],ans:1,type:'phonics'},
+    {q:'Which word is the opposite of "big"?',opts:['Huge','Large','Small','Fat'],ans:2,type:'vocabulary'}
+  ],
+  2:[
+    {q:'Which word has a "silent e" making the vowel long?',opts:['Cat','Cap','Cape','Cup'],ans:2,type:'phonics'},
+    {q:'What is a "compound word"?',opts:['A long word','Two words joined together','A word with prefix','A rhyming word'],ans:1,type:'grammar'},
+    {q:'Which is a compound word?',opts:['Happy','Sunshine','Running','Slowly'],ans:1,type:'grammar'},
+    {q:'Which word has the "ch" digraph sound?',opts:['Cat','Chair','Sheep','Phone'],ans:1,type:'phonics'},
+    {q:'What does "enormous" mean?',opts:['Very small','Very fast','Very large','Very loud'],ans:2,type:'vocabulary'},
+    {q:'A group of lions is called a?',opts:['Pack','Herd','Pride','Flock'],ans:2,type:'vocabulary'},
+    {q:'Which sentence uses a question mark correctly?',opts:['Is she coming.','Is she coming?','Is she coming!','is she coming?'],ans:1,type:'grammar'},
+    {q:'Which word is a verb (action word)?',opts:['Tree','Beautiful','Running','Blue'],ans:2,type:'grammar'},
+    {q:'What does "nocturnal" mean?',opts:['Active at night','Active by day','Very slow','Lives in water'],ans:0,type:'vocabulary'},
+    {q:'How many syllables in "umbrella"?',opts:['2','3','4','5'],ans:1,type:'phonics'},
+    {q:'Which word is a noun?',opts:['Jump','Quickly','Mountain','Beautiful'],ans:2,type:'grammar'},
+    {q:'What is an "antonym"?',opts:['A word with same meaning','A word with opposite meaning','A word that rhymes','A very long word'],ans:1,type:'grammar'},
+    {q:'Which sentence is in the past tense?',opts:['She runs fast','She will run','She ran fast','She is running'],ans:2,type:'grammar'},
+    {q:'What does the prefix "un-" mean?',opts:['Again','Before','Not','After'],ans:2,type:'grammar'},
+    {q:'Which is NOT a vowel?',opts:['A','E','B','I'],ans:2,type:'phonics'}
+  ],
+  3:[
+    {q:'What is the "main idea" of a paragraph?',opts:['The last sentence','The most important point','The first word','A supporting detail'],ans:1,type:'comprehension'},
+    {q:'Which word means "very hungry"?',opts:['Satisfied','Famished','Curious','Exhausted'],ans:1,type:'vocabulary'},
+    {q:'What does "infer" mean in reading?',opts:['To read aloud','To guess from clues','To skip a word','To spell correctly'],ans:1,type:'comprehension'},
+    {q:'Which sentence uses a comma correctly?',opts:['I like cats,dogs and birds.','I like cats, dogs, and birds.','I like, cats dogs and birds.','I like cats dogs, and birds.'],ans:1,type:'grammar'},
+    {q:'What is a "synonym" of "happy"?',opts:['Sad','Angry','Joyful','Tired'],ans:2,type:'vocabulary'},
+    {q:'Which word has the "tion" suffix meaning "the act of"?',opts:['Information','Jumping','Quickly','Beautiful'],ans:0,type:'grammar'},
+    {q:'What is the purpose of a "topic sentence"?',opts:['To end a paragraph','To introduce the main idea','To give an example','To ask a question'],ans:1,type:'comprehension'},
+    {q:'Which is an "adjective"?',opts:['Run','Quickly','Beautiful','Sing'],ans:2,type:'grammar'},
+    {q:'What does "context clues" help a reader do?',opts:['Spell words','Find page numbers','Understand new words','Count syllables'],ans:2,type:'comprehension'},
+    {q:'Which sentence uses "their" correctly?',opts:['Their going home.','I went their.','They took their bags.','Their is a bird.'],ans:2,type:'grammar'},
+    {q:'What is a "simile"?',opts:['A type of noun','Comparing using like/as','A punctuation mark','A paragraph type'],ans:1,type:'grammar'},
+    {q:'Which word is an "adverb"?',opts:['Cat','Beautiful','Quickly','Sing'],ans:2,type:'grammar'},
+    {q:'What does "summarise" mean?',opts:['To memorise exactly','To write the main points briefly','To copy word for word','To ask questions'],ans:1,type:'comprehension'},
+    {q:'Which is the correct plural of "leaf"?',opts:['Leafs','Leaves','Leafes','Leaved'],ans:1,type:'grammar'},
+    {q:'What does "visualise" mean when reading?',opts:['To speak aloud','To look at pictures','To create mental images','To spell the words'],ans:2,type:'comprehension'}
+  ]
+};
+
+const ACTIVITIES = [
+  {tag:'phonics',title:'Sound Box Game',desc:'Draw 3 boxes. Say a word slowly. Students tap/push a counter into each box for each sound they hear. E.g. "cat" = /c/ /a/ /t/. Great for phonemic awareness.',age:'Grade 1'},
+  {tag:'phonics',title:'Letter Hunt',desc:'Hide letter cards around the room. Students find them and make the sound as they collect. First to collect all 5 in a set wins!',age:'Grade 1–2'},
+  {tag:'phonics',title:'Rhyme Time Circle',desc:'Sit in a circle. Say a word. The next student must say a rhyming word within 5 seconds. If they cannot, they sit out. Last one standing wins.',age:'Grade 1'},
+  {tag:'fluency',title:'Echo Reading',desc:'Teacher reads a sentence with expression. Students repeat it back, matching the exact speed and expression. Works on prosody and expression in reading.',age:'Grade 1–3'},
+  {tag:'fluency',title:'Partner Reading',desc:'Students pair up. One reads a paragraph while the other follows along. Then they switch. Each helps the other decode difficult words.',age:'Grade 2–3'},
+  {tag:'fluency',title:'One-Minute Read',desc:'Give each student the same passage. Set a 1-minute timer. Students read as much as they can. Count words read correctly. Track weekly.',age:'Grade 2–3'},
+  {tag:'comprehension',title:'Story Sequencing Cards',desc:'Print story pictures and cut them up. Students arrange them in correct order and narrate the story. Develops sequencing and recall.',age:'Grade 1–2'},
+  {tag:'comprehension',title:'5 Ws Mind Map',desc:'After reading, students fill in a mind map: Who? What? When? Where? Why? This visual tool strengthens comprehension across text types.',age:'Grade 2–3'},
+  {tag:'comprehension',title:'Prediction Gallery',desc:'Before reading, show only the title and pictures. Students write what they think will happen. After reading, compare predictions to actual text.',age:'Grade 2–3'},
+  {tag:'vocabulary',title:'Word Jar Activity',desc:'Introduce 1 new word per day. Students write it on a slip and put it in the "Word Jar". Weekly, pull out words and ask students to use them in sentences.',age:'Grade 1–3'},
+  {tag:'vocabulary',title:'Vocabulary Bingo',desc:'Create bingo cards with new vocabulary words. Read definitions aloud. Students mark the word. First to complete a row wins.',age:'Grade 2–3'},
+  {tag:'vocabulary',title:'Word Web',desc:'Write a new word in the centre of a circle. Students brainstorm synonyms, antonyms, examples, non-examples, and use it in a sentence around it.',age:'Grade 2–3'},
+  {tag:'home',title:'Read Aloud with Parents',desc:'Send home a simple book or printed passage. Ask parents to listen to their child read for 10 minutes daily and sign a reading log.',age:'Grade 1–3'},
+  {tag:'home',title:'Bedtime Story Challenge',desc:'Encourage parents to tell or read one story per night. Provide a simple observation sheet: "What did your child enjoy? What was new?"',age:'Grade 1–2'},
+  {tag:'home',title:'Kitchen Vocabulary Walk',desc:'Parents and children identify items in the kitchen and practice new words: spoon, vessel, spice, lid, flame. Learning in real-life contexts.',age:'Grade 1–2'}
+];
+
+const LADDER_LEVELS = [
+  {
+    level:1,title:'Emergent Reader',desc:'Recognise letters and simple 2-3 letter words',
+    passage:'I am Tom. I see a cat. The cat is fat. The cat can sit.',
+    questions:[
+      {q:'What is the boy\'s name?',opts:['Tim','Tom','Sam','Jim'],ans:1},
+      {q:'What does Tom see?',opts:['A dog','A cat','A bird','A fish'],ans:1},
+      {q:'Is the cat fat or thin?',opts:['Thin','Tall','Fat','Small'],ans:2}
+    ]
+  },
+  {
+    level:2,title:'Beginning Reader',desc:'Read short sentences and simple stories',
+    passage:'Mia has a red ball. She plays with her ball every day. One day the ball went into a bush. Mia looked for it. She found it and was very happy.',
+    questions:[
+      {q:'What colour is the ball?',opts:['Blue','Green','Red','Yellow'],ans:2},
+      {q:'Where did the ball go?',opts:['In a well','Into a bush','Behind a door','Under the bed'],ans:1},
+      {q:'How did Mia feel when she found the ball?',opts:['Sad','Angry','Scared','Very happy'],ans:3}
+    ]
+  },
+  {
+    level:3,title:'Developing Reader',desc:'Read paragraphs and answer comprehension questions',
+    passage:'Every morning, the baker wakes up before sunrise. He mixes flour, water, and salt to make dough. After kneading the dough for a long time, he shapes it into loaves and puts them in the hot oven. The smell of fresh bread fills the whole street. Neighbours come to buy his bread before school.',
+    questions:[
+      {q:'When does the baker wake up?',opts:['After sunrise','At noon','Before sunrise','In the evening'],ans:2},
+      {q:'What three things does the baker mix?',opts:['Flour, milk, sugar','Flour, water, salt','Rice, water, oil','Butter, egg, flour'],ans:1},
+      {q:'Why do neighbours come early?',opts:['For coffee','To help bake','To buy fresh bread','To smell the oven'],ans:2}
+    ]
+  },
+  {
+    level:4,title:'Fluent Reader',desc:'Read longer texts and make inferences',
+    passage:'The village of Sundarpur had not seen rain for three months. The pond dried up. The crops wilted. The children could not play outside due to the dusty heat. Then one night, the sky turned dark and lightning flashed. By morning, the pond was full and the farmers rushed to their fields, relief visible on every face. Nature had heard their silent prayers.',
+    questions:[
+      {q:'How long had there been no rain?',opts:['One month','Two months','Three months','Four months'],ans:2},
+      {q:'What happened to the crops?',opts:['They grew well','They were stolen','They wilted','They were flooded'],ans:2},
+      {q:'What does "relief visible on every face" suggest?',opts:['People were surprised','People were sad','People were happy the drought ended','People were scared'],ans:2}
+    ]
+  },
+  {
+    level:5,title:'Advanced Reader',desc:'Analyse text, identify main idea, and evaluate',
+    passage:'Forests cover about 31% of the Earth\'s land area, but this number is shrinking every year. Deforestation — the cutting down of trees — happens for farming, timber, and construction. While these activities support human needs, they destroy habitats for millions of species. Scientists warn that at the current rate of deforestation, the world\'s rainforests could disappear within a century. However, replanting programmes and sustainable forestry practices offer hope for restoring what has been lost.',
+    questions:[
+      {q:'What percentage of Earth\'s land does forest cover?',opts:['21%','31%','41%','51%'],ans:1},
+      {q:'What is the main idea of this passage?',opts:['Trees are important for building','Forests are disappearing due to human activity but solutions exist','Scientists study forests','Animals live in forests'],ans:1},
+      {q:'What does "deforestation" mean?',opts:['Growing new trees','Cutting down trees','Protecting forests','Studying trees'],ans:1}
+    ]
+  }
+];
+
+const RAG_COMPETENCIES = [
+  'Can recognise all uppercase letters A–Z',
+  'Can recognise all lowercase letters a–z',
+  'Can blend CVC words (e.g., cat, dog, sit)',
+  'Can read common sight words (the, and, a, is, was)',
+  'Reads simple sentences without sounding out each letter',
+  'Can answer "who, what, when" questions after listening to a story',
+  'Can retell a story in sequence using 3–5 sentences',
+  'Uses capital letters at the start of sentences',
+  'Uses full stops at the end of sentences',
+  'Can write own name and simple words independently',
+  'Understands and uses new vocabulary in context',
+  'Participates in class discussions and partner reading'
+];
+
+// ===== LOCAL STORAGE HELPERS =====
+function save(key, val){try{localStorage.setItem('fln_'+key, JSON.stringify(val));}catch(e){}}
+function load(key, def){try{const v=localStorage.getItem('fln_'+key);return v!==null?JSON.parse(v):def;}catch(e){return def;}}
+
+// ===== NAVIGATION =====
+let currentPage = 'page-title';
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  currentPage = id;
+  closeNav();
+  document.getElementById('main-nav').style.display = id==='page-title'?'none':'flex';
+  // Update active nav item
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const navItem = document.querySelector(`.nav-item[onclick="showPage('${id}')"]`);
+  if(navItem) navItem.classList.add('active');
+  window.scrollTo(0,0);
+  // Re-render dynamic pages
+  if(id==='page19') renderDashboard();
+  if(id==='page20') renderDataSummary();
+}
+function toggleNav(){
+  document.getElementById('nav-menu').classList.toggle('open');
+  document.getElementById('nav-overlay').classList.toggle('show');
+}
+function closeNav(){
+  document.getElementById('nav-menu').classList.remove('open');
+  document.getElementById('nav-overlay').classList.remove('show');
+}
+
+// ===== PAGE 6: LETTERS =====
+let currentLetter = 'A';
+function initLetters(){
+  const ug=document.getElementById('upper-grid');
+  const lg=document.getElementById('lower-grid');
+  if(!ug||!lg) return;
+  const mastered = load('letters_mastered', []);
+  ug.innerHTML='';lg.innerHTML='';
+  LETTERS.forEach(l=>{
+    const d=LETTER_DATA[l];
+    const div=document.createElement('div');
+    div.className='letter-card'+(mastered.includes(l)?' mastered':'');
+    div.id='lc-'+l;
+    div.innerHTML=`<div class="ltr">${l}</div><div class="snd">${d.sound}</div>`;
+    div.onclick=()=>selectLetter(l);
+    ug.appendChild(div);
+  });
+  LETTERS.forEach(l=>{
+    const lc=l.toLowerCase();
+    const div=document.createElement('div');
+    div.className='letter-card';
+    div.id='lc-lc-'+lc;
+    div.innerHTML=`<div class="ltr">${lc}</div><div class="snd">${LETTER_DATA[l].sound}</div>`;
+    div.onclick=()=>selectLetter(l);
+    lg.appendChild(div);
+  });
+  updateLetterProgress();
+}
+function selectLetter(l){
+  currentLetter=l;
+  const d=LETTER_DATA[l];
+  document.getElementById('letter-big').textContent=l;
+  document.getElementById('letter-info').textContent=`Name: ${d.name} | Sound: ${d.sound} | Example: ${d.example}`;
+  document.getElementById('letter-display').classList.add('show');
+}
+function masterCurrentLetter(){
+  const mastered=load('letters_mastered',[]);
+  if(!mastered.includes(currentLetter)) mastered.push(currentLetter);
+  save('letters_mastered', mastered);
+  const el=document.getElementById('lc-'+currentLetter);
+  if(el) el.classList.add('mastered');
+  updateLetterProgress();
+}
+function updateLetterProgress(){
+  const mastered=load('letters_mastered',[]);
+  const count=mastered.length;
+  document.getElementById('letter-count').textContent=`${count} / 52`;
+  document.getElementById('letter-pb').style.width=(count/52*100)+'%';
+}
+function resetLetters(){
+  if(confirm('Reset all letter progress?')){
+    save('letters_mastered',[]);
+    initLetters();
+    document.getElementById('letter-display').classList.remove('show');
+  }
+}
+
+// ===== PAGE 7: PHONICS =====
+const phonics_consonants=['b','c','d','f','g','h','j','k','l','m','n','p','r','s','t','v','w','z','sh','ch','th','pl','gr','br','tr','cl'];
+const phonics_vowels=['a','e','i','o','u','ai','ee','oo','ou'];
+const phonics_endings=['t','n','g','d','p','k','m','s','ll','nd','st','ck','ng','mp'];
+let blend={c:'',v:'',e:''};
+const cvcWords={
+  'c:a:t':'cat 🐱','c:a:p':'cap 🧢','b:a:t':'bat 🏏','d:a:d':'dad 👨','m:a:n':'man 🧍',
+  's:u:n':'sun ☀️','r:u:n':'run 🏃','f:u:n':'fun 😄','b:i:g':'big 📦','s:i:t':'sit 🪑',
+  'h:e:n':'hen 🐔','b:e:d':'bed 🛏️','r:e:d':'red 🔴','d:o:g':'dog 🐶','l:o:g':'log 🪵'
+};
+function initPhonics(){
+  const cc=document.getElementById('phonics-consonants');
+  const cv=document.getElementById('phonics-vowels');
+  const ce=document.getElementById('phonics-endings');
+  if(!cc) return;
+  cc.innerHTML=phonics_consonants.map(c=>`<div class="phoneme" onclick="selectPhoneme('c','${c}',this)">${c}</div>`).join('');
+  cv.innerHTML=phonics_vowels.map(v=>`<div class="phoneme" onclick="selectPhoneme('v','${v}',this)">${v}</div>`).join('');
+  ce.innerHTML=phonics_endings.map(e=>`<div class="phoneme" onclick="selectPhoneme('e','${e}',this)">${e}</div>`).join('');
+  loadSavedBlends();
+  renderWordFamilies();
+}
+function selectPhoneme(type,val,el){
+  document.querySelectorAll(`#phonics-${type==='c'?'consonants':type==='v'?'vowels':'endings'} .phoneme`).forEach(p=>p.classList.remove('selected'));
+  el.classList.add('selected');blend[type]=val;
+}
+function blendSounds(){
+  const word=blend.c+blend.v+blend.e;
+  if(!word){document.getElementById('blend-result').textContent='Select sounds above ↑';return;}
+  document.getElementById('blend-result').textContent=word.toUpperCase();
+  const key=`${blend.c}:${blend.v}:${blend.e}`;
+  document.getElementById('blend-meaning').textContent=cvcWords[key]||'';
+}
+function clearBlend(){blend={c:'',v:'',e:''};document.getElementById('blend-result').textContent='Select sounds above ↑';document.getElementById('blend-meaning').textContent='';document.querySelectorAll('.phoneme').forEach(p=>p.classList.remove('selected'));}
+function saveBlend(){
+  const word=blend.c+blend.v+blend.e;
+  if(!word) return;
+  const saved=load('saved_blends',[]);
+  if(!saved.includes(word)) saved.push(word);
+  save('saved_blends',saved);
+  loadSavedBlends();
+}
+function loadSavedBlends(){
+  const saved=load('saved_blends',[]);
+  const el=document.getElementById('blends-saved');
+  if(!el) return;
+  el.innerHTML=saved.length?saved.map(w=>`<span class="phoneme" style="cursor:default">${w}</span>`).join(''):`<span style="color:var(--muted);font-size:0.85rem">Saved words appear here...</span>`;
+}
+function renderWordFamilies(){
+  const wf=document.getElementById('word-families');
+  if(!wf) return;
+  const families=[
+    {name:'-at family',words:['cat','bat','hat','rat','mat','fat']},
+    {name:'-an family',words:['can','man','ran','pan','tan','fan']},
+    {name:'-in family',words:['bin','fin','pin','tin','win','din']},
+  ];
+  wf.innerHTML=families.map(f=>`<div class="info-box"><strong style="color:var(--accent)">${f.name}</strong><div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">${f.words.map(w=>`<span class="tag">${w}</span>`).join('')}</div></div>`).join('');
+}
+
+// ===== PAGE 8: SIGHT WORDS =====
+let swFilter='all';
+function initSightWords(){
+  renderSightWords();
+  updateSWProgress();
+}
+function renderSightWords(){
+  const grid=document.getElementById('sight-word-grid');
+  if(!grid) return;
+  const mastered=load('sight_words_mastered',[]);
+  const words=swFilter==='mastered'?SIGHT_WORDS.filter(w=>mastered.includes(w)):swFilter==='pending'?SIGHT_WORDS.filter(w=>!mastered.includes(w)):SIGHT_WORDS;
+  grid.innerHTML=words.map(w=>`<div class="sight-word${mastered.includes(w)?' mastered':''}" onclick="toggleSightWord('${w}')">${w}</div>`).join('');
+}
+function filterSW(f){swFilter=f;renderSightWords();}
+function toggleSightWord(w){
+  const mastered=load('sight_words_mastered',[]);
+  const idx=mastered.indexOf(w);
+  if(idx>-1) mastered.splice(idx,1); else mastered.push(w);
+  save('sight_words_mastered',mastered);
+  renderSightWords();updateSWProgress();
+}
+function updateSWProgress(){
+  const count=load('sight_words_mastered',[]).length;
+  const el=document.getElementById('sw-count');
+  if(el) el.textContent=count;
+  const pb=document.getElementById('sw-pb');
+  if(pb) pb.style.width=(count/100*100)+'%';
+}
+function resetSightWords(){if(confirm('Reset all sight word progress?')){save('sight_words_mastered',[]);renderSightWords();updateSWProgress();}}
+
+// ===== PAGE 9: SENTENCES =====
+let sentenceIdx=0, sentCompleted=load('sent_completed',0);
+function initSentences(){
+  loadSentence();
+  updateSentenceProgress();
+}
+function loadSentence(){
+  const s=SENTENCES[sentenceIdx];
+  if(!s) return;
+  document.getElementById('sent-num').textContent=sentenceIdx+1;
+  document.getElementById('sent-total').textContent=SENTENCES.length;
+  const bank=document.getElementById('word-bank');
+  const drop=document.getElementById('sentence-drop');
+  if(!bank||!drop) return;
+  const shuffled=[...s.words].sort(()=>Math.random()-0.5);
+  bank.innerHTML=shuffled.map(w=>`<div class="drag-word" onclick="moveWord(this,'bank-to-drop')" data-word="${w}">${w}</div>`).join('');
+  drop.innerHTML='';
+  document.getElementById('sent-feedback').textContent='';
+}
+function moveWord(el,dir){
+  if(dir==='bank-to-drop'){
+    document.getElementById('sentence-drop').appendChild(el);
+    el.onclick=()=>moveWord(el,'drop-to-bank');
+  } else {
+    document.getElementById('word-bank').appendChild(el);
+    el.onclick=()=>moveWord(el,'bank-to-drop');
+  }
+}
+function handleDropArea(e){}
+function checkSentence(){
+  const drop=document.getElementById('sentence-drop');
+  if(!drop) return;
+  const words=[...drop.children].map(c=>c.dataset.word).join(' ');
+  const correct=SENTENCES[sentenceIdx].correct;
+  const fb=document.getElementById('sent-feedback');
+  if(words===correct){
+    fb.textContent='✅ Correct! Well done!';
+    fb.style.color='var(--green)';
+    if(sentenceIdx>=sentCompleted){sentCompleted=sentenceIdx+1;save('sent_completed',sentCompleted);}
+    updateSentenceProgress();
+  } else {
+    fb.textContent='❌ Not quite right. Try rearranging!';
+    fb.style.color='var(--red)';
+  }
+}
+function clearSentence(){loadSentence();}
+function nextSentence(){sentenceIdx=(sentenceIdx+1)%SENTENCES.length;loadSentence();}
+function updateSentenceProgress(){
+  const el=document.getElementById('sent-progress');
+  if(el) el.textContent=`${sentCompleted} / ${SENTENCES.length}`;
+  const pb=document.getElementById('sent-pb');
+  if(pb) pb.style.width=(sentCompleted/SENTENCES.length*100)+'%';
+}
+
+// ===== PAGE 10: WPM TRACKER =====
+function initWPMTracker(){
+  const today=new Date().toISOString().split('T')[0];
+  const el=document.getElementById('wpm-date');
+  if(el) el.value=today;
+  renderWPMChart(); renderWPMTable();
+}
+function addWPM(){
+  const name=document.getElementById('wpm-name').value.trim();
+  const score=parseInt(document.getElementById('wpm-score').value);
+  const date=document.getElementById('wpm-date').value;
+  if(!name||!score||!date){alert('Please fill all fields');return;}
+  const records=load('wpm_records',[]);
+  records.push({name,score,date,level:getWPMLevel(score)});
+  save('wpm_records',records);
+  renderWPMChart(); renderWPMTable();
+  document.getElementById('wpm-name').value='';
+  document.getElementById('wpm-score').value='';
+}
+function getWPMLevel(wpm){
+  if(wpm<30) return{label:'Below Grade 1',color:'var(--red)'};
+  if(wpm<60) return{label:'Grade 1 Range',color:'var(--amber)'};
+  if(wpm<90) return{label:'Grade 2 Range',color:'#3498db'};
+  return{label:'Grade 3+ Range',color:'var(--green)'};
+}
+function renderWPMChart(){
+  const chart=document.getElementById('wpm-chart');
+  if(!chart) return;
+  const records=load('wpm_records',[]);
+  if(!records.length){chart.innerHTML='<div style="color:var(--muted);font-size:0.85rem;align-self:center">No data yet.</div>';return;}
+  const recent=records.slice(-10);
+  const max=Math.max(...recent.map(r=>r.score),1);
+  chart.innerHTML=recent.map(r=>`
+    <div class="chart-bar-wrap">
+      <div class="chart-bar-val">${r.score}</div>
+      <div class="chart-bar" style="height:${Math.max(r.score/max*100,5)}%"></div>
+      <div class="chart-bar-label">${r.name.substring(0,4)}</div>
+    </div>
+  `).join('');
+}
+function renderWPMTable(){
+  const table=document.getElementById('wpm-table');
+  const empty=document.getElementById('wpm-empty');
+  if(!table) return;
+  const records=load('wpm_records',[]);
+  const existingRows=table.querySelectorAll('tr.data-row');
+  existingRows.forEach(r=>r.remove());
+  if(!records.length){if(empty) empty.style.display='block';return;}
+  if(empty) empty.style.display='none';
+  records.slice().reverse().forEach((r,i)=>{
+    const tr=document.createElement('tr');
+    tr.className='data-row';
+    tr.style.background=i%2===0?'var(--card2)':'';
+    tr.innerHTML=`<td style="padding:8px;border:1px solid var(--border)">${r.name}</td><td style="padding:8px;border:1px solid var(--border);font-weight:bold;color:var(--accent)">${r.score}</td><td style="padding:8px;border:1px solid var(--border)">${r.date}</td><td style="padding:8px;border:1px solid var(--border);color:${r.level.color}">${r.level.label}</td><td style="padding:8px;border:1px solid var(--border)"><button class="btn btn-sm" style="background:rgba(231,76,60,0.2);border:1px solid var(--red);color:var(--red);padding:4px 8px" onclick="deleteWPM(${records.length-1-i})">🗑️</button></td>`;
+    table.appendChild(tr);
+  });
+}
+function deleteWPM(idx){
+  const records=load('wpm_records',[]);
+  records.splice(idx,1);
+  save('wpm_records',records);
+  renderWPMChart(); renderWPMTable();
+}
+
+// ===== PAGE 11: COMPREHENSION =====
+let activePassage=0, compAnswers=[];
+function initComprehension(){
+  renderPassageTabs();
+  renderPassage(0);
+}
+function renderPassageTabs(){
+  const tabs=document.getElementById('passage-tabs');
+  if(!tabs) return;
+  tabs.innerHTML=COMPREHENSION_PASSAGES.map((p,i)=>`<button class="btn btn-sm ${i===activePassage?'btn-primary':'btn-outline'}" onclick="renderPassage(${i})">${p.title}</button>`).join('');
+}
+function renderPassage(idx){
+  activePassage=idx;
+  renderPassageTabs();
+  const p=COMPREHENSION_PASSAGES[idx];
+  const savedAns=load(`comp_answers_${idx}`,[]);
+  const area=document.getElementById('passage-area');
+  if(!area) return;
+  area.innerHTML=`
+    <div class="card"><h3>${p.level}: ${p.title}</h3><div class="passage-box">${p.text}</div></div>
+    <div class="card">
+      <h3>📝 Answer the Questions</h3>
+      ${p.questions.map((q,qi)=>`
+        <div class="test-question">
+          <div class="q-num">Q${qi+1}</div>
+          <div class="q-text">${q.q}</div>
+          ${q.opts.map((o,oi)=>`<div class="mcq-option" id="comp-${idx}-${qi}-${oi}" onclick="selectCompAnswer(${idx},${qi},${oi},${q.ans})">${o}</div>`).join('')}
+        </div>
+      `).join('')}
+      <button class="btn btn-primary" style="margin-top:12px" onclick="checkAllComp(${idx})">✅ Check All Answers</button>
+      <div id="comp-score-${idx}" style="margin-top:10px;font-weight:bold;font-size:1rem"></div>
+    </div>
+  `;
+  if(savedAns.length) savedAns.forEach((ans,qi)=>{if(ans!==-1) highlightComp(idx,qi,ans,p.questions[qi].ans);});
+}
+function selectCompAnswer(passIdx,qi,optIdx,correct){
+  const p=COMPREHENSION_PASSAGES[passIdx];
+  ['mcq-option'].forEach(()=>{});
+  highlightComp(passIdx,qi,optIdx,correct);
+  const saved=load(`comp_answers_${passIdx}`,[]);
+  saved[qi]=optIdx;
+  save(`comp_answers_${passIdx}`,saved);
+}
+function highlightComp(passIdx,qi,optIdx,correct){
+  const p=COMPREHENSION_PASSAGES[passIdx];
+  p.questions[qi].opts.forEach((_,oi)=>{
+    const el=document.getElementById(`comp-${passIdx}-${qi}-${oi}`);
+    if(el){el.classList.remove('correct','wrong');if(oi===optIdx){el.classList.add(optIdx===correct?'correct':'wrong');}}
+  });
+  if(optIdx!==correct){
+    const cel=document.getElementById(`comp-${passIdx}-${qi}-${correct}`);
+    if(cel) cel.classList.add('correct');
+  }
+}
+function checkAllComp(passIdx){
+  const p=COMPREHENSION_PASSAGES[passIdx];
+  const saved=load(`comp_answers_${passIdx}`,[]);
+  let correct=0;
+  p.questions.forEach((q,qi)=>{
+    if(saved[qi]===q.ans) correct++;
+    highlightComp(passIdx,qi,saved[qi]??-1,q.ans);
+  });
+  const el=document.getElementById(`comp-score-${passIdx}`);
+  if(el) el.innerHTML=`Score: <span style="color:${correct===p.questions.length?'var(--green)':'var(--amber)'}"> ${correct} / ${p.questions.length}</span> ${correct===p.questions.length?'🎉 Perfect!':'Keep practising!'}`;
+}
+
+// ===== PAGE 12: LISTENING =====
+function initListening(){
+  const area=document.getElementById('listening-passages');
+  if(!area) return;
+  const listeningTexts=[
+    {title:'The Crow and the Pitcher',text:`Long ago, a crow was very thirsty. He flew from place to place looking for water. Finally he found a pitcher with a little water at the bottom. He tried to reach the water but his beak could not reach it. Then he had an idea. He began to drop pebbles into the pitcher, one by one. Slowly the water rose to the top. The clever crow drank the water and flew away happily.`,questions:['What was the crow looking for?','What did the crow find?','What did the crow put in the pitcher?','Why did the water rise?','What lesson does this story teach?']},
+    {title:'A Day at School',text:`Today is Monday. Priya wakes up early. She washes her face and brushes her teeth. Her mother packs her lunch box with rice and dal. Priya puts on her uniform and takes her school bag. Her father drops her at school by eight o\'clock. Her teacher is very kind. She teaches them new words every day. At noon, Priya eats her lunch with her friends. In the evening, she comes home and tells her mother what she learned.`,questions:['What day is it in the story?','What does Priya\'s mother pack in her lunch box?','Who drops Priya to school?','What does her teacher do every day?','What does Priya do when she comes home?']}
+  ];
+  area.innerHTML=listeningTexts.map((t,i)=>`
+    <div class="card">
+      <h3>📖 Passage ${i+1}: ${t.title}</h3>
+      <div class="passage-box" style="font-size:1rem;line-height:2">${t.text}</div>
+      <div class="info-box amber" style="margin-top:12px">
+        <strong>🎤 Comprehension Questions (Ask Orally):</strong>
+        <ol style="margin-top:8px;padding-left:20px;line-height:2.2">
+          ${t.questions.map(q=>`<li style="color:var(--text)">${q}</li>`).join('')}
+        </ol>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== PAGE 13: VOCABULARY =====
+let vocabCurrentMode='cards';
+function initVocabulary(){
+  loadVocabCategory();
+}
+function vocabMode(mode){
+  vocabCurrentMode=mode;
+  loadVocabCategory();
+}
+function loadVocabCategory(){
+  const cat=document.getElementById('vocab-category');
+  if(!cat) return;
+  const words=VOCABULARY_DATA[cat.value]||[];
+  if(vocabCurrentMode==='cards'){
+    document.getElementById('vocab-cards-view').style.display='block';
+    document.getElementById('vocab-quiz-view').style.display='none';
+    renderVocabCards(words);
+  } else {
+    document.getElementById('vocab-cards-view').style.display='none';
+    document.getElementById('vocab-quiz-view').style.display='block';
+    renderVocabQuiz(words);
+  }
+}
+function renderVocabCards(words){
+  const el=document.getElementById('vocab-cards-view');
+  if(!el) return;
+  el.innerHTML=`<div class="card"><h3>📚 Word Cards — Click to Reveal</h3>${words.map((w,i)=>`<div class="vocab-card" id="vc-${i}" onclick="toggleVocab(${i})"><div class="vocab-word">📖 ${w.word}</div><div class="vocab-meaning">${w.meaning}</div></div>`).join('')}</div>`;
+}
+function toggleVocab(i){document.getElementById('vc-'+i).classList.toggle('revealed');}
+function renderVocabQuiz(words){
+  const el=document.getElementById('vocab-quiz-view');
+  if(!el) return;
+  const shuffled=[...words].sort(()=>Math.random()-0.5).slice(0,5);
+  el.innerHTML=`<div class="card"><h3>🧪 Vocabulary Quiz — Match the meaning</h3>${shuffled.map((w,qi)=>{
+    const opts=[w.meaning,...words.filter(x=>x.word!==w.word).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.meaning)].sort(()=>Math.random()-0.5);
+    const correctIdx=opts.indexOf(w.meaning);
+    return`<div class="test-question"><div class="q-num">Q${qi+1}</div><div class="q-text">What does "<strong style="color:var(--accent)">${w.word}</strong>" mean?</div>${opts.map((o,oi)=>`<div class="mcq-option" onclick="checkVocabAns(this,${oi===correctIdx})">${o}</div>`).join('')}</div>`;
+  }).join('')}</div>`;
+}
+function checkVocabAns(el,correct){
+  el.classList.add(correct?'correct':'wrong');
+}
+
+// ===== PAGE 14: READING LADDER =====
+let ladderState={};
+function initLadder(){
+  ladderState=load('ladder_state',{});
+  renderLadder();
+}
+function renderLadder(){
+  const el=document.getElementById('ladder-levels');
+  if(!el) return;
+  el.innerHTML=LADDER_LEVELS.map((l,i)=>{
+    const state=ladderState[i];
+    const isFirst=i===0;
+    const prevState=i>0?ladderState[i-1]:null;
+    const unlocked=isFirst||(prevState&&prevState.score>=70);
+    const cls=state?.passed?'unlocked':unlocked?'current':'locked';
+    return`<div class="level-card ${cls}" id="level-${i}">
+      <div style="display:flex;align-items:center;margin-bottom:10px">
+        <div class="level-badge">${l.level}</div>
+        <div>
+          <div style="font-weight:bold;color:var(--white)">${l.title}</div>
+          <div style="font-size:0.8rem;color:var(--muted)">${l.desc}</div>
+        </div>
+        ${state?.passed?'<span style="margin-left:auto;color:var(--green);font-size:1.2rem">✅</span>':''}
+      </div>
+      ${unlocked?`
+        <div class="passage-box" style="font-size:0.9rem;margin-bottom:12px">${l.passage}</div>
+        <div id="level-qs-${i}">
+          ${l.questions.map((q,qi)=>`
+            <div class="test-question">
+              <div class="q-num">Q${qi+1}</div>
+              <div class="q-text">${q.q}</div>
+              ${q.opts.map((o,oi)=>`<div class="mcq-option" id="lq-${i}-${qi}-${oi}" onclick="selectLadderAns(${i},${qi},${oi},${q.ans})">${o}</div>`).join('')}
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="checkLadderLevel(${i})">✅ Submit & Check</button>
+        <div id="level-result-${i}" style="margin-top:10px;font-weight:bold"></div>
+      `:`<div class="info-box" style="font-size:0.85rem">🔒 ${i===0?'Start here':'Complete Level '+(i)+' with 70%+ to unlock'}</div>`}
+    </div>`;
+  }).join('');
+}
+let ladderAnswers={};
+function selectLadderAns(level,qi,optIdx,correct){
+  if(!ladderAnswers[level]) ladderAnswers[level]={};
+  ladderAnswers[level][qi]=optIdx;
+  const q=LADDER_LEVELS[level].questions[qi];
+  q.opts.forEach((_,oi)=>{
+    const el=document.getElementById(`lq-${level}-${qi}-${oi}`);
+    if(el) el.classList.remove('correct','wrong');
+  });
+  const el=document.getElementById(`lq-${level}-${qi}-${optIdx}`);
+  if(el) el.classList.add(optIdx===correct?'correct':'wrong');
+  if(optIdx!==correct){
+    const cel=document.getElementById(`lq-${level}-${qi}-${correct}`);
+    if(cel) cel.classList.add('correct');
+  }
+}
+function checkLadderLevel(level){
+  const questions=LADDER_LEVELS[level].questions;
+  const ans=ladderAnswers[level]||{};
+  let correct=0;
+  questions.forEach((q,qi)=>{if(ans[qi]===q.ans) correct++;});
+  const score=Math.round(correct/questions.length*100);
+  ladderState[level]={score,passed:score>=70};
+  save('ladder_state',ladderState);
+  const el=document.getElementById(`level-result-${level}`);
+  if(el) el.innerHTML=`Score: ${score}% ${score>=70?'<span style="color:var(--green)">✅ Unlocked next level!</span>':'<span style="color:var(--amber)">Try again to score 70%+</span>'}`;
+  if(score>=70) setTimeout(()=>renderLadder(),1000);
+}
+
+// ===== PAGE 15: RAG SELF-EVAL =====
+function initRAG(){
+  const el=document.getElementById('rag-sheet');
+  if(!el) return;
+  const saved=load('rag_current',{});
+  el.innerHTML=RAG_COMPETENCIES.map((c,i)=>`
+    <div class="rag-item">
+      <div class="rag-label">${i+1}. ${c}</div>
+      <div class="rag-btns">
+        <button class="rag-btn r ${saved[i]==='r'?'sel':''}" onclick="setRAG(${i},'r',this)">R</button>
+        <button class="rag-btn a ${saved[i]==='a'?'sel':''}" onclick="setRAG(${i},'a',this)">A</button>
+        <button class="rag-btn g ${saved[i]==='g'?'sel':''}" onclick="setRAG(${i},'g',this)">G</button>
+      </div>
+    </div>
+  `).join('');
+  renderRAGSaved();
+}
+function setRAG(idx,color,btn){
+  const current=load('rag_current',{});
+  current[idx]=color;
+  save('rag_current',current);
+  const allBtns=btn.parentElement.querySelectorAll('.rag-btn');
+  allBtns.forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function saveRAG(){
+  const student=document.getElementById('rag-student').value.trim();
+  if(!student){alert('Please enter student name');return;}
+  const current=load('rag_current',{});
+  const allSaved=load('rag_all_saved',[]);
+  allSaved.push({student,date:new Date().toLocaleDateString('en-IN'),ratings:current});
+  save('rag_all_saved',allSaved);
+  alert(`Evaluation saved for ${student}!`);
+  renderRAGSaved();
+}
+function renderRAGSaved(){
+  const el=document.getElementById('rag-saved-list');
+  if(!el) return;
+  const all=load('rag_all_saved',[]);
+  if(!all.length){el.innerHTML='<span style="color:var(--muted);font-size:0.85rem">No evaluations saved yet.</span>';return;}
+  el.innerHTML=all.map((s,i)=>{
+    const ratings=s.ratings||{};
+    const r=Object.values(ratings).filter(v=>v==='r').length;
+    const a=Object.values(ratings).filter(v=>v==='a').length;
+    const g=Object.values(ratings).filter(v=>v==='g').length;
+    return`<div style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:12px;margin:6px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div><strong style="color:var(--white)">${s.student}</strong><div style="font-size:0.75rem;color:var(--muted)">${s.date}</div></div>
+      <div style="display:flex;gap:8px">
+        <span style="color:var(--red)">🔴 ${r}</span>
+        <span style="color:var(--amber)">🟡 ${a}</span>
+        <span style="color:var(--green)">🟢 ${g}</span>
+      </div>
+      <button class="btn btn-sm" style="background:rgba(231,76,60,0.2);border:1px solid var(--red);color:var(--red);padding:4px 8px" onclick="deleteRAG(${i})">🗑️</button>
+    </div>`;
+  }).join('');
+}
+function deleteRAG(i){
+  const all=load('rag_all_saved',[]);
+  all.splice(i,1);
+  save('rag_all_saved',all);
+  renderRAGSaved();
+}
+
+// ===== PAGE 16: DIAGNOSTIC TEST =====
+function generateTest(){
+  const grade=document.getElementById('diag-grade').value;
+  const count=parseInt(document.getElementById('diag-count').value);
+  const pool=DIAGNOSTIC_QUESTIONS[grade]||[];
+  const shuffled=[...pool].sort(()=>Math.random()-0.5).slice(0,Math.min(count,pool.length));
+  const out=document.getElementById('test-output');
+  if(!out) return;
+  out.innerHTML=`
+    <div class="card" id="printable-test">
+      <div style="text-align:center;margin-bottom:16px;border-bottom:2px solid var(--accent);padding-bottom:12px">
+        <div style="font-size:1rem;font-weight:bold;color:var(--white)">FLN Reading Diagnostic Test</div>
+        <div style="color:var(--muted);font-size:0.85rem">Grade ${grade} | ${count} Questions | Date: ___________</div>
+        <div style="color:var(--muted);font-size:0.85rem">Student Name: ___________________________ Class: _______</div>
+      </div>
+      ${shuffled.map((q,i)=>`
+        <div class="test-question">
+          <div class="q-num">Q${i+1} <span class="tag">${q.type}</span></div>
+          <div class="q-text">${q.q}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+            ${q.opts.map((o,oi)=>`<label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text);font-size:0.9rem"><input type="radio" name="q${i}" value="${oi}"> ${String.fromCharCode(65+oi)}. ${o}</label>`).join('')}
+          </div>
+        </div>
+      `).join('')}
+      <button class="btn btn-primary no-print" style="margin-top:12px" onclick="checkDiagTest(${JSON.stringify(shuffled).replace(/"/g,'&quot;')})">✅ Check Score</button>
+      <div id="diag-score" style="margin-top:12px;font-weight:bold;font-size:1.1rem"></div>
+    </div>
+  `;
+}
+function checkDiagTest(questions){
+  let correct=0;
+  questions.forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel && parseInt(sel.value)===q.ans) correct++;
+  });
+  const pct=Math.round(correct/questions.length*100);
+  const el=document.getElementById('diag-score');
+  if(el) el.innerHTML=`Score: ${correct}/${questions.length} (${pct}%) — ${pct>=80?'<span style="color:var(--green)">Excellent!</span>':pct>=60?'<span style="color:var(--amber)">Good effort</span>':'<span style="color:var(--red)">Needs support</span>'}`;
+}
+function printTest(){
+  window.print();
+}
+
+// ===== PAGE 17: ACTIVITIES =====
+let activityFilter='all';
+function filterActivities(tag){
+  activityFilter=tag;
+  renderActivities();
+}
+function renderActivities(){
+  const el=document.getElementById('activity-list');
+  if(!el) return;
+  const filtered=activityFilter==='all'?ACTIVITIES:ACTIVITIES.filter(a=>a.tag===activityFilter);
+  el.innerHTML=filtered.map(a=>`
+    <div class="activity-item">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <h4>${a.title}</h4>
+        <span class="activity-tag">${a.tag}</span>
+        <span class="activity-tag" style="border-color:var(--muted);color:var(--muted)">${a.age}</span>
+      </div>
+      <p>${a.desc}</p>
+    </div>
+  `).join('');
+}
+
+// ===== PAGE 18: PROGRESS CARD =====
+const LITERACY_COMPETENCIES=[
+  'Letter recognition (A–Z)',
+  'Phonics and blending',
+  'Sight word recognition',
+  'Reading simple sentences',
+  'Reading fluency (WPM level)',
+  'Reading comprehension',
+  'Writing own name',
+  'Writing simple sentences',
+  'Vocabulary use in context'
+];
+const SOCIAL_COMPETENCIES=[
+  'Listens attentively in class',
+  'Participates in group activities',
+  'Shows respect for others',
+  'Completes tasks independently',
+  'Physical development (fine motor)',
+  'Attendance and regularity'
+];
+function initProgressCard(){
+  const lf=document.getElementById('pc-literacy-fields');
+  const sf=document.getElementById('pc-social-fields');
+  if(!lf||!sf) return;
+  lf.innerHTML=LITERACY_COMPETENCIES.map((c,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
+      <span style="color:var(--text);font-size:0.9rem">${c}</span>
+      <div style="display:flex;gap:6px">
+        ${['NY','D','A'].map(r=>`<label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.8rem;color:var(--muted)"><input type="radio" name="lit-${i}" value="${r}"> ${r}</label>`).join('')}
+      </div>
+    </div>
+  `).join('');
+  sf.innerHTML=SOCIAL_COMPETENCIES.map((c,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px">
+      <span style="color:var(--text);font-size:0.9rem">${c}</span>
+      <div style="display:flex;gap:6px">
+        ${['NY','D','A'].map(r=>`<label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:0.8rem;color:var(--muted)"><input type="radio" name="soc-${i}" value="${r}"> ${r}</label>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+function previewCard(){
+  const name=document.getElementById('pc-name').value||'[Student Name]';
+  const grade=document.getElementById('pc-grade').value||'[Grade]';
+  const section=document.getElementById('pc-section').value||'[Section]';
+  const year=document.getElementById('pc-year').value||'[Year]';
+  const teacher=document.getElementById('pc-teacher').value||'[Teacher]';
+  const school=document.getElementById('pc-school').value||'[School]';
+  const remarks=document.getElementById('pc-remarks').value||'';
+  const strengths=document.getElementById('pc-strengths').value||'';
+  const growth=document.getElementById('pc-growth').value||'';
+  const getLit=(i)=>{const r=document.querySelector(`input[name="lit-${i}"]:checked`);return r?r.value:'—';};
+  const getSoc=(i)=>{const r=document.querySelector(`input[name="soc-${i}"]:checked`);return r?r.value:'—';};
+  const getRatingColor=(r)=>r==='A'?'var(--green)':r==='D'?'var(--amber)':r==='NY'?'var(--red)':'var(--muted)';
+  const preview=document.getElementById('progress-card-preview');
+  preview.style.display='block';
+  preview.innerHTML=`
+    <div id="printable-card" style="background:white;color:#111;border:2px solid #1a3a6b;border-radius:12px;padding:24px;font-family:Georgia,serif;max-width:700px;margin:0 auto">
+      <div style="text-align:center;border-bottom:3px solid #1a3a6b;padding-bottom:16px;margin-bottom:16px">
+        <div style="font-size:0.75rem;color:#666;text-transform:uppercase;letter-spacing:2px">Holistic Progress Card</div>
+        <div style="font-size:1.4rem;font-weight:bold;color:#1a3a6b;margin:4px 0">FLN Reading & Competency Mastery Lab</div>
+        <div style="font-size:0.85rem;color:#444">${school} | Academic Year: ${year}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f0f4ff;border-radius:8px;padding:12px;margin-bottom:16px;font-size:0.9rem">
+        <div><strong>Student:</strong> ${name}</div>
+        <div><strong>Grade:</strong> ${grade} – ${section}</div>
+        <div><strong>Teacher:</strong> ${teacher}</div>
+        <div><strong>Date:</strong> ${new Date().toLocaleDateString('en-IN')}</div>
+      </div>
+      <div style="margin-bottom:4px;font-size:0.75rem;color:#666;text-align:right">NY = Not Yet | D = Developing | A = Achieved</div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.85rem;margin-bottom:16px">
+        <tr style="background:#1a3a6b;color:white"><th style="padding:8px;text-align:left" colspan="2">📖 Literacy Competencies</th><th style="padding:8px;text-align:center;width:80px">Rating</th></tr>
+        ${LITERACY_COMPETENCIES.map((c,i)=>`<tr style="background:${i%2===0?'#f9faff':'white'}"><td style="padding:8px;border:1px solid #ddd" colspan="2">${c}</td><td style="padding:8px;border:1px solid #ddd;text-align:center;font-weight:bold;color:${getRatingColor(getLit(i))}">${getLit(i)}</td></tr>`).join('')}
+        <tr style="background:#1a3a6b;color:white"><th style="padding:8px;text-align:left" colspan="2">🌱 Socio-Emotional & Other</th><th style="padding:8px;text-align:center">Rating</th></tr>
+        ${SOCIAL_COMPETENCIES.map((c,i)=>`<tr style="background:${i%2===0?'#f9faff':'white'}"><td style="padding:8px;border:1px solid #ddd" colspan="2">${c}</td><td style="padding:8px;border:1px solid #ddd;text-align:center;font-weight:bold;color:${getRatingColor(getSoc(i))}">${getSoc(i)}</td></tr>`).join('')}
+      </table>
+      ${remarks?`<div style="background:#f0f4ff;border-left:4px solid #1a3a6b;padding:10px;margin-bottom:10px;font-size:0.85rem"><strong>Overall Remarks:</strong> ${remarks}</div>`:''}
+      ${strengths?`<div style="background:#e8fff0;border-left:4px solid #2ecc71;padding:10px;margin-bottom:10px;font-size:0.85rem"><strong>Areas of Strength:</strong> ${strengths}</div>`:''}
+      ${growth?`<div style="background:#fff9e6;border-left:4px solid #f39c12;padding:10px;margin-bottom:10px;font-size:0.85rem"><strong>Areas for Growth:</strong> ${growth}</div>`:''}
+      <div style="display:flex;justify-content:space-between;margin-top:24px;padding-top:16px;border-top:2px solid #1a3a6b;font-size:0.85rem">
+        <div style="text-align:center"><div style="width:150px;border-bottom:1px solid #333;margin-bottom:4px;height:30px"></div>Teacher Signature</div>
+        <div style="text-align:center"><div style="width:150px;border-bottom:1px solid #333;margin-bottom:4px;height:30px"></div>Parent Signature</div>
+        <div style="text-align:center"><div style="width:150px;border-bottom:1px solid #333;margin-bottom:4px;height:30px"></div>Principal Signature</div>
+      </div>
+      <div style="text-align:center;margin-top:12px;font-size:0.7rem;color:#666">Aligned with NEP 2020 | NCF 2023 | PARAKH Principles | Developed by Dr. Mateen Yousuf</div>
+    </div>
+  `;
+  preview.scrollIntoView({behavior:'smooth'});
+}
+function printCard(){previewCard();setTimeout(()=>window.print(),500);}
+function resetCard(){
+  document.querySelectorAll('input[type="radio"]').forEach(r=>r.checked=false);
+  ['pc-name','pc-grade','pc-section','pc-year','pc-teacher','pc-school','pc-remarks','pc-strengths','pc-growth'].forEach(id=>{const el=document.getElementById(id);if(el) el.value='';});
+  document.getElementById('progress-card-preview').style.display='none';
+}
+
+// ===== PAGE 19: DASHBOARD =====
+function renderDashboard(){
+  const letters=load('letters_mastered',[]).length;
+  const words=load('sight_words_mastered',[]).length;
+  const wpmRecords=load('wpm_records',[]);
+  document.getElementById('dash-letters').textContent=Math.round(letters/52*100)+'%';
+  document.getElementById('dash-words').textContent=Math.round(words/100*100)+'%';
+  document.getElementById('dash-sessions').textContent=wpmRecords.length;
+  const modules=[
+    {name:'Letter Recognition',val:letters,max:52},
+    {name:'Sight Words',val:words,max:100},
+    {name:'Sentence Builder',val:load('sent_completed',0),max:8},
+    {name:'Reading Ladder',val:Object.values(load('ladder_state',{})).filter(s=>s.passed).length,max:5},
+  ];
+  const mpb=document.getElementById('module-progress-bars');
+  if(mpb) mpb.innerHTML=modules.map(m=>`
+    <div class="progress-bar-wrap">
+      <div class="pb-label"><span>${m.name}</span><span>${m.val}/${m.max}</span></div>
+      <div class="pb"><div class="pb-fill" style="width:${Math.round(m.val/m.max*100)}%"></div></div>
+    </div>
+  `).join('');
+  const recentWPM=document.getElementById('dash-wpm-recent');
+  if(recentWPM){
+    if(!wpmRecords.length){recentWPM.innerHTML='<span style="color:var(--muted);font-size:0.85rem">No WPM data recorded yet.</span>';}
+    else{recentWPM.innerHTML=wpmRecords.slice(-5).reverse().map(r=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.85rem"><span>${r.name}</span><span style="color:var(--accent);font-weight:bold">${r.score} WPM</span><span style="color:${r.level.color}">${r.level.label}</span></div>`).join('');}
+  }
+  // Achievements
+  const achievements=[];
+  if(letters>=26) achievements.push({emoji:'🔤',title:'Alphabet Master',desc:'All 26 uppercase letters learned!'});
+  if(words>=50) achievements.push({emoji:'👁️',title:'Sight Word Champion',desc:'50+ sight words mastered!'});
+  if(wpmRecords.length>=10) achievements.push({emoji:'📈',title:'Consistent Tracker',desc:'10+ reading sessions recorded!'});
+  if(load('ladder_state',{})[4]?.passed) achievements.push({emoji:'🪜',title:'Reading Ladder Complete',desc:'All 5 levels completed!'});
+  if(!achievements.length) achievements.push({emoji:'🌱',title:'Getting Started','desc':'Complete modules to earn achievements!'});
+  const da=document.getElementById('dash-achievements');
+  if(da) da.innerHTML=achievements.map(a=>`<div style="background:var(--card2);border:1px solid var(--accent);border-radius:10px;padding:12px;text-align:center;min-width:120px"><div style="font-size:2rem">${a.emoji}</div><div style="font-size:0.8rem;font-weight:bold;color:var(--accent);margin-top:4px">${a.title}</div><div style="font-size:0.7rem;color:var(--muted);margin-top:2px">${a.desc}</div></div>`).join('');
+}
+
+// ===== PAGE 20: EXPORT/BACKUP =====
+function exportData(){
+  const data={};
+  for(let i=0;i<localStorage.length;i++){
+    const k=localStorage.key(i);
+    if(k.startsWith('fln_')) data[k]=localStorage.getItem(k);
+  }
+  data.exported_at=new Date().toISOString();
+  data.version='1.0';
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`fln-backup-${new Date().toLocaleDateString('en-IN').replace(/\//g,'-')}.json`;
+  a.click();URL.revokeObjectURL(url);
+}
+function importData(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=(ev)=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      let count=0;
+      Object.keys(data).forEach(k=>{
+        if(k.startsWith('fln_')){localStorage.setItem(k,data[k]);count++;}
+      });
+      document.getElementById('import-status').textContent=`✅ Successfully imported ${count} data items!`;
+      renderDataSummary();
+    } catch(err){document.getElementById('import-status').textContent='❌ Error reading backup file.';document.getElementById('import-status').style.color='var(--red)';}
+  };
+  reader.readAsText(file);
+}
+function renderDataSummary(){
+  const el=document.getElementById('data-summary');
+  if(!el) return;
+  const items=[
+    {label:'Letters Mastered',val:`${load('letters_mastered',[]).length} / 52`},
+    {label:'Sight Words Mastered',val:`${load('sight_words_mastered',[]).length} / 100`},
+    {label:'WPM Sessions',val:load('wpm_records',[]).length},
+    {label:'Saved Word Blends',val:load('saved_blends',[]).length},
+    {label:'Student Evaluations (RAG)',val:load('rag_all_saved',[]).length},
+    {label:'Ladder Progress',val:`${Object.values(load('ladder_state',{})).filter(s=>s.passed).length} / 5 levels`},
+    {label:'Sentences Completed',val:`${load('sent_completed',0)} / 8`},
+  ];
+  el.innerHTML=items.map(i=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.9rem"><span style="color:var(--muted)">${i.label}</span><span style="color:var(--accent);font-weight:bold">${i.val}</span></div>`).join('');
+}
+function resetAllData(){
+  if(confirm('⚠️ This will DELETE ALL progress data permanently. Are you sure?')){
+    const keys=[];
+    for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('fln_')) keys.push(k);}
+    keys.forEach(k=>localStorage.removeItem(k));
+    alert('All data has been reset.');
+    renderDataSummary();
+  }
+}
+
+// ===== INIT =====
+function initAllPages(){
+  initLetters();
+  initPhonics();
+  initSightWords();
+  initSentences();
+  initWPMTracker();
+  initComprehension();
+  initListening();
+  initVocabulary();
+  initLadder();
+  initRAG();
+  initProgressCard();
+  renderActivities();
+  // Set today's date
+  const today=new Date().toISOString().split('T')[0];
+  const wpmDate=document.getElementById('wpm-date');
+  if(wpmDate) wpmDate.value=today;
+}
+
+// Service Worker Registration
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(r=>console.log('SW registered'))
+      .catch(e=>console.log('SW failed',e));
+  });
+}
+
+window.addEventListener('load',initAllPages);
+</script>
+</body>
+</html>

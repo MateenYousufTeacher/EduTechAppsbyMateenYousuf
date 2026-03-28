@@ -1,0 +1,26 @@
+{
+  "name": "FLN Reading & Competency Mastery Lab",
+  "short_name": "FLN Lab",
+  "description": "Foundational Literacy & Numeracy App aligned with NEP 2020, NCF 2023, PARAKH",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a1628",
+  "theme_color": "#1a3a6b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "en-IN"
+}

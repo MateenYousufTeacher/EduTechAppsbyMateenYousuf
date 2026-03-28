@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#1e3a5f"/>
+<meta name="description" content="FLN Booster – AI-powered Foundational Literacy & Numeracy app aligned with NEP 2020 and NCF Foundational Stage 2022"/>
+<title>FLN Booster – Foundational Literacy & Numeracy</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"/>
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --navy: #0d1f3c;
+  --deep-blue: #1e3a5f;
+  --royal: #1e5799;
+  --sky: #3b82f6;
+  --gold: #f59e0b;
+  --amber: #fbbf24;
+  --cream: #fef9ef;
+  --white: #ffffff;
+  --light-grey: #f1f5f9;
+  --text-dark: #1e293b;
+  --text-mid: #475569;
+  --text-light: #94a3b8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 48px rgba(0,0,0,0.18);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== SCREEN SYSTEM ===== */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+/* ===== LANDING PAGE ===== */
+#screen-home {
+  background: linear-gradient(160deg, #0d1f3c 0%, #1e3a5f 40%, #1e5799 80%, #2563eb 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+#screen-home::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251,191,36,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+#screen-home::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.home-inner {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== TOP HEADER BAR ===== */
+.top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 24px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.top-bar-logo {
+  font-family: 'Playfair Display', serif;
+  color: var(--amber);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.top-bar-badges {
+  display: flex; gap: 8px;
+}
+.badge-nep {
+  background: rgba(251,191,36,0.2);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 24px 20px;
+  text-align: center;
+}
+
+.hero-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 4px 12px rgba(251,191,36,0.4));
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(251,191,36,0.15);
+  border: 1px solid rgba(251,191,36,0.4);
+  color: var(--amber);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.hero-title span {
+  color: var(--amber);
+  display: block;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 380px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.policy-strip {
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 32px;
+}
+.policy-pill {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.cta-btn {
+  background: linear-gradient(135deg, var(--gold), var(--amber));
+  color: var(--navy);
+  border: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(251,191,36,0.35);
+  transition: all 0.3s;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.3px;
+}
+.cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(251,191,36,0.45); }
+.cta-btn:active { transform: translateY(0); }
+
+/* ===== AUTHOR CARD ===== */
+.author-card {
+  margin: 28px 24px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.author-photo {
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--amber);
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(251,191,36,0.3);
+}
+.author-info { flex: 1; text-align: left; }
+.author-name {
+  font-family: 'Playfair Display', serif;
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.author-role { color: var(--amber); font-size: 0.8rem; font-weight: 500; line-height: 1.4; }
+.author-org { color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-top: 3px; }
+
+/* ===== QUICK STATS ===== */
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; padding: 0 24px 32px;
+}
+.stat-box {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+.stat-val {
+  font-family: 'Space Mono', monospace;
+  color: var(--amber);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.stat-lbl { color: rgba(255,255,255,0.6); font-size: 0.65rem; margin-top: 4px; line-height: 1.3; }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.nav-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 10px 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: none; border: none;
+  color: rgba(255,255,255,0.5);
+}
+.nav-item.active { color: var(--amber); }
+.nav-item:hover { color: var(--sky); }
+.nav-icon { font-size: 1.4rem; margin-bottom: 2px; }
+.nav-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* ===== INNER SCREENS WRAPPER ===== */
+.inner-screen {
+  background: var(--cream);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  background: linear-gradient(135deg, var(--navy), var(--deep-blue));
+  color: white;
+  padding: 48px 24px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; right: -30px;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: rgba(251,191,36,0.1);
+}
+.page-header-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.page-header p { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+/* ===== SECTION HEADING ===== */
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--navy);
+  font-weight: 700;
+  padding: 20px 20px 8px;
+  border-left: 4px solid var(--amber);
+  margin: 12px 16px 4px;
+}
+
+/* ===== MODULE CARDS ===== */
+.module-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 8px 16px;
+}
+.module-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: all 0.25s;
+  border: 2px solid transparent;
+  text-align: center;
+}
+.module-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--sky); }
+.module-card .m-icon { font-size: 2.2rem; margin-bottom: 10px; }
+.module-card .m-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 5px;
+}
+.module-card .m-desc { font-size: 0.72rem; color: var(--text-mid); line-height: 1.4; }
+.module-card .m-progress {
+  margin-top: 10px;
+  height: 4px;
+  background: var(--light-grey);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.module-card .m-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sky), var(--royal));
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+/* ===== DIAGNOSTIC SCREEN ===== */
+.diag-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.diag-q-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--sky);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.diag-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.diag-options { display: flex; flex-direction: column; gap: 10px; }
+.diag-opt {
+  background: var(--light-grey);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  text-align: left;
+}
+.diag-opt:hover { border-color: var(--sky); background: rgba(59,130,246,0.05); }
+.diag-opt.correct { background: rgba(16,185,129,0.1); border-color: var(--success); color: var(--success); }
+.diag-opt.wrong { background: rgba(239,68,68,0.1); border-color: var(--danger); color: var(--danger); }
+.diag-opt.selected { border-color: var(--sky); background: rgba(59,130,246,0.08); }
+
+/* ===== PROGRESS BAR ===== */
+.progress-track {
+  height: 8px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  margin: 12px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* ===== READING MODULE ===== */
+.story-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.story-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--navy);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--light-grey);
+}
+.story-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+.story-text .word {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0 2px;
+  border-radius: 3px;
+  transition: background 0.15s;
+}
+.story-text .word:hover { background: rgba(251,191,36,0.2); }
+.story-text .word.highlighted { background: var(--amber); color: var(--navy); }
+
+.phonics-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 10px;
+  padding: 16px;
+}
+.phonics-tile {
+  background: var(--white);
+  border-radius: 10px;
+  aspect-ratio: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.2s;
+  color: var(--navy);
+  border: 2px solid transparent;
+  font-family: 'Space Mono', monospace;
+}
+.phonics-tile:hover { transform: scale(1.05); border-color: var(--sky); }
+.phonics-tile .pt-sound { font-size: 0.65rem; color: var(--text-mid); margin-top: 2px; font-family: 'DM Sans', sans-serif; }
+.phonics-tile.active { background: linear-gradient(135deg, var(--royal), var(--sky)); color: white; }
+
+/* ===== MATH MODULE ===== */
+.math-problem {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 16px;
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.math-display {
+  font-family: 'Space Mono', monospace;
+  font-size: 2.5rem;
+  color: var(--navy);
+  margin: 20px 0;
+  letter-spacing: 2px;
+}
+.math-input {
+  width: 120px;
+  font-family: 'Space Mono', monospace;
+  font-size: 2rem;
+  text-align: center;
+  border: 3px solid var(--sky);
+  border-radius: 12px;
+  padding: 10px;
+  color: var(--navy);
+  outline: none;
+  margin: 0 auto;
+  display: block;
+}
+.math-input:focus { border-color: var(--amber); }
+.number-pad {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 10px; padding: 16px; max-width: 280px; margin: 0 auto;
+}
+.num-btn {
+  background: var(--white);
+  border: 2px solid var(--light-grey);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.num-btn:hover { background: var(--sky); color: white; border-color: var(--sky); }
+.num-btn:active { transform: scale(0.95); }
+.num-btn.del { background: rgba(239,68,68,0.1); border-color: var(--danger); color: var(--danger); }
+.num-btn.ok { background: linear-gradient(135deg, var(--success), #059669); color: white; border-color: transparent; }
+
+/* ===== WRITING MODULE ===== */
+.writing-prompt {
+  background: linear-gradient(135deg, var(--navy), var(--deep-blue));
+  color: white;
+  border-radius: var(--radius);
+  margin: 16px;
+  padding: 22px;
+}
+.writing-prompt h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.writing-prompt p { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+.writing-area {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 0 16px 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.writing-lines {
+  width: 100%;
+  min-height: 160px;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 2.2;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 34px,
+    rgba(59,130,246,0.15) 34px,
+    rgba(59,130,246,0.15) 36px
+  );
+  outline: none;
+  resize: none;
+  color: var(--text-dark);
+}
+.word-count { font-size: 0.78rem; color: var(--text-mid); text-align: right; margin-top: 8px; }
+
+/* ===== ACHIEVEMENT BADGES ===== */
+.badges-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; padding: 8px 16px;
+}
+.badge-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 2px solid transparent;
+}
+.badge-card.earned { border-color: var(--amber); }
+.badge-card.locked { opacity: 0.5; }
+.badge-icon { font-size: 2rem; margin-bottom: 8px; }
+.badge-name { font-size: 0.7rem; font-weight: 600; color: var(--navy); }
+.badge-card.earned .badge-icon { filter: drop-shadow(0 2px 8px rgba(251,191,36,0.5)); }
+
+/* ===== PROGRESS DASHBOARD ===== */
+.progress-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 8px 16px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.progress-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+.prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.prog-label { font-size: 0.8rem; color: var(--text-mid); width: 80px; flex-shrink: 0; }
+.prog-bar { flex: 1; height: 10px; background: var(--light-grey); border-radius: 5px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 5px; transition: width 0.8s ease; }
+.prog-pct { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-mid); width: 36px; text-align: right; }
+
+/* ===== ACTION BUTTONS ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 24px;
+  border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  border: none;
+}
+.btn-primary { background: linear-gradient(135deg, var(--royal), var(--sky)); color: white; }
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(59,130,246,0.35); transform: translateY(-2px); }
+.btn-gold { background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--navy); }
+.btn-gold:hover { box-shadow: 0 6px 20px rgba(251,191,36,0.35); transform: translateY(-2px); }
+.btn-outline { background: transparent; border: 2px solid var(--sky); color: var(--sky); }
+.btn-block { display: flex; width: 100%; margin: 8px 16px; width: calc(100% - 32px); }
+
+/* ===== TOAST / FEEDBACK ===== */
+.toast {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--navy);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  z-index: 999;
+  box-shadow: var(--shadow-lg);
+  display: none;
+  white-space: nowrap;
+}
+.toast.show { display: block; animation: slideDown 0.3s ease; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ===== RESULT SCREEN ===== */
+.result-screen {
+  text-align: center;
+  padding: 48px 24px;
+}
+.result-icon { font-size: 5rem; margin-bottom: 20px; }
+.result-score {
+  font-family: 'Space Mono', monospace;
+  font-size: 3rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+.result-msg {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--text-mid);
+  margin-top: 8px;
+}
+
+/* ===== INSTALL BANNER ===== */
+.install-banner {
+  background: linear-gradient(135deg, var(--navy), var(--deep-blue));
+  margin: 16px;
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.install-banner-text { flex: 1; }
+.install-banner-text h4 { color: white; font-size: 0.88rem; font-weight: 600; }
+.install-banner-text p { color: rgba(255,255,255,0.65); font-size: 0.75rem; }
+.install-banner-btn {
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ===== NEP INFO CARDS ===== */
+.nep-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 8px 16px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border-left: 4px solid var(--royal);
+}
+.nep-card h4 {
+  font-family: 'Playfair Display', serif;
+  color: var(--navy);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.nep-card p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; }
+.nep-card .policy-tag {
+  display: inline-block;
+  background: rgba(30,87,153,0.1);
+  color: var(--royal);
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.bounce-in { animation: bounceIn 0.6s ease; }
+
+/* ===== AUTHOR MINI (in sub-pages) ===== */
+.author-mini {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.author-mini img {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid var(--amber);
+}
+.author-mini-text .name { color: white; font-size: 0.78rem; font-weight: 600; }
+.author-mini-text .role { color: rgba(255,255,255,0.6); font-size: 0.68rem; }
+
+/* ===== DIFFICULTY SELECTOR ===== */
+.diff-row {
+  display: flex; gap: 8px; padding: 8px 16px;
+}
+.diff-btn {
+  flex: 1; padding: 10px; border-radius: 10px; border: 2px solid var(--light-grey);
+  background: var(--white); font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; color: var(--text-mid);
+  font-family: 'DM Sans', sans-serif;
+}
+.diff-btn.active.easy { background: rgba(16,185,129,0.15); border-color: var(--success); color: var(--success); }
+.diff-btn.active.med { background: rgba(251,191,36,0.15); border-color: var(--warning); color: #d97706; }
+.diff-btn.active.hard { background: rgba(239,68,68,0.15); border-color: var(--danger); color: var(--danger); }
+
+/* ===== UTILITY ===== */
+.p-16 { padding: 16px; }
+.mt-12 { margin-top: 12px; }
+.text-center { text-align: center; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.gap-8 { gap: 8px; }
+.color-success { color: var(--success); }
+.color-danger { color: var(--danger); }
+.divider { height: 1px; background: var(--light-grey); margin: 12px 16px; }
+.spacer-80 { height: 80px; }
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- =================== SCREEN: HOME / LANDING =================== -->
+<div class="screen active" id="screen-home">
+  <div class="home-inner">
+    <div class="top-bar">
+      <div class="top-bar-logo">🏫 FLN Booster</div>
+      <div class="top-bar-badges">
+        <span class="badge-nep">NEP 2020</span>
+        <span class="badge-nep">NCF</span>
+      </div>
+    </div>
+
+    <div class="hero-section">
+      <div class="hero-icon">📚</div>
+      <div class="hero-tag">AI-Powered Learning Platform</div>
+      <h1 class="hero-title">
+        Foundational Literacy
+        <span>&amp; Numeracy Booster</span>
+      </h1>
+      <p class="hero-subtitle">
+        Building strong reading, writing, and arithmetic foundations for every child — aligned with NEP 2020 and NCF Foundational Stage 2022.
+      </p>
+      <div class="policy-strip">
+        <span class="policy-pill">📜 NEP 2020</span>
+        <span class="policy-pill">📘 NCF 2022</span>
+        <span class="policy-pill">📊 PARAKH</span>
+        <span class="policy-pill">🎓 NCERT</span>
+      </div>
+      <button class="cta-btn" onclick="showScreen('screen-dashboard')">
+        🚀 Start Learning
+      </button>
+    </div>
+
+    <div class="author-card">
+      <img src="author.jpg" alt="Mateen Yousuf" class="author-photo" id="authorPhotoHome"/>
+      <div class="author-info">
+        <div class="author-name">Mateen Yousuf</div>
+        <div class="author-role">Concept Developer &amp; App Architect</div>
+        <div class="author-org">Teacher — School Education Department, J&amp;K</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-val">3</div>
+        <div class="stat-lbl">Core Learning Modules</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">Offline Capable</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">NEP</div>
+        <div class="stat-lbl">Policy Aligned</div>
+      </div>
+    </div>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== SCREEN: DASHBOARD =================== -->
+<div class="screen" id="screen-dashboard">
+  <div class="inner-screen">
+    <div class="page-header">
+      <div class="page-header-icon">🎯</div>
+      <h1>Learning Dashboard</h1>
+      <p>Track your journey to foundational mastery</p>
+      <div class="progress-track" style="margin-top:16px;">
+        <div class="progress-fill" id="overall-progress" style="width:0%"></div>
+      </div>
+      <div class="author-mini">
+        <img src="author.jpg" alt="Mateen Yousuf" id="authorPhotoDb"/>
+        <div class="author-mini-text">
+          <div class="name">Mateen Yousuf</div>
+          <div class="role">Teacher — SED, J&amp;K</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Install Banner -->
+    <div class="install-banner" id="installBanner" style="display:none">
+      <div class="install-banner-text">
+        <h4>📲 Install FLN Booster</h4>
+        <p>Add to home screen for offline use</p>
+      </div>
+      <button class="install-banner-btn" id="installBtn">Install</button>
+    </div>
+
+    <div class="section-heading">📋 Start Here — Diagnostic Test</div>
+    <div class="p-16" style="padding-top:4px;">
+      <div style="background:linear-gradient(135deg,#1e3a5f,#1e5799);border-radius:var(--radius);padding:18px;display:flex;align-items:center;gap:14px;">
+        <div style="font-size:2.5rem;">🔍</div>
+        <div style="flex:1;">
+          <div style="font-family:'Playfair Display',serif;color:white;font-size:1rem;margin-bottom:4px;">Quick Diagnostic Assessment</div>
+          <div style="color:rgba(255,255,255,0.7);font-size:0.78rem;line-height:1.4;">Identify your learning gaps before you begin. Takes 5 minutes.</div>
+        </div>
+        <button class="btn btn-gold" onclick="showScreen('screen-diagnostic')" style="flex-shrink:0;padding:10px 16px;font-size:0.8rem;">Start →</button>
+      </div>
+    </div>
+
+    <div class="section-heading">📚 Learning Modules</div>
+    <div class="module-grid">
+      <div class="module-card" onclick="showScreen('screen-reading')">
+        <div class="m-icon">📖</div>
+        <div class="m-title">Reading Development</div>
+        <div class="m-desc">Phonics, fluency &amp; comprehension</div>
+        <div class="m-progress"><div class="m-progress-bar" id="prog-reading" style="width:0%"></div></div>
+      </div>
+      <div class="module-card" onclick="showScreen('screen-math')">
+        <div class="m-icon">🔢</div>
+        <div class="m-title">Basic Mathematics</div>
+        <div class="m-desc">Numbers, counting &amp; arithmetic</div>
+        <div class="m-progress"><div class="m-progress-bar" id="prog-math" style="width:0%"></div></div>
+      </div>
+      <div class="module-card" onclick="showScreen('screen-writing')">
+        <div class="m-icon">✏️</div>
+        <div class="m-title">Writing Skills</div>
+        <div class="m-desc">Letters, sentences &amp; paragraphs</div>
+        <div class="m-progress"><div class="m-progress-bar" id="prog-writing" style="width:0%"></div></div>
+      </div>
+      <div class="module-card" onclick="showScreen('screen-progress')">
+        <div class="m-icon">📊</div>
+        <div class="m-title">My Progress</div>
+        <div class="m-desc">Scores, badges &amp; achievements</div>
+        <div class="m-progress"><div class="m-progress-bar" style="width:100%;background:linear-gradient(90deg,var(--amber),var(--gold))"></div></div>
+      </div>
+    </div>
+
+    <div class="section-heading">🏅 Achievements</div>
+    <div class="badges-grid">
+      <div class="badge-card" id="badge-reader">
+        <div class="badge-icon">⭐</div>
+        <div class="badge-name">Reading Star</div>
+      </div>
+      <div class="badge-card" id="badge-math">
+        <div class="badge-icon">🔭</div>
+        <div class="badge-name">Math Explorer</div>
+      </div>
+      <div class="badge-card" id="badge-writer">
+        <div class="badge-icon">🏆</div>
+        <div class="badge-name">Writing Champion</div>
+      </div>
+    </div>
+
+    <div class="section-heading">📜 NEP 2020 Alignment</div>
+    <div class="nep-card">
+      <span class="policy-tag">NEP 2020 · FLN Priority</span>
+      <h4>Foundational Literacy &amp; Numeracy</h4>
+      <p>NEP 2020 identifies FLN as the highest national priority in school education. Every child must achieve foundational reading, writing, and arithmetic skills before advancing to higher grades. This app directly supports this mandate through adaptive, personalized learning.</p>
+    </div>
+    <div class="nep-card">
+      <span class="policy-tag">NCF Foundational Stage 2022</span>
+      <h4>Playful &amp; Activity-Based Learning</h4>
+      <p>NCF 2022 emphasizes phonological awareness, number sense, and conceptual understanding through engaging, activity-based experiences. Every module in this app is designed following these NCF principles.</p>
+    </div>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== SCREEN: DIAGNOSTIC =================== -->
+<div class="screen" id="screen-diagnostic">
+  <div class="inner-screen">
+    <div class="page-header">
+      <div class="page-header-icon">🔍</div>
+      <h1>Diagnostic Assessment</h1>
+      <p>NEP 2020 · Competency-Based Evaluation</p>
+      <div class="progress-track" style="margin-top:12px;">
+        <div class="progress-fill" id="diag-progress-bar" style="width:10%"></div>
+      </div>
+      <div class="author-mini">
+        <img src="author.jpg" alt="Mateen Yousuf" id="authorPhotoDiag"/>
+        <div class="author-mini-text">
+          <div class="name">Mateen Yousuf</div>
+          <div class="role">Teacher — SED, J&amp;K</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="diag-container"></div>
+    <div id="diag-result" style="display:none;" class="result-screen">
+      <div class="result-icon bounce-in">🎯</div>
+      <div class="result-score" id="diag-score-display">0/10</div>
+      <div class="result-msg" id="diag-msg"></div>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;padding:0 16px;">
+        <button class="btn btn-primary" onclick="showScreen('screen-dashboard')">📚 Go to Learning Modules</button>
+        <button class="btn btn-outline" onclick="startDiagnostic()">🔄 Retake Assessment</button>
+      </div>
+    </div>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== SCREEN: READING =================== -->
+<div class="screen" id="screen-reading">
+  <div class="inner-screen">
+    <div class="page-header">
+      <div class="page-header-icon">📖</div>
+      <h1>Reading Development</h1>
+      <p>Phonics · Fluency · Comprehension — NCF 2022</p>
+      <div class="author-mini">
+        <img src="author.jpg" alt="Mateen Yousuf" id="authorPhotoRead"/>
+        <div class="author-mini-text">
+          <div class="name">Mateen Yousuf</div>
+          <div class="role">Teacher — SED, J&amp;K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diff-row">
+      <button class="diff-btn easy active" onclick="setDiff('reading','easy',this)">🟢 Beginner</button>
+      <button class="diff-btn med" onclick="setDiff('reading','med',this)">🟡 Developing</button>
+      <button class="diff-btn hard" onclick="setDiff('reading','hard',this)">🔴 Proficient</button>
+    </div>
+
+    <!-- Phonics Tab -->
+    <div class="section-heading">🔤 Phonics Practice</div>
+    <p style="padding:0 16px 8px;font-size:0.82rem;color:var(--text-mid);">Tap each letter tile to hear its sound and see an example word.</p>
+    <div class="phonics-grid" id="phonics-grid"></div>
+
+    <!-- Story Reading -->
+    <div class="section-heading">📰 Read &amp; Understand</div>
+    <div class="story-card" id="story-card">
+      <div class="story-title" id="story-title">Loading story...</div>
+      <div class="story-text" id="story-text"></div>
+    </div>
+
+    <!-- Comprehension Quiz -->
+    <div class="section-heading">❓ Comprehension Questions</div>
+    <div id="comp-questions"></div>
+
+    <button class="btn btn-primary btn-block" onclick="nextStory()">📖 Next Story →</button>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== SCREEN: MATH =================== -->
+<div class="screen" id="screen-math">
+  <div class="inner-screen">
+    <div class="page-header">
+      <div class="page-header-icon">🔢</div>
+      <h1>Basic Mathematics</h1>
+      <p>Number Sense · Arithmetic · Word Problems — NEP 2020</p>
+      <div class="author-mini">
+        <img src="author.jpg" alt="Mateen Yousuf" id="authorPhotoMath"/>
+        <div class="author-mini-text">
+          <div class="name">Mateen Yousuf</div>
+          <div class="role">Teacher — SED, J&amp;K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diff-row">
+      <button class="diff-btn easy active" onclick="setDiff('math','easy',this)">🟢 Counting</button>
+      <button class="diff-btn med" onclick="setDiff('math','med',this)">🟡 Add/Sub</button>
+      <button class="diff-btn hard" onclick="setDiff('math','hard',this)">🔴 Multiply</button>
+    </div>
+
+    <div class="section-heading">🧮 Solve the Problem</div>
+    <div class="math-problem">
+      <div id="math-word-problem" style="font-size:0.9rem;color:var(--text-mid);line-height:1.6;margin-bottom:12px;background:var(--light-grey);padding:12px;border-radius:10px;min-height:40px;"></div>
+      <div class="math-display" id="math-equation">? + ? = ?</div>
+      <input type="number" class="math-input" id="math-answer" placeholder="?" inputmode="numeric"/>
+    </div>
+    <div class="number-pad">
+      <button class="num-btn" onclick="padInput('1')">1</button>
+      <button class="num-btn" onclick="padInput('2')">2</button>
+      <button class="num-btn" onclick="padInput('3')">3</button>
+      <button class="num-btn" onclick="padInput('4')">4</button>
+      <button class="num-btn" onclick="padInput('5')">5</button>
+      <button class="num-btn" onclick="padInput('6')">6</button>
+      <button class="num-btn" onclick="padInput('7')">7</button>
+      <button class="num-btn" onclick="padInput('8')">8</button>
+      <button class="num-btn" onclick="padInput('9')">9</button>
+      <button class="num-btn del" onclick="padInput('del')">⌫</button>
+      <button class="num-btn" onclick="padInput('0')">0</button>
+      <button class="num-btn ok" onclick="checkMath()">✓</button>
+    </div>
+
+    <div id="math-feedback" style="text-align:center;font-size:1rem;font-weight:600;min-height:30px;padding:8px 16px;"></div>
+
+    <div class="section-heading">📊 Math Score</div>
+    <div class="progress-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3>Today's Performance</h3>
+        <span style="font-family:'Space Mono',monospace;font-size:1.2rem;color:var(--amber);" id="math-score-display">0/0</span>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label">Correct</div>
+        <div class="prog-bar"><div class="prog-fill" id="math-correct-bar" style="width:0%;background:var(--success)"></div></div>
+        <div class="prog-pct" id="math-correct-pct">0%</div>
+      </div>
+    </div>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== SCREEN: WRITING =================== -->
+<div class="screen" id="screen-writing">
+  <div class="inner-screen">
+    <div class="page-header">
+      <div class="page-header-icon">✏️</div>
+      <h1>Writing Skills</h1>
+      <p>Letters · Sentences · Paragraphs — NCF 2022</p>
+      <div class="author-mini">
+        <img src="author.jpg" alt="Mateen Yousuf" id="authorPhotoWrite"/>
+        <div class="author-mini-text">
+          <div class="name">Mateen Yousuf</div>
+          <div class="role">Teacher — SED, J&amp;K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diff-row">
+      <button class="diff-btn easy active" onclick="setDiff('writing','easy',this)">🟢 Letters</button>
+      <button class="diff-btn med" onclick="setDiff('writing','med',this)">🟡 Sentences</button>
+      <button class="diff-btn hard" onclick="setDiff('writing','hard',this)">🔴 Paragraph</button>
+    </div>
+
+    <div class="section-heading">💡 Writing Prompt</div>
+    <div class="writing-prompt">
+      <h3 id="writing-prompt-title">✍️ Your Writing Task</h3>
+      <p id="writing-prompt-text">Loading your writing prompt...</p>
+    </div>
+
+    <div class="writing-area">
+      <textarea class="writing-lines" id="writing-textarea" placeholder="Start writing here..." oninput="updateWordCount()"></textarea>
+      <div class="word-count" id="word-count">0 words</div>
+    </div>
+
+    <div style="display:flex;gap:10px;padding:0 16px 8px;">
+      <button class="btn btn-primary" style="flex:1" onclick="saveWriting()">💾 Save Writing</button>
+      <button class="btn btn-outline" style="flex:1" onclick="newWritingPrompt()">🔄 New Prompt</button>
+    </div>
+
+    <!-- Saved Writings -->
+    <div class="section-heading">📁 Saved Writing Practice</div>
+    <div id="saved-writings" style="padding:0 16px;"></div>
+
+    <!-- Alphabet Practice -->
+    <div class="section-heading">🔡 Alphabet Reference</div>
+    <div id="alphabet-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:0 16px 16px;"></div>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== SCREEN: PROGRESS =================== -->
+<div class="screen" id="screen-progress">
+  <div class="inner-screen">
+    <div class="page-header">
+      <div class="page-header-icon">📊</div>
+      <h1>My Progress</h1>
+      <p>PARAKH-aligned Continuous Progress Monitoring</p>
+      <div class="author-mini">
+        <img src="author.jpg" alt="Mateen Yousuf" id="authorPhotoProgress"/>
+        <div class="author-mini-text">
+          <div class="name">Mateen Yousuf</div>
+          <div class="role">Teacher — SED, J&amp;K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">📈 Learning Progress</div>
+    <div class="progress-card">
+      <h3>Module Completion</h3>
+      <div class="prog-row">
+        <div class="prog-label">📖 Reading</div>
+        <div class="prog-bar"><div class="prog-fill" id="prog-reading-full" style="width:0%;background:linear-gradient(90deg,#3b82f6,#1e5799)"></div></div>
+        <div class="prog-pct" id="prog-reading-pct">0%</div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label">🔢 Math</div>
+        <div class="prog-bar"><div class="prog-fill" id="prog-math-full" style="width:0%;background:linear-gradient(90deg,#f59e0b,#d97706)"></div></div>
+        <div class="prog-pct" id="prog-math-pct">0%</div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label">✏️ Writing</div>
+        <div class="prog-bar"><div class="prog-fill" id="prog-writing-full" style="width:0%;background:linear-gradient(90deg,#10b981,#059669)"></div></div>
+        <div class="prog-pct" id="prog-writing-pct">0%</div>
+      </div>
+    </div>
+
+    <div class="section-heading">🏅 Earned Badges</div>
+    <div class="badges-grid" id="progress-badges"></div>
+
+    <div class="section-heading">📋 Assessment History</div>
+    <div id="assessment-history" style="padding:0 16px;"></div>
+
+    <div class="section-heading">🔄 Reset Progress</div>
+    <div class="p-16" style="padding-top:4px;">
+      <button class="btn btn-outline btn-block" style="border-color:var(--danger);color:var(--danger);" onclick="resetProgress()">🗑️ Reset All Progress</button>
+    </div>
+
+    <div class="spacer-80"></div>
+  </div>
+</div>
+
+<!-- =================== BOTTOM NAVIGATION =================== -->
+<div class="bottom-nav" id="bottom-nav">
+  <button class="nav-item active" id="nav-home" onclick="showScreen('screen-home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </button>
+  <button class="nav-item" id="nav-reading" onclick="showScreen('screen-reading')">
+    <span class="nav-icon">📖</span>
+    <span class="nav-label">Read</span>
+  </button>
+  <button class="nav-item" id="nav-math" onclick="showScreen('screen-math')">
+    <span class="nav-icon">🔢</span>
+    <span class="nav-label">Math</span>
+  </button>
+  <button class="nav-item" id="nav-writing" onclick="showScreen('screen-writing')">
+    <span class="nav-icon">✏️</span>
+    <span class="nav-label">Write</span>
+  </button>
+  <button class="nav-item" id="nav-progress" onclick="showScreen('screen-progress')">
+    <span class="nav-icon">📊</span>
+    <span class="nav-label">Progress</span>
+  </button>
+</div>
+
+<script>
+// =============================================
+// FLN BOOSTER – MAIN APPLICATION JAVASCRIPT
+// Author: Mateen Yousuf, Teacher – SED J&K
+// Aligned with NEP 2020 · NCF 2022 · PARAKH
+// =============================================
+
+/* ---- EMBED AUTHOR PHOTO AS BASE64 ---- */
+// The photo will be loaded from author.jpg file
+// This ensures offline functionality
+
+/* ===== APP STATE ===== */
+let appState = {
+  diagScore: 0,
+  diagTotal: 0,
+  mathCorrect: 0,
+  mathTotal: 0,
+  readingProgress: 0,
+  mathProgress: 0,
+  writingProgress: 0,
+  storyIndex: 0,
+  mathDiff: 'easy',
+  readingDiff: 'easy',
+  writingDiff: 'easy',
+  currentMathAnswer: null,
+  diagQuestion: 0,
+  badges: { reader: false, math: false, writer: false }
+};
+
+/* ===== LOAD / SAVE STATE ===== */
+function loadState() {
+  try {
+    const saved = localStorage.getItem('fln-state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      appState = { ...appState, ...parsed };
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('fln-state', JSON.stringify(appState));
+  } catch(e) {}
+}
+
+/* ===== SCREEN NAVIGATION ===== */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navMap = {
+    'screen-home': 'nav-home',
+    'screen-dashboard': 'nav-home',
+    'screen-diagnostic': 'nav-home',
+    'screen-reading': 'nav-reading',
+    'screen-math': 'nav-math',
+    'screen-writing': 'nav-writing',
+    'screen-progress': 'nav-progress'
+  };
+  if (navMap[id]) document.getElementById(navMap[id]).classList.add('active');
+  // Scroll to top
+  window.scrollTo(0, 0);
+  // Init screens
+  if (id === 'screen-reading') initReading();
+  if (id === 'screen-math') initMath();
+  if (id === 'screen-writing') initWriting();
+  if (id === 'screen-progress') updateProgress();
+  if (id === 'screen-dashboard') updateDashboard();
+  if (id === 'screen-diagnostic') startDiagnostic();
+}
+
+/* ===== TOAST NOTIFICATION ===== */
+function showToast(msg, duration = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+/* ===== DIFFICULTY SELECTOR ===== */
+function setDiff(module, level, btn) {
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  appState[module + 'Diff'] = level;
+  if (module === 'math') initMath();
+  if (module === 'reading') initReading();
+  if (module === 'writing') initWriting();
+}
+
+/* ===== DIAGNOSTIC ASSESSMENT DATA ===== */
+const diagQuestions = [
+  { q: "Which word has the 'a' sound?", opts: ["cat", "dog", "run", "hop"], ans: 0, type: "literacy" },
+  { q: "What comes after 7?", opts: ["6", "8", "9", "5"], ans: 1, type: "numeracy" },
+  { q: "Which word is spelled correctly?", opts: ["skool", "school", "scool", "schol"], ans: 1, type: "literacy" },
+  { q: "5 + 3 = ?", opts: ["7", "8", "9", "6"], ans: 1, type: "numeracy" },
+  { q: "Which sentence makes sense?", opts: ["The sun shines bright", "Bright shines sun the", "Sun the shines bright", "Shines the sun bright"], ans: 0, type: "literacy" },
+  { q: "10 − 4 = ?", opts: ["5", "7", "6", "8"], ans: 2, type: "numeracy" },
+  { q: "Which letter comes after 'D'?", opts: ["C", "E", "F", "B"], ans: 1, type: "literacy" },
+  { q: "Which number is the largest?", opts: ["45", "54", "44", "55"], ans: 3, type: "numeracy" },
+  { q: "A story has a beginning, ___, and end.", opts: ["title", "picture", "middle", "cover"], ans: 2, type: "literacy" },
+  { q: "2 × 3 = ?", opts: ["5", "8", "6", "7"], ans: 2, type: "numeracy" }
+];
+
+let currentDiagQ = 0;
+let diagAnswered = false;
+
+function startDiagnostic() {
+  currentDiagQ = 0;
+  appState.diagScore = 0;
+  diagAnswered = false;
+  document.getElementById('diag-result').style.display = 'none';
+  document.getElementById('diag-container').style.display = 'block';
+  renderDiagQuestion();
+}
+
+function renderDiagQuestion() {
+  const q = diagQuestions[currentDiagQ];
+  const pct = ((currentDiagQ) / diagQuestions.length * 100);
+  document.getElementById('diag-progress-bar').style.width = pct + '%';
+  diagAnswered = false;
+  document.getElementById('diag-container').innerHTML = `
+    <div class="diag-card">
+      <div class="diag-q-num">QUESTION ${currentDiagQ + 1} OF ${diagQuestions.length} · ${q.type.toUpperCase()}</div>
+      <div class="diag-question">${q.q}</div>
+      <div class="diag-options">
+        ${q.opts.map((o, i) => `<button class="diag-opt" onclick="answerDiag(${i})" id="dopt-${i}">${o}</button>`).join('')}
+      </div>
+      <div style="margin-top:16px;color:var(--text-light);font-size:0.78rem;text-align:center;">
+        ${currentDiagQ + 1} / ${diagQuestions.length} answered
+      </div>
+    </div>`;
+}
+
+function answerDiag(chosen) {
+  if (diagAnswered) return;
+  diagAnswered = true;
+  const q = diagQuestions[currentDiagQ];
+  const opts = document.querySelectorAll('.diag-opt');
+  opts[q.ans].classList.add('correct');
+  if (chosen !== q.ans) {
+    opts[chosen].classList.add('wrong');
+  } else {
+    appState.diagScore++;
+    showToast('✅ Correct!');
+  }
+  setTimeout(() => {
+    currentDiagQ++;
+    if (currentDiagQ < diagQuestions.length) {
+      renderDiagQuestion();
+    } else {
+      showDiagResult();
+    }
+  }, 1200);
+}
+
+function showDiagResult() {
+  document.getElementById('diag-container').style.display = 'none';
+  document.getElementById('diag-result').style.display = 'block';
+  document.getElementById('diag-progress-bar').style.width = '100%';
+  const score = appState.diagScore;
+  const total = diagQuestions.length;
+  document.getElementById('diag-score-display').textContent = score + '/' + total;
+  let msg = '';
+  if (score <= 3) msg = 'Keep practising — every expert was once a beginner! 🌱';
+  else if (score <= 6) msg = 'Good effort! You are developing strong foundations. 📈';
+  else msg = 'Excellent! You have strong foundational skills! 🌟';
+  document.getElementById('diag-msg').textContent = msg;
+  // Save to history
+  const history = JSON.parse(localStorage.getItem('fln-history') || '[]');
+  history.unshift({ date: new Date().toLocaleDateString(), score, total, type: 'Diagnostic' });
+  localStorage.setItem('fln-history', JSON.stringify(history.slice(0, 10)));
+  saveState();
+}
+
+/* ===== PHONICS DATA ===== */
+const phonicsData = [
+  { letter: 'A', sound: '/æ/', example: 'Apple' },
+  { letter: 'B', sound: '/b/', example: 'Ball' },
+  { letter: 'C', sound: '/k/', example: 'Cat' },
+  { letter: 'D', sound: '/d/', example: 'Dog' },
+  { letter: 'E', sound: '/e/', example: 'Egg' },
+  { letter: 'F', sound: '/f/', example: 'Fish' },
+  { letter: 'G', sound: '/g/', example: 'Goat' },
+  { letter: 'H', sound: '/h/', example: 'Hat' },
+  { letter: 'I', sound: '/ɪ/', example: 'Ink' },
+  { letter: 'J', sound: '/dʒ/', example: 'Jar' },
+  { letter: 'K', sound: '/k/', example: 'Kite' },
+  { letter: 'L', sound: '/l/', example: 'Lion' },
+  { letter: 'M', sound: '/m/', example: 'Moon' },
+  { letter: 'N', sound: '/n/', example: 'Net' },
+  { letter: 'O', sound: '/ɒ/', example: 'Orange' },
+  { letter: 'P', sound: '/p/', example: 'Pen' }
+];
+
+/* ===== STORIES DATA ===== */
+const stories = [
+  {
+    title: "The Little Farmer",
+    text: "Ramu was a little boy who lived in a village. Every morning, he helped his father water the crops. One day, it did not rain for many weeks. The crops were dry and the farmer was sad. Ramu had an idea. He asked all the children in the village to help carry water from the river. Together, they saved the crops. The village was very happy.",
+    level: 'easy',
+    questions: [
+      { q: "Where did Ramu live?", opts: ["City", "Village", "Town", "Forest"], ans: 1 },
+      { q: "What problem did the village face?", opts: ["Flood", "No food", "No rain", "No school"], ans: 2 },
+      { q: "How did Ramu help?", opts: ["By planting trees", "By getting water", "By singing", "By sleeping"], ans: 1 }
+    ]
+  },
+  {
+    title: "The Clever Crow",
+    text: "A crow was very thirsty. He flew around looking for water. At last, he found a pot with a little water at the bottom. His beak could not reach the water. He did not give up. He picked up small stones one by one and dropped them into the pot. Slowly, the water rose to the top. The crow drank the water and flew away happily.",
+    level: 'easy',
+    questions: [
+      { q: "Why was the crow searching?", opts: ["For food", "For water", "For a nest", "For friends"], ans: 1 },
+      { q: "What did the crow put in the pot?", opts: ["Leaves", "Sand", "Stones", "Sticks"], ans: 2 },
+      { q: "What lesson does this story teach?", opts: ["Give up easily", "Never try", "Think cleverly", "Ask for help"], ans: 2 }
+    ]
+  },
+  {
+    title: "Clean Water for All",
+    text: "Seema lived near a river. The river water was dirty because people threw garbage in it. Her science teacher taught her about clean water. Seema started a campaign called 'Save Our River'. She spoke to shopkeepers and families. She organized a clean-up drive every Sunday. Slowly, the river became cleaner. People began to understand that clean water is important for health.",
+    level: 'med',
+    questions: [
+      { q: "What problem did Seema notice?", opts: ["Dirty air", "Dirty river", "No school", "No electricity"], ans: 1 },
+      { q: "What was her campaign called?", opts: ["Clean India", "Save Our River", "Blue Water", "Green Village"], ans: 1 },
+      { q: "When did she organize clean-up drives?", opts: ["Saturday", "Monday", "Sunday", "Friday"], ans: 2 }
+    ]
+  }
+];
+
+let activeStoryIndex = 0;
+let compAnswered = 0;
+
+function initReading() {
+  renderPhonics();
+  renderStory();
+}
+
+function renderPhonics() {
+  const grid = document.getElementById('phonics-grid');
+  if (!grid) return;
+  grid.innerHTML = phonicsData.map((p, i) =>
+    `<div class="phonics-tile" id="pt-${i}" onclick="phonicsTap(${i})">
+      ${p.letter}
+      <div class="pt-sound">${p.example}</div>
+    </div>`
+  ).join('');
+}
+
+function phonicsTap(i) {
+  document.querySelectorAll('.phonics-tile').forEach(t => t.classList.remove('active'));
+  document.getElementById('pt-' + i).classList.add('active');
+  showToast(`🔤 "${phonicsData[i].letter}" says ${phonicsData[i].sound} — like "${phonicsData[i].example}"`);
+  // Update progress
+  appState.readingProgress = Math.min(100, appState.readingProgress + 3);
+  updateProgressBars();
+  saveState();
+}
+
+function renderStory() {
+  const story = stories[activeStoryIndex % stories.length];
+  document.getElementById('story-title').textContent = '📖 ' + story.title;
+  const words = story.text.split(' ');
+  document.getElementById('story-text').innerHTML = words.map(w =>
+    `<span class="word" onclick="highlightWord(this)">${w} </span>`
+  ).join('');
+  renderCompQuestions(story);
+}
+
+function highlightWord(el) {
+  el.classList.toggle('highlighted');
+  appState.readingProgress = Math.min(100, appState.readingProgress + 1);
+  updateProgressBars();
+  saveState();
+}
+
+function renderCompQuestions(story) {
+  const container = document.getElementById('comp-questions');
+  container.innerHTML = story.questions.map((q, qi) => `
+    <div class="diag-card" style="margin:8px 16px;">
+      <div class="diag-q-num">QUESTION ${qi + 1}</div>
+      <div class="diag-question" style="font-size:0.95rem;">${q.q}</div>
+      <div class="diag-options">
+        ${q.opts.map((o, oi) => `<button class="diag-opt" onclick="answerComp(this,${qi},${oi},${q.ans})">${o}</button>`).join('')}
+      </div>
+    </div>`
+  ).join('');
+}
+
+function answerComp(el, qi, chosen, correct) {
+  const card = el.closest('.diag-card');
+  card.querySelectorAll('.diag-opt').forEach(b => b.disabled = true);
+  const opts = card.querySelectorAll('.diag-opt');
+  opts[correct].classList.add('correct');
+  if (chosen !== correct) {
+    el.classList.add('wrong');
+    showToast('❌ Not quite — review the story!');
+  } else {
+    showToast('✅ Correct answer!');
+    appState.readingProgress = Math.min(100, appState.readingProgress + 10);
+    checkBadge('reader');
+    updateProgressBars();
+    saveState();
+  }
+}
+
+function nextStory() {
+  activeStoryIndex++;
+  renderStory();
+  appState.readingProgress = Math.min(100, appState.readingProgress + 5);
+  updateProgressBars();
+  saveState();
+  showToast('📖 New story loaded!');
+}
+
+/* ===== MATH MODULE ===== */
+let mathProblems = [];
+let currentMathProblem = null;
+
+const mathWordProblems = {
+  easy: [
+    { text: "Raju has 4 apples. His mother gives him 3 more. How many apples does he have now?", a: 4, b: 3, op: '+', ans: 7 },
+    { text: "There are 9 birds on a tree. 5 fly away. How many remain?", a: 9, b: 5, op: '−', ans: 4 },
+    { text: "A farmer has 6 cows and 2 buffaloes. How many animals in total?", a: 6, b: 2, op: '+', ans: 8 },
+    { text: "Meena had 8 pencils. She gave 3 to her friend. How many does she have left?", a: 8, b: 3, op: '−', ans: 5 }
+  ],
+  med: [
+    { text: "A class has 15 boys and 12 girls. How many students are there in total?", a: 15, b: 12, op: '+', ans: 27 },
+    { text: "A shopkeeper had 50 mangoes and sold 23. How many are left?", a: 50, b: 23, op: '−', ans: 27 },
+    { text: "There are 18 red flowers and 14 yellow flowers in a garden. How many flowers total?", a: 18, b: 14, op: '+', ans: 32 },
+    { text: "A box had 45 chocolates. 27 were eaten. How many remain?", a: 45, b: 27, op: '−', ans: 18 }
+  ],
+  hard: [
+    { text: "4 children each have 6 pencils. How many pencils are there altogether?", a: 4, b: 6, op: '×', ans: 24 },
+    { text: "A farmer plants 8 rows with 9 seeds each. How many seeds total?", a: 8, b: 9, op: '×', ans: 72 },
+    { text: "5 baskets, each with 7 mangoes. Total mangoes?", a: 5, b: 7, op: '×', ans: 35 },
+    { text: "3 friends each earn ₹25. How much do they earn together?", a: 3, b: 25, op: '×', ans: 75 }
+  ]
+};
+
+function initMath() {
+  loadNewMathProblem();
+  updateMathScoreDisplay();
+}
+
+function loadNewMathProblem() {
+  const diff = appState.mathDiff || 'easy';
+  const problems = mathWordProblems[diff];
+  const p = problems[Math.floor(Math.random() * problems.length)];
+  currentMathProblem = p;
+  document.getElementById('math-word-problem').textContent = p.text;
+  document.getElementById('math-equation').textContent = `${p.a} ${p.op} ${p.b} = ?`;
+  document.getElementById('math-answer').value = '';
+  document.getElementById('math-feedback').textContent = '';
+}
+
+function padInput(val) {
+  const input = document.getElementById('math-answer');
+  if (val === 'del') {
+    input.value = input.value.slice(0, -1);
+  } else if (val === '0' && input.value === '') {
+    // don't start with 0
+  } else {
+    input.value += val;
+  }
+}
+
+function checkMath() {
+  const input = document.getElementById('math-answer');
+  const userAns = parseInt(input.value);
+  if (isNaN(userAns)) { showToast('⚠️ Please enter a number!'); return; }
+  const fb = document.getElementById('math-feedback');
+  appState.mathTotal++;
+  if (userAns === currentMathProblem.ans) {
+    appState.mathCorrect++;
+    fb.innerHTML = '<span class="color-success">✅ Correct! Well done!</span>';
+    appState.mathProgress = Math.min(100, appState.mathProgress + 8);
+    checkBadge('math');
+    showToast('🎉 Correct! +8 Math points');
+  } else {
+    fb.innerHTML = `<span class="color-danger">❌ Answer: ${currentMathProblem.ans} — Try again!</span>`;
+  }
+  updateProgressBars();
+  updateMathScoreDisplay();
+  saveState();
+  setTimeout(loadNewMathProblem, 1500);
+}
+
+function updateMathScoreDisplay() {
+  const el = document.getElementById('math-score-display');
+  if (el) el.textContent = appState.mathCorrect + '/' + appState.mathTotal;
+  const pct = appState.mathTotal ? Math.round(appState.mathCorrect / appState.mathTotal * 100) : 0;
+  const bar = document.getElementById('math-correct-bar');
+  const pctEl = document.getElementById('math-correct-pct');
+  if (bar) bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + '%';
+}
+
+/* ===== WRITING MODULE ===== */
+const writingPrompts = {
+  easy: [
+    { title: "✏️ Letters Practice", text: "Write each letter of the alphabet in order: A, B, C, D... Continue from where you know!" },
+    { title: "✏️ My Name", text: "Write your full name clearly. Then write the names of 3 family members." },
+    { title: "✏️ Copy Sentence", text: "Copy this sentence carefully:\n'The sun rises in the east and sets in the west.'" }
+  ],
+  med: [
+    { title: "✍️ My Daily Routine", text: "Write 4-5 sentences about what you do every morning. Include: wake up, eat, school, and one other thing you do." },
+    { title: "✍️ My Favourite Animal", text: "Write 5 sentences about your favourite animal. What does it look like? Where does it live? What does it eat?" },
+    { title: "✍️ My School", text: "Describe your school in 4-5 sentences. Include: location, classes, teachers, and what you like most." }
+  ],
+  hard: [
+    { title: "📝 Short Paragraph", text: "Write a short paragraph (6-8 sentences) about the importance of trees and forests for our environment. Use the following ideas: oxygen, shade, animals, climate." },
+    { title: "📝 A Letter to a Friend", text: "Write a letter to your friend describing a festival you celebrated recently. Include: the name of the festival, what you did, who was with you, and what you enjoyed most." },
+    { title: "📝 My Dream", text: "Write a paragraph about what you want to be when you grow up and why. Give at least 3 reasons for your choice." }
+  ]
+};
+
+let currentWritingPromptIndex = 0;
+
+function initWriting() {
+  loadWritingPrompt();
+  renderSavedWritings();
+  renderAlphabet();
+}
+
+function loadWritingPrompt() {
+  const diff = appState.writingDiff || 'easy';
+  const prompts = writingPrompts[diff];
+  const p = prompts[currentWritingPromptIndex % prompts.length];
+  document.getElementById('writing-prompt-title').textContent = p.title;
+  document.getElementById('writing-prompt-text').textContent = p.text;
+}
+
+function newWritingPrompt() {
+  currentWritingPromptIndex++;
+  loadWritingPrompt();
+  document.getElementById('writing-textarea').value = '';
+  document.getElementById('word-count').textContent = '0 words';
+  showToast('🔄 New writing prompt loaded!');
+}
+
+function updateWordCount() {
+  const text = document.getElementById('writing-textarea').value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  document.getElementById('word-count').textContent = count + ' word' + (count !== 1 ? 's' : '');
+}
+
+function saveWriting() {
+  const text = document.getElementById('writing-textarea').value.trim();
+  if (!text) { showToast('⚠️ Please write something first!'); return; }
+  const writings = JSON.parse(localStorage.getItem('fln-writings') || '[]');
+  writings.unshift({
+    date: new Date().toLocaleDateString(),
+    text: text.substring(0, 200),
+    prompt: document.getElementById('writing-prompt-title').textContent
+  });
+  localStorage.setItem('fln-writings', JSON.stringify(writings.slice(0, 10)));
+  appState.writingProgress = Math.min(100, appState.writingProgress + 12);
+  checkBadge('writer');
+  updateProgressBars();
+  saveState();
+  renderSavedWritings();
+  showToast('💾 Writing saved! Great job!');
+}
+
+function renderSavedWritings() {
+  const container = document.getElementById('saved-writings');
+  if (!container) return;
+  const writings = JSON.parse(localStorage.getItem('fln-writings') || '[]');
+  if (!writings.length) {
+    container.innerHTML = '<p style="color:var(--text-light);font-size:0.82rem;padding:4px 0;">No saved writings yet. Start writing!</p>';
+    return;
+  }
+  container.innerHTML = writings.slice(0, 3).map(w => `
+    <div style="background:var(--white);border-radius:10px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:0.75rem;font-weight:600;color:var(--navy);">${w.prompt}</span>
+        <span style="font-size:0.7rem;color:var(--text-light);">${w.date}</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-mid);line-height:1.5;">${w.text.substring(0, 120)}${w.text.length > 120 ? '...' : ''}</p>
+    </div>`
+  ).join('');
+}
+
+function renderAlphabet() {
+  const grid = document.getElementById('alphabet-grid');
+  if (!grid) return;
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  grid.innerHTML = letters.map(l =>
+    `<div style="background:var(--white);border-radius:8px;padding:10px 4px;text-align:center;font-family:'Space Mono',monospace;font-weight:700;color:var(--navy);font-size:1.1rem;box-shadow:0 2px 6px rgba(0,0,0,0.06);">${l}</div>`
+  ).join('');
+}
+
+/* ===== BADGES & PROGRESS ===== */
+function checkBadge(type) {
+  const thresholds = { reader: 40, math: 40, writer: 24 };
+  const props = { reader: 'readingProgress', math: 'mathProgress', writer: 'writingProgress' };
+  if (!appState.badges[type] && appState[props[type]] >= thresholds[type]) {
+    appState.badges[type] = true;
+    const names = { reader: 'Reading Star ⭐', math: 'Math Explorer 🔭', writer: 'Writing Champion 🏆' };
+    showToast('🏅 Badge Earned: ' + names[type] + '!', 3000);
+    saveState();
+  }
+}
+
+function updateProgressBars() {
+  const setBar = (id, val) => { const el = document.getElementById(id); if (el) el.style.width = val + '%'; };
+  setBar('prog-reading', appState.readingProgress);
+  setBar('prog-math', appState.mathProgress);
+  setBar('prog-writing', appState.writingProgress);
+  const overall = Math.round((appState.readingProgress + appState.mathProgress + appState.writingProgress) / 3);
+  setBar('overall-progress', overall);
+}
+
+function updateDashboard() {
+  updateProgressBars();
+  // Update badges on dashboard
+  ['reader', 'math', 'writer'].forEach(b => {
+    const el = document.getElementById('badge-' + b);
+    if (el) {
+      if (appState.badges[b]) el.classList.add('earned');
+      else el.classList.remove('earned');
+    }
+  });
+}
+
+function updateProgress() {
+  updateProgressBars();
+  // Update full progress bars
+  const setFull = (id, pctId, val) => {
+    const bar = document.getElementById(id); if (bar) bar.style.width = val + '%';
+    const pct = document.getElementById(pctId); if (pct) pct.textContent = val + '%';
+  };
+  setFull('prog-reading-full', 'prog-reading-pct', appState.readingProgress);
+  setFull('prog-math-full', 'prog-math-pct', appState.mathProgress);
+  setFull('prog-writing-full', 'prog-writing-pct', appState.writingProgress);
+  // Render badges
+  const badgeData = [
+    { key: 'reader', icon: '⭐', name: 'Reading Star', desc: 'Complete reading exercises' },
+    { key: 'math', icon: '🔭', name: 'Math Explorer', desc: 'Solve math problems' },
+    { key: 'writer', icon: '🏆', name: 'Writing Champion', desc: 'Save writing practice' }
+  ];
+  document.getElementById('progress-badges').innerHTML = badgeData.map(b => `
+    <div class="badge-card ${appState.badges[b.key] ? 'earned' : 'locked'}">
+      <div class="badge-icon">${b.icon}</div>
+      <div class="badge-name">${b.name}</div>
+    </div>`).join('');
+  // Assessment history
+  const history = JSON.parse(localStorage.getItem('fln-history') || '[]');
+  const histEl = document.getElementById('assessment-history');
+  if (histEl) {
+    if (!history.length) {
+      histEl.innerHTML = '<p style="color:var(--text-light);font-size:0.82rem;padding:4px 16px;">No assessments taken yet.</p>';
+    } else {
+      histEl.innerHTML = history.slice(0, 5).map(h => `
+        <div style="background:var(--white);border-radius:10px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+          <div>
+            <div style="font-size:0.85rem;font-weight:600;color:var(--navy);">${h.type}</div>
+            <div style="font-size:0.75rem;color:var(--text-light);">${h.date}</div>
+          </div>
+          <div style="font-family:'Space Mono',monospace;font-size:1.1rem;color:var(--sky);">${h.score}/${h.total}</div>
+        </div>`).join('');
+    }
+  }
+}
+
+function resetProgress() {
+  if (confirm('Reset all progress? This cannot be undone.')) {
+    appState.readingProgress = 0;
+    appState.mathProgress = 0;
+    appState.writingProgress = 0;
+    appState.mathCorrect = 0;
+    appState.mathTotal = 0;
+    appState.badges = { reader: false, math: false, writer: false };
+    localStorage.removeItem('fln-history');
+    localStorage.removeItem('fln-writings');
+    saveState();
+    updateProgress();
+    showToast('🗑️ Progress reset.');
+  }
+}
+
+/* ===== PWA INSTALL ===== */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('installBanner');
+  if (banner) banner.style.display = 'flex';
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const installBtn = document.getElementById('installBtn');
+  if (installBtn) {
+    installBtn.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => {
+          deferredPrompt = null;
+          document.getElementById('installBanner').style.display = 'none';
+        });
+      }
+    });
+  }
+});
+
+/* ===== SERVICE WORKER REGISTRATION ===== */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('✅ FLN Booster: Service Worker registered'))
+      .catch(e => console.log('SW Error:', e));
+  });
+}
+
+/* ===== INIT ===== */
+loadState();
+updateProgressBars();
+</script>
+</body>
+</html>

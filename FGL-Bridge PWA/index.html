@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a0d2e">
+<meta name="description" content="FGL-Bridge – First-Generation Learners Support App. Offline PWA by Mateen Yousuf, NEP 2020 aligned.">
+<title>FGL-Bridge – First-Gen Learners App</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN: Warm, playful-gamified, child-friendly + professional parent layer ===== */
+:root {
+  --bg:       #12091e;
+  --bg2:      #1a1030;
+  --bg3:      #231840;
+  --card:     #1e1535;
+  --card2:    #271d42;
+  --gold:     #ffd700;
+  --orange:   #ff7c38;
+  --pink:     #ff5fa0;
+  --teal:     #00d4aa;
+  --violet:   #9b5de5;
+  --sky:      #00b4d8;
+  --text:     #f0eaff;
+  --muted:    #8878aa;
+  --border:   rgba(155,93,229,0.2);
+  --radius:   20px;
+  --fhead:    'Fredoka One', cursive;
+  --fbody:    'Quicksand', sans-serif;
+  --fcomic:   'Comic Neue', cursive;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--fbody);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(155,93,229,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(255,124,56,0.06) 0%, transparent 55%);
+}
+
+/* === STARS BG === */
+.stars {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  width: 3px; height: 3px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:0.1;} 50%{opacity:0.6;} }
+
+/* === SPLASH === */
+#splash {
+  position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(135deg, #12091e, #1a0d2e, #0d1a2e);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 18px;
+  transition: opacity 0.8s ease;
+}
+#splash.out { opacity: 0; pointer-events: none; }
+
+.splash-rocket {
+  font-size: 5rem;
+  animation: rocketLaunch 1s ease-in-out infinite alternate;
+}
+@keyframes rocketLaunch {
+  from { transform: translateY(0) rotate(-5deg); }
+  to { transform: translateY(-16px) rotate(5deg); }
+}
+.splash-t1 {
+  font-family: var(--fhead);
+  font-size: 2.6rem;
+  background: linear-gradient(90deg, var(--gold), var(--orange), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+.splash-t2 {
+  font-family: var(--fcomic);
+  font-size: 1rem;
+  color: var(--teal);
+  text-align: center;
+}
+.star-row { display: flex; gap: 10px; }
+.splash-star {
+  font-size: 1.5rem;
+  animation: spin 2s linear infinite;
+}
+.splash-star:nth-child(2) { animation-delay: 0.3s; animation-direction: reverse; }
+.splash-star:nth-child(3) { animation-delay: 0.6s; }
+@keyframes spin { from{transform:rotate(0);} to{transform:rotate(360deg);} }
+
+.pill-offline {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(0,212,170,0.12);
+  border: 1px solid rgba(0,212,170,0.3);
+  color: var(--teal);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 0.72rem; font-weight: 700;
+}
+.pdot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* === HEADER === */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(18,9,30,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 100;
+}
+.logo {
+  font-family: var(--fhead);
+  font-size: 1.45rem;
+  background: linear-gradient(90deg, var(--gold), var(--orange));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-badge {
+  font-family: var(--fbody);
+  font-size: 0.65rem;
+  color: var(--teal);
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+}
+
+.mode-sw {
+  display: flex;
+  background: var(--card);
+  border-radius: 30px;
+  padding: 3px;
+  border: 1px solid var(--border);
+}
+.msw {
+  padding: 5px 11px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--fbody);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: transparent;
+  transition: all 0.3s;
+}
+.msw.on { background: linear-gradient(135deg, var(--violet), var(--pink)); color: white; }
+
+/* === BOTTOM NAV === */
+.bnav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(18,9,30,0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 6px 0 14px;
+}
+.nb {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer; padding: 6px 2px;
+  border: none; background: transparent;
+  color: var(--muted);
+  font-size: 0.58rem; font-family: var(--fbody); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  transition: all 0.3s;
+}
+.nb .ni { font-size: 1.3rem; transition: transform 0.3s; }
+.nb.on { color: var(--gold); }
+.nb.on .ni { transform: translateY(-4px); filter: drop-shadow(0 0 6px rgba(255,215,0,0.6)); }
+
+/* === MAIN === */
+main { padding: 16px 16px 92px; max-width: 480px; margin: 0 auto; position: relative; z-index: 1; }
+
+/* === PAGES === */
+.pg { display: none; animation: fadeUp 0.35s ease; }
+.pg.on { display: block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+/* === CARDS === */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 18px;
+  margin-bottom: 14px;
+  position: relative; overflow: hidden;
+}
+.card-glow::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--pink), var(--gold));
+}
+.ctitle {
+  font-family: var(--fhead);
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* === HOME PAGE === */
+.hero {
+  background: linear-gradient(135deg, #1e1040, #2a1050, #1a0d3a);
+  border-radius: var(--radius);
+  padding: 26px 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(155,93,229,0.3);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '🚀';
+  position: absolute; right: -15px; bottom: -15px;
+  font-size: 8rem; opacity: 0.05;
+}
+.hero h1 {
+  font-family: var(--fhead);
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, var(--gold), var(--orange), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 6px; line-height: 1.2;
+}
+.hero p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.htag {
+  background: rgba(155,93,229,0.15);
+  border: 1px solid rgba(155,93,229,0.3);
+  color: var(--violet);
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 0.68rem; font-weight: 700;
+}
+
+/* XP Bar */
+.xp-card {
+  background: linear-gradient(135deg, #1e1535, #2a1a4a);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255,215,0,0.2);
+}
+.xp-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.xp-name { font-family: var(--fhead); font-size: 1.1rem; color: var(--gold); }
+.xp-level {
+  background: linear-gradient(135deg, var(--gold), var(--orange));
+  color: var(--bg);
+  font-family: var(--fhead);
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.xp-bar-wrap { height: 10px; background: var(--bg3); border-radius: 5px; overflow: hidden; margin-bottom: 6px; }
+.xp-bar { height: 100%; background: linear-gradient(90deg, var(--gold), var(--orange)); border-radius: 5px; transition: width 1.5s ease; }
+.xp-info { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
+
+/* Module tiles */
+.mods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mtile {
+  background: var(--card2);
+  border-radius: 16px;
+  padding: 18px 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+  text-align: center;
+  position: relative;
+}
+.mtile:hover { transform: translateY(-3px); }
+.mtile.gold:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(255,215,0,0.2); }
+.mtile.pink:hover { border-color: var(--pink); box-shadow: 0 4px 20px rgba(255,95,160,0.2); }
+.mtile.teal:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(0,212,170,0.2); }
+.mtile.sky:hover { border-color: var(--sky); box-shadow: 0 4px 20px rgba(0,180,216,0.2); }
+.mtile .micon { font-size: 2rem; margin-bottom: 8px; }
+.mtile .mname { font-family: var(--fhead); font-size: 0.9rem; }
+.mtile .mdesc { font-size: 0.68rem; color: var(--muted); margin-top: 3px; }
+.mtile .mbadge {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--gold); color: var(--bg);
+  font-size: 0.58rem; font-weight: 700;
+  padding: 2px 6px; border-radius: 10px;
+}
+
+/* Streak section */
+.streak-grid { display: flex; gap: 5px; flex-wrap: wrap; }
+.sday {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 700;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--muted);
+}
+.sday.done { background: linear-gradient(135deg, var(--gold), var(--orange)); color: var(--bg); border-color: transparent; }
+.sday.today { background: rgba(155,93,229,0.3); color: var(--violet); border-color: var(--violet); }
+
+/* === LEARN PAGE === */
+.lesson-hero {
+  background: linear-gradient(135deg, #1e1040, #2a1850);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(155,93,229,0.3);
+}
+.lh-step { font-family: var(--fcomic); font-size: 0.85rem; color: var(--teal); margin-bottom: 6px; }
+.lh-title { font-family: var(--fhead); font-size: 1.2rem; color: var(--gold); margin-bottom: 8px; }
+.lh-prog { display: flex; align-items: center; gap: 10px; }
+.lh-bar-w { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.lh-bar { height: 100%; background: linear-gradient(90deg, var(--violet), var(--pink)); border-radius: 4px; transition: width 0.6s ease; }
+
+.step-cards { }
+.step-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.step-card:hover { border-color: var(--violet); transform: translateX(4px); }
+.step-card.done-step { opacity: 0.6; }
+.step-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--violet), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fhead); font-size: 0.9rem;
+  flex-shrink: 0;
+  color: white;
+}
+.step-num.done-n { background: linear-gradient(135deg, var(--teal), var(--sky)); }
+.step-info { flex: 1; }
+.step-title { font-family: var(--fhead); font-size: 0.95rem; margin-bottom: 4px; }
+.step-desc { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
+.step-audio {
+  background: rgba(0,212,170,0.12);
+  border: 1px solid rgba(0,212,170,0.25);
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.step-audio:hover { background: rgba(0,212,170,0.25); }
+
+.subject-pills { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+.subpill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  font-size: 0.75rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s;
+  color: var(--muted); background: var(--card);
+}
+.subpill.on { background: linear-gradient(135deg, var(--violet), var(--pink)); color: white; border-color: transparent; }
+
+/* === HOMEWORK PAGE === */
+.hw-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.hw-card:hover { border-color: var(--gold); }
+.hw-subject { font-size: 0.7rem; font-weight: 700; color: var(--violet); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+.hw-title { font-family: var(--fhead); font-size: 1rem; margin-bottom: 6px; }
+.hw-steps { margin-top: 10px; display: none; animation: fadeUp 0.3s ease; }
+.hw-steps.open { display: block; }
+.hw-step {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.hw-step:last-child { border-bottom: none; }
+.hw-snum {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--violet);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.hw-meta { display: flex; align-items: center; gap: 8px; }
+.hw-due {
+  font-size: 0.7rem;
+  color: var(--orange);
+  font-weight: 700;
+}
+.hw-listen {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,215,0,0.12);
+  border: 1px solid rgba(255,215,0,0.25);
+  color: var(--gold);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.hw-listen:hover { background: rgba(255,215,0,0.22); }
+
+/* === GOALS PAGE === */
+.goal-header {
+  background: linear-gradient(135deg, #1e1040, #2a0d30);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255,124,56,0.3);
+  text-align: center;
+}
+.gh-title { font-family: var(--fhead); font-size: 1.3rem; color: var(--orange); margin-bottom: 4px; }
+.gh-sub { font-size: 0.8rem; color: var(--muted); }
+.gh-coins {
+  font-family: var(--fhead);
+  font-size: 1.8rem;
+  color: var(--gold);
+  margin-top: 8px;
+}
+
+.goal-item {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex; align-items: center; gap: 12px;
+}
+.goal-item:hover { border-color: var(--orange); }
+.goal-item.done-g { opacity: 0.65; border-color: rgba(0,212,170,0.3); }
+.goal-icon { font-size: 1.8rem; flex-shrink: 0; }
+.goal-info { flex: 1; }
+.goal-title { font-family: var(--fhead); font-size: 0.9rem; margin-bottom: 3px; }
+.goal-xp { font-size: 0.7rem; color: var(--gold); font-weight: 700; }
+.goal-check { font-size: 1.3rem; }
+
+.rewards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.reward-tile {
+  background: var(--card2);
+  border-radius: 12px;
+  padding: 14px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.reward-tile.earned { border-color: var(--gold); background: rgba(255,215,0,0.08); }
+.reward-icon { font-size: 1.8rem; margin-bottom: 5px; }
+.reward-name { font-size: 0.68rem; font-weight: 700; color: var(--muted); }
+.reward-tile.earned .reward-name { color: var(--gold); }
+
+/* === TRACKER PAGE === */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.comp-card {
+  background: var(--card2);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.comp-icon { font-size: 1.6rem; margin-bottom: 6px; }
+.comp-name { font-family: var(--fhead); font-size: 0.88rem; margin-bottom: 10px; }
+.ring-w { position: relative; width: 68px; height: 68px; margin: 0 auto 6px; }
+.rsvg { transform: rotate(-90deg); }
+.rsvg circle { fill: none; stroke-width: 7; stroke-linecap: round; }
+.rsvg .rbg { stroke: var(--bg3); }
+.rsvg .rfill { transition: stroke-dashoffset 1.8s ease; }
+.rpct { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--fhead); font-size: 0.95rem; }
+.clevel { font-size: 0.68rem; color: var(--muted); }
+
+.band-section { margin-bottom: 14px; }
+.band-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.band-lbl { font-size: 0.75rem; color: var(--muted); width: 90px; flex-shrink: 0; }
+.band-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.band-fill { height: 100%; border-radius: 4px; transition: width 1.5s ease; }
+.band-pct { font-size: 0.75rem; font-weight: 700; width: 34px; text-align: right; }
+
+/* === PROFILE PAGE === */
+.profile-top { text-align: center; margin-bottom: 18px; }
+.av-ring {
+  width: 94px; height: 94px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 0 6px rgba(255,215,0,0.1);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.av-ring img { width:100%; height:100%; object-fit:cover; object-position:top; }
+.av-ov {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: 0.3s;
+  font-size: 1.4rem;
+}
+.av-ring:hover .av-ov { opacity: 1; }
+.pname { font-family: var(--fhead); font-size: 1.35rem; color: var(--gold); }
+.prole { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 14px; }
+.stat-c {
+  background: var(--card2);
+  border-radius: 14px;
+  padding: 14px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.stat-v { font-family: var(--fhead); font-size: 1.5rem; color: var(--gold); }
+.stat-l { font-size: 0.65rem; color: var(--muted); margin-top: 3px; }
+
+.notes-ta {
+  width: 100%;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--fbody);
+  font-size: 0.88rem;
+  padding: 12px 14px;
+  resize: vertical; min-height: 100px;
+  outline: none; margin-bottom: 10px;
+}
+.notes-ta:focus { border-color: var(--violet); }
+
+/* === BUTTON === */
+.btn {
+  width: 100%; padding: 13px;
+  border-radius: 14px; border: none;
+  font-family: var(--fhead); font-size: 0.95rem;
+  cursor: pointer; transition: all 0.3s;
+  display: block; text-align: center;
+  margin-bottom: 8px;
+}
+.btn-v { background: linear-gradient(135deg, var(--violet), var(--pink)); color: white; }
+.btn-g { background: linear-gradient(135deg, var(--gold), var(--orange)); color: var(--bg); }
+.btn-o { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.35); }
+
+/* === PARENT MODE overlay === */
+.parent-mode-banner {
+  background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(0,180,216,0.1));
+  border: 1px solid rgba(0,212,170,0.3);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  display: none;
+}
+.parent-mode-banner.show { display: block; }
+.pmb-title { font-family: var(--fhead); font-size: 1rem; color: var(--teal); margin-bottom: 6px; }
+.pmb-text { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+.big-btn {
+  padding: 20px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  width: 100%; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card2);
+  border: 2px solid var(--border);
+  transition: all 0.3s;
+  font-family: var(--fhead);
+  color: var(--text);
+}
+.big-btn:hover { border-color: var(--teal); transform: translateY(-2px); }
+.big-btn .bi { font-size: 2.2rem; flex-shrink: 0; }
+.big-btn .bt { text-align: left; }
+.big-btn .bt-title { font-size: 1.05rem; margin-bottom: 3px; }
+.big-btn .bt-sub { font-size: 0.75rem; color: var(--muted); font-family: var(--fbody); font-weight: 500; }
+
+/* === TOAST === */
+#toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 18px; border-radius: 30px;
+  font-size: 0.82rem; font-weight: 600; z-index: 9999;
+  opacity: 0; transition: opacity 0.3s;
+  pointer-events: none; white-space: nowrap;
+  font-family: var(--fbody);
+}
+#toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-rocket">🚀</div>
+  <div class="splash-t1">FGL-Bridge</div>
+  <div class="splash-t2">First-Generation Learners Support Ecosystem<br>पहली पीढ़ी के शिक्षार्थी · اولین نسل کے طلباء</div>
+  <div class="star-row">
+    <span class="splash-star">⭐</span>
+    <span class="splash-star">🌟</span>
+    <span class="splash-star">⭐</span>
+  </div>
+  <div class="pill-offline"><span class="pdot"></span> Fully Offline · NEP 2020</div>
+</div>
+
+<div id="toast"></div>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="logo">🚀 FGL-Bridge</div>
+    <div class="logo-badge">First-Gen Learners · NEP 2020 · NCF 2023</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="pill-offline"><span class="pdot"></span> Offline</div>
+    <div class="mode-sw">
+      <button class="msw on" onclick="setMode('student')">👦 Student</button>
+      <button class="msw" onclick="setMode('parent')">👨 Parent</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HOME PAGE -->
+  <div class="pg on" id="pg-home">
+
+    <div class="parent-mode-banner" id="parentBanner">
+      <div class="pmb-title">👋 Welcome, Parent!</div>
+      <div class="pmb-text">You don't need to read. Just press the big buttons below to help your child learn. We guide you with voice! 🔊</div>
+    </div>
+
+    <div class="hero">
+      <h1>Every Child Can<br>Soar! 🌟</h1>
+      <p>Supporting first-generation learners with audio-visual scaffolding, step-by-step homework help, and daily achievement goals.</p>
+      <div class="hero-tags">
+        <span class="htag">NEP 2020</span>
+        <span class="htag">NCF 2023</span>
+        <span class="htag">PARAKH</span>
+        <span class="htag">FLN Mission</span>
+        <span class="htag">NIPUN Bharat</span>
+        <span class="htag">ZPD Theory</span>
+      </div>
+    </div>
+
+    <!-- XP Progress -->
+    <div class="xp-card">
+      <div class="xp-top">
+        <div class="xp-name">⭐ Aamir's Journey</div>
+        <div class="xp-level">Level 4 – Explorer</div>
+      </div>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar" id="xpBar" style="width:62%"></div>
+      </div>
+      <div class="xp-info">
+        <span>620 / 1000 XP</span>
+        <span>🔥 7-day streak</span>
+        <span>🏆 Next: Challenger</span>
+      </div>
+    </div>
+
+    <!-- Parent mode big buttons -->
+    <div id="parentBtns" style="display:none">
+      <button class="big-btn" onclick="goPage('homework');speakText('Opening homework helper')">
+        <div class="bi">📚</div>
+        <div class="bt">
+          <div class="bt-title">Help with Homework</div>
+          <div class="bt-sub">Step-by-step audio guide for today's tasks</div>
+        </div>
+      </button>
+      <button class="big-btn" onclick="goPage('goals');speakText('Opening daily goals')">
+        <div class="bi">🎯</div>
+        <div class="bt">
+          <div class="bt-title">Daily Goals</div>
+          <div class="bt-sub">See what your child should complete today</div>
+        </div>
+      </button>
+      <button class="big-btn" onclick="speakText('Your child has completed 3 out of 5 goals today. Keep encouraging them!')">
+        <div class="bi">🔊</div>
+        <div class="bt">
+          <div class="bt-title">Hear Progress Report</div>
+          <div class="bt-sub">Audio summary of your child's progress</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- Student module tiles -->
+    <div id="studentMods">
+      <div class="card card-glow">
+        <div class="ctitle">📚 Learning Modules</div>
+        <div class="mods">
+          <div class="mtile gold" onclick="goPage('learn')">
+            <div class="mbadge">NEW</div>
+            <div class="micon">📖</div>
+            <div class="mname">Self-Learn</div>
+            <div class="mdesc">Step-by-step lessons</div>
+          </div>
+          <div class="mtile pink" onclick="goPage('homework')">
+            <div class="micon">✏️</div>
+            <div class="mname">Homework Help</div>
+            <div class="mdesc">Simplified tasks</div>
+          </div>
+          <div class="mtile teal" onclick="goPage('goals')">
+            <div class="micon">🎯</div>
+            <div class="mname">Daily Goals</div>
+            <div class="mdesc">Earn XP & badges</div>
+          </div>
+          <div class="mtile sky" onclick="goPage('tracker')">
+            <div class="micon">📊</div>
+            <div class="mname">My Progress</div>
+            <div class="mdesc">Track competency</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Streak -->
+      <div class="card">
+        <div class="ctitle">🔥 Learning Streak</div>
+        <div class="streak-grid" id="streakGrid"></div>
+        <div style="font-size:0.78rem;color:var(--muted);margin-top:10px">
+          🌟 Current streak: <strong style="color:var(--gold)">7 days</strong> · Keep it up!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARN PAGE -->
+  <div class="pg" id="pg-learn">
+    <div class="lesson-hero">
+      <div class="lh-step" id="lessonStepLabel">Subject: Science · Lesson 3 of 8</div>
+      <div class="lh-title" id="lessonTitle">🌱 How Plants Make Food</div>
+      <div class="lh-prog">
+        <div class="lh-bar-w"><div class="lh-bar" id="lessonBar" style="width:35%"></div></div>
+        <div style="font-size:0.75rem;color:var(--muted);white-space:nowrap">35%</div>
+      </div>
+    </div>
+
+    <div class="subject-pills">
+      <div class="subpill on" onclick="setSubject('science',this)">🔬 Science</div>
+      <div class="subpill" onclick="setSubject('math',this)">🔢 Maths</div>
+      <div class="subpill" onclick="setSubject('english',this)">📝 English</div>
+      <div class="subpill" onclick="setSubject('evs',this)">🌍 EVS</div>
+    </div>
+
+    <div class="card card-glow">
+      <div class="ctitle">📋 Learning Steps</div>
+      <div class="step-cards" id="stepCards"></div>
+    </div>
+
+    <button class="btn btn-v" onclick="markLessonDone()">✅ Mark Lesson Complete (+50 XP)</button>
+  </div>
+
+  <!-- HOMEWORK PAGE -->
+  <div class="pg" id="pg-homework">
+    <div class="card card-glow">
+      <div class="ctitle">✏️ Homework Simplifier</div>
+      <p style="font-size:0.78rem;color:var(--muted)">Each homework task broken into easy steps with audio help</p>
+    </div>
+    <div id="hwList"></div>
+  </div>
+
+  <!-- GOALS PAGE -->
+  <div class="pg" id="pg-goals">
+    <div class="goal-header">
+      <div class="gh-title">🎯 Today's Micro-Goals</div>
+      <div class="gh-sub">Complete goals to earn XP and unlock rewards!</div>
+      <div class="gh-coins" id="coinCount">🪙 620 XP</div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">📋 Today's Tasks <span style="font-size:0.8rem;color:var(--teal);font-family:var(--fbody)" id="goalsDone">0/5 done</span></div>
+      <div id="goalsList"></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">🏆 My Badges</div>
+      <div class="rewards-grid" id="rewardsGrid"></div>
+    </div>
+  </div>
+
+  <!-- TRACKER PAGE -->
+  <div class="pg" id="pg-tracker">
+    <div class="card card-glow">
+      <div class="ctitle">📊 Competency Tracker <span style="font-size:0.72rem;color:var(--teal);font-family:var(--fbody)">(PARAKH Aligned)</span></div>
+      <div class="comp-grid" id="compGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">📈 Performance Bands</div>
+      <div class="band-section" id="bandSection"></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">🧠 ZPD Progress (Vygotsky)</div>
+      <div style="font-size:0.82rem;color:var(--muted);line-height:1.8;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:1.1rem">✅</span>
+          <span><strong style="color:var(--teal)">Zone of Actual Development:</strong> Can do independently</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:1.1rem">🔄</span>
+          <span><strong style="color:var(--gold)">Zone of Proximal Development:</strong> Needs guidance</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:1.1rem">🎯</span>
+          <span><strong style="color:var(--orange)">Next Learning Target:</strong> With app scaffolding</span>
+        </div>
+      </div>
+      <div style="background:var(--bg3);border-radius:12px;padding:14px">
+        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px">Current ZPD Progress</div>
+        <div style="height:12px;background:var(--bg);border-radius:6px;overflow:hidden">
+          <div style="height:100%;width:58%;background:linear-gradient(90deg,var(--teal),var(--gold),var(--orange));border-radius:6px;transition:width 1.5s ease"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);margin-top:5px">
+          <span>Emerging</span><span>Developing</span><span>Proficient</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE PAGE -->
+  <div class="pg" id="pg-profile">
+    <div class="profile-top">
+      <div class="av-ring" onclick="document.getElementById('phUp').click()">
+        <img id="authImg" src="author.jpg" alt="Mateen Yousuf"
+          onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'94\' height=\'94\'><rect fill=\'%231e1535\' width=\'94\' height=\'94\'/><text y=\'56\' x=\'47\' text-anchor=\'middle\' font-size=\'36\'>👤</text></svg>'">
+        <div class="av-ov">📷</div>
+      </div>
+      <input type="file" id="phUp" accept="image/*" style="display:none" onchange="uploadPhoto(event)">
+      <div class="pname">Mateen Yousuf</div>
+      <div class="prole">Teacher – School Education Department, J&K</div>
+      <br>
+      <div class="pill-offline"><span class="pdot"></span> NEP 2020 · FGL Champion · Samagra Shiksha</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-c"><div class="stat-v" id="stLessons">12</div><div class="stat-l">Lessons Done</div></div>
+      <div class="stat-c"><div class="stat-v" id="stXP">620</div><div class="stat-l">Total XP</div></div>
+      <div class="stat-c"><div class="stat-v" id="stStreak">7</div><div class="stat-l">Day Streak</div></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">🧑‍🎓 Student Profiles</div>
+      <div id="studentProfiles"></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">📝 Teacher Notes</div>
+      <textarea class="notes-ta" id="tnotes" placeholder="Notes on first-generation learners…" oninput="saveNotes()"></textarea>
+      <button class="btn btn-g" onclick="saveNotes();showToast('Notes saved! ✅')">💾 Save Notes</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <button class="nb on" onclick="goPage('home')"><span class="ni">🏠</span>Home</button>
+  <button class="nb" onclick="goPage('learn')"><span class="ni">📖</span>Learn</button>
+  <button class="nb" onclick="goPage('homework')"><span class="ni">✏️</span>Homework</button>
+  <button class="nb" onclick="goPage('goals')"><span class="ni">🎯</span>Goals</button>
+  <button class="nb" onclick="goPage('tracker')"><span class="ni">📊</span>Track</button>
+  <button class="nb" onclick="goPage('profile')"><span class="ni">👤</span>Profile</button>
+</nav>
+
+<script>
+// ===== DATA =====
+const lessonSteps = {
+  science: [
+    { title:'What is Photosynthesis?', desc:'Plants make their own food using sunlight, water, and air. This process is called photosynthesis.', done:true },
+    { title:'What do plants need?', desc:'Plants need: 1) Sunlight from the sun ☀️  2) Water from the soil 💧  3) Carbon dioxide from air 🌬️', done:true },
+    { title:'Where does it happen?', desc:'Photosynthesis happens in the green leaves. The green colour comes from chlorophyll.', done:false },
+    { title:'What is produced?', desc:'Plants produce glucose (food) and release oxygen. We breathe that oxygen! 😊', done:false },
+    { title:'Activity: Draw a plant', desc:'Draw a simple plant and label: roots, stem, leaves. Then draw arrows showing water going up.', done:false },
+  ],
+  math: [
+    { title:'What are fractions?', desc:'A fraction shows a part of a whole. Example: If you cut a roti into 4 equal pieces, each piece is 1/4.', done:false },
+    { title:'Numerator and Denominator', desc:'The top number is the numerator (how many parts you have). The bottom is the denominator (total parts).', done:false },
+    { title:'Adding simple fractions', desc:'To add 1/4 + 2/4, just add the top numbers: 1+2=3. Answer: 3/4. (Same bottom number!)' , done:false },
+    { title:'Practice problems', desc:'Try: 2/5 + 1/5 = ?  Also try: 3/8 + 2/8 = ?', done:false },
+  ],
+  english: [
+    { title:'Reading a paragraph', desc:'Read slowly. If you don\'t know a word, skip it and finish the sentence. Then come back to it.', done:false },
+    { title:'Finding the main idea', desc:'Ask yourself: "What is this paragraph MOSTLY about?" That\'s your main idea.', done:false },
+    { title:'New vocabulary', desc:'Pick 3 new words from your reading. Write them down. Use them in your own sentences.', done:false },
+    { title:'Speaking practice', desc:'Read one paragraph out loud. Don\'t worry about pronunciation — just try your best!', done:false },
+  ],
+  evs: [
+    { title:'Our Environment', desc:'The environment is everything around us — air, water, trees, animals, and people.', done:false },
+    { title:'Natural vs Man-made', desc:'Natural things: rivers, mountains, trees. Man-made things: roads, buildings, phones.', done:false },
+    { title:'Protecting our environment', desc:'We can help by: planting trees 🌳, saving water 💧, not littering 🚫', done:false },
+    { title:'Local environment activity', desc:'Look around your home. Name 5 natural things and 5 man-made things you can see.', done:false },
+  ]
+};
+
+const homeworkData = [
+  {
+    subject:'Science', title:'Write 5 differences between plants and animals',
+    due:'Tomorrow', open:false,
+    steps:[
+      'Open your Science textbook to Chapter 3.',
+      'Read the section on "Characteristics of Living Things" (page 28-30).',
+      'Make two columns on paper: "Plants" and "Animals".',
+      'For each difference, write one point in each column.',
+      'Example: Plants make their own food. Animals eat other things for food.',
+    ]
+  },
+  {
+    subject:'Maths', title:'Solve exercise 5.3 — fractions (Q1 to Q5)',
+    due:'Today', open:false,
+    steps:[
+      'Open your Maths book to Exercise 5.3.',
+      'For each question, write the fraction you see.',
+      'Check if the bottom numbers (denominators) are the same.',
+      'If same: just add or subtract the top numbers.',
+      'Write your answer as a fraction and simplify if possible.',
+    ]
+  },
+  {
+    subject:'English', title:'Write a paragraph about your favourite season',
+    due:'2 Days', open:false,
+    steps:[
+      'Choose your favourite season: Summer, Winter, Monsoon, or Spring.',
+      'Write 3 reasons WHY you like it.',
+      'Start with: "My favourite season is ___ because..."',
+      'Use at least 5 sentences.',
+      'Check your spelling before submitting.',
+    ]
+  },
+];
+
+const goalsData = [
+  { icon:'📖', title:'Complete 1 learning step', xp:'+20 XP', done:false },
+  { icon:'✏️', title:'Finish one homework task', xp:'+30 XP', done:false },
+  { icon:'🎯', title:'Practice for 15 minutes', xp:'+25 XP', done:false },
+  { icon:'🗣️', title:'Read one paragraph out loud', xp:'+15 XP', done:false },
+  { icon:'📝', title:'Write 3 new words in notebook', xp:'+10 XP', done:false },
+];
+
+const badges = [
+  { icon:'🌟', name:'First Step', earned:true },
+  { icon:'🔥', name:'7-Day Streak', earned:true },
+  { icon:'📚', name:'Bookworm', earned:true },
+  { icon:'🏆', name:'Top Scorer', earned:false },
+  { icon:'🚀', name:'Explorer', earned:false },
+  { icon:'💡', name:'Bright Mind', earned:false },
+];
+
+const competencies = [
+  { name:'Literacy', icon:'📝', pct:68, color:'#9b5de5' },
+  { name:'Numeracy', icon:'🔢', pct:55, color:'#ffd700' },
+  { name:'Science', icon:'🔬', pct:72, color:'#00d4aa' },
+  { name:'Expression', icon:'🗣️', pct:45, color:'#ff5fa0' },
+];
+
+const bands = [
+  { label:'🔴 Emerging', pct:20, color:'var(--orange)', info:'20%' },
+  { label:'🟡 Developing', pct:45, color:'var(--gold)', info:'45%' },
+  { label:'🔵 Proficient', pct:28, color:'var(--sky)', info:'28%' },
+  { label:'🟢 Advanced', pct:7, color:'var(--teal)', info:'7%' },
+];
+
+const sampleStudents = [
+  { name:'Aamir Hussain', class:'Class 5', xp:620, streak:7, emoji:'👦' },
+  { name:'Zara Malik', class:'Class 5', xp:845, streak:12, emoji:'👧' },
+  { name:'Bilal Ahmed', class:'Class 5', xp:380, streak:3, emoji:'👦' },
+  { name:'Rukhsar Jan', class:'Class 5', xp:710, streak:9, emoji:'👧' },
+];
+
+// ===== STATE =====
+let currentMode = 'student';
+let goalsDone = JSON.parse(localStorage.getItem('fgl_goals') || '[]');
+let xp = parseInt(localStorage.getItem('fgl_xp') || '620');
+let currentSubject = 'science';
+
+// ===== INIT =====
+window.onload = () => {
+  // Stars
+  const s = document.getElementById('stars');
+  for (let i=0; i<40; i++) {
+    const el = document.createElement('div');
+    el.className = 'star';
+    el.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s`;
+    s.appendChild(el);
+  }
+  setTimeout(()=>{ document.getElementById('splash').classList.add('out'); setTimeout(()=>document.getElementById('splash').remove(), 800); }, 2800);
+
+  renderStreak();
+  renderSteps('science');
+  renderHomework();
+  renderGoals();
+  renderBadges();
+  renderCompetencies();
+  renderBands();
+  renderStudentProfiles();
+  loadStorage();
+  updateGoalCount();
+};
+
+// ===== NAV =====
+function goPage(page) {
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('pg-'+page).classList.add('on');
+  const map = {home:0,learn:1,homework:2,goals:3,tracker:4,profile:5};
+  if (map[page]!==undefined) document.querySelectorAll('.nb')[map[page]].classList.add('on');
+}
+
+// ===== MODE =====
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.msw').forEach(b=>b.classList.remove('on'));
+  event.target.classList.add('on');
+  const isParent = mode==='parent';
+  document.getElementById('parentBanner').classList.toggle('show', isParent);
+  document.getElementById('parentBtns').style.display = isParent ? 'block' : 'none';
+  document.getElementById('studentMods').style.display = isParent ? 'none' : 'block';
+  if (isParent) speakText('Welcome parent. Press the big buttons to help your child learn today.');
+  showToast(isParent ? '👨 Parent Mode – Audio guidance ready!' : '👦 Student Mode – Let\'s learn!');
+}
+
+// ===== STREAK =====
+function renderStreak() {
+  let html = '';
+  const days = ['M','T','W','T','F','S','S'];
+  for (let i=0; i<21; i++) {
+    const day = days[i%7];
+    const done = i<7 || (i<14 && Math.random()>0.4);
+    const today = i===6;
+    html += `<div class="sday ${today?'today':done?'done':''}">${day}</div>`;
+  }
+  document.getElementById('streakGrid').innerHTML = html;
+}
+
+// ===== LEARN =====
+function renderSteps(subject) {
+  const steps = lessonSteps[subject] || lessonSteps.science;
+  const done = steps.filter(s=>s.done).length;
+  document.getElementById('lessonBar').style.width = Math.round((done/steps.length)*100)+'%';
+  document.getElementById('stepCards').innerHTML = steps.map((s,i)=>`
+    <div class="step-card ${s.done?'done-step':''}" onclick="toggleStep('${subject}',${i})">
+      <div class="step-num ${s.done?'done-n':''}">${s.done?'✓':(i+1)}</div>
+      <div class="step-info">
+        <div class="step-title">${s.title}</div>
+        <div class="step-desc">${s.desc}</div>
+      </div>
+      <div class="step-audio" onclick="event.stopPropagation();speakText('${s.title}. ${s.desc.replace(/'/g,"")}')" title="Listen">🔊</div>
+    </div>
+  `).join('');
+}
+
+function toggleStep(subject, idx) {
+  lessonSteps[subject][idx].done = !lessonSteps[subject][idx].done;
+  renderSteps(subject);
+  if (lessonSteps[subject][idx].done) { addXP(10); showToast('✅ Step done! +10 XP'); }
+}
+
+function setSubject(sub, el) {
+  currentSubject = sub;
+  document.querySelectorAll('.subpill').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  const titles = {science:'🌱 How Plants Make Food', math:'➗ Understanding Fractions', english:'📝 Reading & Writing Skills', evs:'🌍 Our Environment'};
+  document.getElementById('lessonTitle').textContent = titles[sub];
+  renderSteps(sub);
+}
+
+function markLessonDone() {
+  addXP(50); showToast('🎉 Lesson complete! +50 XP earned!');
+  document.getElementById('stLessons').textContent = parseInt(document.getElementById('stLessons').textContent)+1;
+}
+
+// ===== HOMEWORK =====
+function renderHomework() {
+  document.getElementById('hwList').innerHTML = homeworkData.map((hw,i)=>`
+    <div class="hw-card" onclick="toggleHW(${i})">
+      <div class="hw-subject">${hw.subject}</div>
+      <div class="hw-title">${hw.title}</div>
+      <div class="hw-meta">
+        <span class="hw-due">📅 Due: ${hw.due}</span>
+        <span class="hw-listen" onclick="event.stopPropagation();speakHomework(${i})">🔊 Listen</span>
+      </div>
+      <div class="hw-steps ${hw.open?'open':''}" id="hwSteps${i}">
+        ${hw.steps.map((s,j)=>`
+          <div class="hw-step">
+            <div class="hw-snum">${j+1}</div>
+            <div>${s}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleHW(i) {
+  homeworkData[i].open = !homeworkData[i].open;
+  renderHomework();
+}
+
+function speakHomework(i) {
+  const hw = homeworkData[i];
+  const text = `Homework: ${hw.title}. Here are the steps. ${hw.steps.join('. Next step: ')}`;
+  speakText(text);
+}
+
+// ===== GOALS =====
+function renderGoals() {
+  document.getElementById('goalsList').innerHTML = goalsData.map((g,i)=>`
+    <div class="goal-item ${goalsDone.includes(i)?'done-g':''}" onclick="toggleGoal(${i})">
+      <div class="goal-icon">${g.icon}</div>
+      <div class="goal-info">
+        <div class="goal-title">${g.title}</div>
+        <div class="goal-xp">${g.xp}</div>
+      </div>
+      <div class="goal-check">${goalsDone.includes(i)?'✅':'⭕'}</div>
+    </div>
+  `).join('');
+}
+
+function toggleGoal(i) {
+  if (goalsDone.includes(i)) { goalsDone = goalsDone.filter(x=>x!==i); }
+  else { goalsDone.push(i); addXP(parseInt(goalsData[i].xp)); showToast(`${goalsData[i].icon} Goal done! ${goalsData[i].xp}`); }
+  localStorage.setItem('fgl_goals', JSON.stringify(goalsDone));
+  updateGoalCount(); renderGoals();
+}
+
+function updateGoalCount() {
+  document.getElementById('goalsDone').textContent = `${goalsDone.length}/${goalsData.length} done`;
+}
+
+function renderBadges() {
+  document.getElementById('rewardsGrid').innerHTML = badges.map(b=>`
+    <div class="reward-tile ${b.earned?'earned':''}">
+      <div class="reward-icon">${b.earned?b.icon:'🔒'}</div>
+      <div class="reward-name">${b.name}</div>
+    </div>
+  `).join('');
+}
+
+// ===== COMPETENCIES =====
+function renderCompetencies() {
+  document.getElementById('compGrid').innerHTML = competencies.map(c=>{
+    const r=27, circ=2*Math.PI*r;
+    const off = circ-(c.pct/100)*circ;
+    return `
+      <div class="comp-card">
+        <div class="comp-icon">${c.icon}</div>
+        <div class="comp-name">${c.name}</div>
+        <div class="ring-w">
+          <svg class="rsvg" width="68" height="68" viewBox="0 0 68 68">
+            <circle class="rbg" cx="34" cy="34" r="${r}" stroke-dasharray="${circ}" stroke-dashoffset="0"/>
+            <circle class="rfill" cx="34" cy="34" r="${r}" stroke="${c.color}" stroke-dasharray="${circ}" stroke-dashoffset="${off}"/>
+          </svg>
+          <div class="rpct" style="color:${c.color}">${c.pct}%</div>
+        </div>
+        <div class="clevel" style="color:${c.color}">Developing</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderBands() {
+  document.getElementById('bandSection').innerHTML = bands.map(b=>`
+    <div class="band-row">
+      <div class="band-lbl">${b.label}</div>
+      <div class="band-track"><div class="band-fill" style="width:${b.pct}%;background:${b.color}"></div></div>
+      <div class="band-pct" style="color:${b.color}">${b.info}</div>
+    </div>
+  `).join('');
+}
+
+function renderStudentProfiles() {
+  document.getElementById('studentProfiles').innerHTML = sampleStudents.map(s=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--card2);border-radius:12px;margin-bottom:8px;cursor:pointer;border:1px solid transparent;transition:all 0.3s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='transparent'">
+      <div style="font-size:1.5rem">${s.emoji}</div>
+      <div style="flex:1">
+        <div style="font-family:var(--fhead);font-size:0.9rem">${s.name}</div>
+        <div style="font-size:0.7rem;color:var(--muted)">${s.class} · 🔥 ${s.streak}-day streak</div>
+      </div>
+      <div style="font-family:var(--fhead);font-size:0.88rem;color:var(--gold)">⭐ ${s.xp} XP</div>
+    </div>
+  `).join('');
+}
+
+// ===== XP =====
+function addXP(amount) {
+  xp += amount;
+  localStorage.setItem('fgl_xp', xp);
+  document.getElementById('coinCount').textContent = `🪙 ${xp} XP`;
+  document.getElementById('stXP').textContent = xp;
+  const pct = Math.min((xp % 1000) / 10, 100);
+  document.getElementById('xpBar').style.width = pct+'%';
+}
+
+// ===== SPEECH =====
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-IN'; u.rate = 0.88; u.pitch = 1.1;
+    speechSynthesis.speak(u);
+  }
+  showToast('🔊 Playing audio...');
+}
+
+// ===== PHOTO =====
+function uploadPhoto(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => { localStorage.setItem('fgl_photo', ev.target.result); document.getElementById('authImg').src = ev.target.result; showToast('📷 Photo updated!'); };
+  r.readAsDataURL(f);
+}
+
+function saveNotes() { localStorage.setItem('fgl_notes', document.getElementById('tnotes').value); }
+
+function loadStorage() {
+  const p = localStorage.getItem('fgl_photo'); if (p) document.getElementById('authImg').src = p;
+  const n = localStorage.getItem('fgl_notes'); if (n) document.getElementById('tnotes').value = n;
+  const savedXP = parseInt(localStorage.getItem('fgl_xp') || '620');
+  xp = savedXP;
+  document.getElementById('coinCount').textContent = `🪙 ${xp} XP`;
+  document.getElementById('stXP').textContent = xp;
+  const pct = Math.min((xp%1000)/10, 100);
+  document.getElementById('xpBar').style.width = pct+'%';
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+// ===== SERVICE WORKER =====
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+}
+</script>
+</body>
+</html>

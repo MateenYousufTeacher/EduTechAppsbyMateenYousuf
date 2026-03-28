@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>User Manual – FLN Booster</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Space+Mono&display=swap"/>
+<style>
+:root{--navy:#0d1f3c;--deep:#1e3a5f;--royal:#1e5799;--sky:#3b82f6;--gold:#f59e0b;--amber:#fbbf24;--cream:#fef9ef;--white:#fff;--mid:#475569;--light:#f1f5f9;--success:#10b981}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);line-height:1.7}
+.hero{background:linear-gradient(150deg,var(--navy),var(--deep),var(--royal));padding:48px 24px 36px;color:white}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.2rem);font-weight:900;margin-bottom:10px}
+.hero p{color:rgba(255,255,255,.75);font-size:.9rem}
+.author-row{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.1);border-radius:12px;padding:14px;margin-top:20px}
+.author-row img{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid var(--amber)}
+.author-name{color:white;font-weight:700;font-size:.95rem}
+.author-role{color:rgba(255,255,255,.65);font-size:.75rem}
+.container{max-width:800px;margin:0 auto;padding:24px 20px}
+.toc{background:var(--white);border-radius:14px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.07);margin-bottom:28px}
+.toc h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:12px;color:var(--navy)}
+.toc a{display:block;padding:6px 0;font-size:.85rem;color:var(--royal);text-decoration:none;border-bottom:1px solid var(--light)}
+.toc a:hover{color:var(--sky)}
+.chapter{margin-bottom:40px}
+.chapter-header{background:linear-gradient(135deg,var(--navy),var(--deep));color:white;border-radius:12px;padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.chapter-icon{font-size:2rem}
+.chapter-num{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--amber);display:block;margin-bottom:2px}
+.chapter-header h2{font-family:'Playfair Display',serif;font-size:1.1rem}
+.chapter p{font-size:.9rem;color:var(--mid);margin-bottom:12px}
+.step-card{background:var(--white);border-radius:12px;padding:16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;gap:12px;align-items:flex-start}
+.step-num{background:linear-gradient(135deg,var(--royal),var(--sky));color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0;font-family:'Space Mono',monospace}
+.step-card h4{font-size:.88rem;font-weight:600;color:var(--navy);margin-bottom:4px}
+.step-card p{font-size:.82rem;color:var(--mid);line-height:1.5}
+.tip-box{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.4);border-radius:10px;padding:14px;margin:12px 0;font-size:.85rem;color:#92400e}
+.tip-box strong{color:#78350f}
+.code-block{background:var(--navy);color:#a5f3fc;font-family:'Space Mono',monospace;font-size:.78rem;padding:14px;border-radius:10px;margin:10px 0;line-height:1.7;overflow-x:auto}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--royal),var(--sky));color:white;padding:12px 24px;border-radius:50px;text-decoration:none;font-weight:600;font-size:.88rem;margin-bottom:24px}
+.divider{height:1px;background:var(--light);margin:16px 0}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div style="display:inline-block;background:rgba(251,191,36,.2);border:1px solid var(--amber);color:var(--amber);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:16px;">📖 Complete User Manual</div>
+  <h1>FLN Booster App<br/>User Manual & Guide</h1>
+  <p>Step-by-step instructions for students, teachers, and parents. Aligned with NEP 2020 and NCF Foundational Stage 2022.</p>
+  <div class="author-row">
+    <img src="author.jpg" alt="Mateen Yousuf"/>
+    <div>
+      <div class="author-name">Mateen Yousuf</div>
+      <div class="author-role">Teacher — School Education Department, J&amp;K</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <a href="index.html" class="back-btn">← Back to App</a>
+
+  <div class="toc">
+    <h3>📋 Table of Contents</h3>
+    <a href="#ch1">Chapter 1: Getting Started & Installation</a>
+    <a href="#ch2">Chapter 2: Landing Page & Navigation</a>
+    <a href="#ch3">Chapter 3: Diagnostic Assessment</a>
+    <a href="#ch4">Chapter 4: Reading Development Module</a>
+    <a href="#ch5">Chapter 5: Mathematics Module</a>
+    <a href="#ch6">Chapter 6: Writing Skills Module</a>
+    <a href="#ch7">Chapter 7: Progress Tracking & Badges</a>
+    <a href="#ch8">Chapter 8: For Teachers — Classroom Use</a>
+    <a href="#ch9">Chapter 9: For Parents — Home Use</a>
+    <a href="#ch10">Chapter 10: Hosting & Distribution</a>
+  </div>
+
+  <!-- CHAPTER 1 -->
+  <div class="chapter" id="ch1">
+    <div class="chapter-header">
+      <div class="chapter-icon">🚀</div>
+      <div><span class="chapter-num">CHAPTER 01</span><h2>Getting Started & Installation</h2></div>
+    </div>
+    <p>The FLN Booster is a Progressive Web App (PWA). This means it works in any modern web browser — no app store required — and can be installed on your device for offline use.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Open the App</h4><p>Open your web browser (Chrome, Firefox, or Edge recommended) and navigate to the app URL. The app loads immediately.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Install to Home Screen (Android)</h4><p>On Android Chrome, tap the three-dot menu (⋮) at the top-right, then tap "Add to Home Screen" or "Install App". Confirm installation. The app now appears on your home screen like a native app.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Install on Desktop (Windows/Mac)</h4><p>In Chrome, click the install icon (⊕) in the address bar, or go to Settings → "Install FLN Booster". Once installed, the app runs in its own window without the browser toolbar.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Use Offline</h4><p>After first load, the app works completely offline. All lessons, assessments, and progress are stored on your device. No internet connection needed after initial setup.</p></div>
+    </div>
+    <div class="tip-box">
+      <strong>💡 Teacher Tip:</strong> To share the app without internet in your school, run it on a local server (e.g., VS Code Live Server) and connect all student devices to the same WiFi network. Students can then install it and use it offline permanently.
+    </div>
+    <div class="divider"></div>
+    <p><strong>Running locally:</strong> Download all 3 files (index.html, manifest.json, service-worker.js) into a folder. Right-click on the folder → "Open with Live Server" (VS Code extension). The app opens at localhost:5500.</p>
+    <div class="code-block">
+# Project folder structure:<br/>
+📁 fln-booster/<br/>
+├── index.html       ← Main app<br/>
+├── manifest.json    ← PWA config<br/>
+├── service-worker.js ← Offline cache<br/>
+└── author.jpg       ← Author photo
+    </div>
+  </div>
+
+  <!-- CHAPTER 2 -->
+  <div class="chapter" id="ch2">
+    <div class="chapter-header">
+      <div class="chapter-icon">🏠</div>
+      <div><span class="chapter-num">CHAPTER 02</span><h2>Landing Page & Navigation</h2></div>
+    </div>
+    <p>The landing page introduces the app, its policy alignment, and the author. It is designed to be immediately welcoming to students, parents, and teachers.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>The Hero Section</h4><p>The top section displays the app name, policy badges (NEP 2020, NCF, PARAKH, NCERT), and a brief description. Tap "🚀 Start Learning" to go directly to the learning dashboard.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Author Card</h4><p>The author card identifies Mateen Yousuf, Teacher – SED J&K, as the concept developer. This appears on every main page for accountability and identity.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Bottom Navigation Bar</h4><p>The navigation bar at the bottom of the screen (always visible) has 5 tabs: 🏠 Home, 📖 Read, 🔢 Math, ✏️ Write, 📊 Progress. Tap any tab to navigate directly to that section.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Statistics Strip</h4><p>The three stat boxes show: 3 Core Modules, 100% Offline, and NEP alignment — giving users an instant overview of the app's capabilities.</p></div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 3 -->
+  <div class="chapter" id="ch3">
+    <div class="chapter-header">
+      <div class="chapter-icon">🔍</div>
+      <div><span class="chapter-num">CHAPTER 03</span><h2>Diagnostic Assessment</h2></div>
+    </div>
+    <p>The diagnostic assessment is the recommended starting point. It identifies whether a student's gaps are in literacy, numeracy, or both — enabling the app to guide them to the right modules first. This is aligned with PARAKH's competency-based assessment philosophy.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Starting the Test</h4><p>From the Dashboard, tap "🔍 Quick Diagnostic Assessment". The test begins immediately with 10 questions spanning literacy and numeracy.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Answering Questions</h4><p>Each question shows 4 answer options. Tap your choice. The correct answer immediately highlights in green; wrong answers show in red. The test auto-advances to the next question after 1.2 seconds.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Progress Bar</h4><p>The orange progress bar at the top of the assessment screen shows how many questions you have completed out of 10.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Results Screen</h4><p>After 10 questions, your score is displayed. Based on your score: 0-3 → Beginner (focus on foundational modules), 4-6 → Developing (work through all modules), 7-10 → Proficient (use harder difficulty levels).</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div><h4>Assessment History</h4><p>Every completed diagnostic is saved and visible in the Progress tab. This allows teachers to track improvement over retakes.</p></div>
+    </div>
+    <div class="tip-box">
+      <strong>📘 NCF/PARAKH Note:</strong> This diagnostic is a formative, low-stakes assessment tool — not a graded exam. Encourage students to attempt it honestly and retake it after practice to see growth.
+    </div>
+  </div>
+
+  <!-- CHAPTER 4 -->
+  <div class="chapter" id="ch4">
+    <div class="chapter-header">
+      <div class="chapter-icon">📖</div>
+      <div><span class="chapter-num">CHAPTER 04</span><h2>Reading Development Module</h2></div>
+    </div>
+    <p>The reading module has three integrated components: Phonics Practice, Story Reading, and Comprehension Questions. Together these develop fluency and understanding — core NCF 2022 reading competencies.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Choose Your Level</h4><p>Use the difficulty selector at the top: 🟢 Beginner (simple phonics and short texts), 🟡 Developing (medium complexity), 🔴 Proficient (advanced comprehension). Start at Beginner and progress upward.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Phonics Practice Grid</h4><p>The grid shows 16 letter tiles (A–P). Tap any letter to see its phonetic sound and a key example word (e.g., "A says /æ/ — like Apple"). This builds letter-sound correspondence awareness. Each tap adds to your reading progress score.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Story Reading</h4><p>A short, age-appropriate story is displayed with clickable words. Tap any word to highlight it in yellow. This encourages word-by-word reading focus. Each word interaction adds to your progress. Tap "Next Story →" to load a new story.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Comprehension Questions</h4><p>After the story, 3 comprehension questions test understanding (not memory). Each has 4 options. Select your answer — correct answers earn progress points and move you toward the Reading Star badge.</p></div>
+    </div>
+    <div class="tip-box">
+      <strong>💡 Classroom Use:</strong> Have students read the story aloud before answering comprehension questions. For very weak readers, the teacher reads the story aloud while students follow along on screen — this is a shared reading strategy aligned with NCF literacy pedagogy.
+    </div>
+  </div>
+
+  <!-- CHAPTER 5 -->
+  <div class="chapter" id="ch5">
+    <div class="chapter-header">
+      <div class="chapter-icon">🔢</div>
+      <div><span class="chapter-num">CHAPTER 05</span><h2>Mathematics Module</h2></div>
+    </div>
+    <p>The math module presents word problems rooted in everyday Indian contexts — emphasizing the NEP 2020 principle that mathematics should be connected to real life. Three difficulty levels cover the progression from simple counting to multiplication.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Select Difficulty Level</h4><p>🟢 Counting: Simple addition and subtraction within 10. 🟡 Add/Sub: Two-digit operations with real-world contexts. 🔴 Multiply: Multiplication problems with practical scenarios. Begin at the level matching your diagnostic result.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Word Problem</h4><p>A word problem appears in the grey box above the equation (e.g., "Raju has 4 apples. His mother gives him 3 more. How many does he have?"). Read the problem carefully before solving.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Number Equation</h4><p>Below the word problem, the equation is shown in large numerals (e.g., "4 + 3 = ?"). The answer box below awaits your input.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Number Pad</h4><p>Use the on-screen number pad to enter your answer without a keyboard. Tap digits to build your number, use ⌫ to delete, and ✓ (green) to submit. This is optimised for touch devices.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div><h4>Feedback & Next Problem</h4><p>If correct, a green "✅ Correct! Well done!" message appears and your score updates. If wrong, the correct answer is shown. The next problem loads automatically after 1.5 seconds. Your session score is shown as X/Total.</p></div>
+    </div>
+    <div class="tip-box">
+      <strong>💡 Teacher Tip for Simulations:</strong> For very basic learners, act out the word problem physically. "Raju has 4 apples — put 4 objects on the desk. Now add 3 more. Count all together." Then enter the answer in the app. This bridges concrete-pictorial-abstract learning, as recommended by NCF 2022.
+    </div>
+  </div>
+
+  <!-- CHAPTER 6 -->
+  <div class="chapter" id="ch6">
+    <div class="chapter-header">
+      <div class="chapter-icon">✏️</div>
+      <div><span class="chapter-num">CHAPTER 06</span><h2>Writing Skills Module</h2></div>
+    </div>
+    <p>The writing module provides structured, scaffolded writing prompts across three levels — from basic letter formation to full paragraph writing. This is aligned with NCF 2022's emphasis on developing written expression as a core foundational competency.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Select Writing Level</h4><p>🟢 Letters: Practice copying letters, words, and short sentences. 🟡 Sentences: Write 4-5 sentences on guided topics. 🔴 Paragraph: Compose full paragraphs on academic and real-world themes.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>The Writing Prompt</h4><p>The dark blue prompt card at the top shows your writing task title and detailed instructions. Read the prompt carefully before beginning. For Paragraph level, specific ideas and vocabulary cues are provided.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>The Writing Area (Lined Paper)</h4><p>The writing area uses a lined background mimicking actual ruled paper — helping students develop consistent line use. Type your response here. The word counter updates in real time at the bottom right.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Save Your Writing</h4><p>Tap "💾 Save Writing" to save your entry to local storage. Up to 10 recent entries are saved and displayed below the writing area for review. Saving earns progress points toward the Writing Champion badge.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div><h4>Alphabet Reference Grid</h4><p>A full A-Z alphabet reference grid at the bottom of the Writing module helps beginners who need to reference letter shapes while writing.</p></div>
+    </div>
+    <div class="tip-box">
+      <strong>📝 Pedagogical Note:</strong> For Letter-level students, the teacher should model each letter on the board before the student types it in the app. For Sentence-level, use the "talk first, write later" strategy — have students verbally describe their response before writing. For Paragraph level, teach the basic paragraph structure (topic sentence → supporting sentences → conclusion) before the student writes.
+    </div>
+  </div>
+
+  <!-- CHAPTER 7 -->
+  <div class="chapter" id="ch7">
+    <div class="chapter-header">
+      <div class="chapter-icon">📊</div>
+      <div><span class="chapter-num">CHAPTER 07</span><h2>Progress Tracking & Badges</h2></div>
+    </div>
+    <p>The Progress tab provides a holistic view of the learner's journey, aligned with PARAKH's continuous progress monitoring philosophy.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Module Progress Bars</h4><p>Three progress bars show completion percentage for Reading, Math, and Writing. Progress increases as students complete activities in each module. Aim for 100% in each module.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Achievement Badges</h4><p>Three badges can be earned: ⭐ Reading Star (complete 40% reading), 🔭 Math Explorer (complete 40% math), 🏆 Writing Champion (save 2+ writing pieces). Earned badges glow gold with a celebration toast notification.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Assessment History</h4><p>All completed diagnostic assessments are listed with date and score. This allows students and teachers to track progress over time and identify if retaken scores improve.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Reset Progress</h4><p>The red "Reset All Progress" button clears all data — useful when a new student starts using the same device. All saved writings and assessment history are permanently deleted.</p></div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 8 -->
+  <div class="chapter" id="ch8">
+    <div class="chapter-header">
+      <div class="chapter-icon">👩‍🏫</div>
+      <div><span class="chapter-num">CHAPTER 08</span><h2>For Teachers — Classroom Use</h2></div>
+    </div>
+    <p>Teachers can integrate this app into NEP 2020-aligned classroom practice in several structured ways.</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Identification Phase</h4><p>Begin each academic year by having all students complete the Diagnostic Assessment. Students scoring below 5/10 are identified as requiring FLN support — these students use the app in Beginner mode first.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Remediation Groups</h4><p>Group students by diagnostic score. While advanced students do grade-level work, the FLN group uses the app for 20-30 minutes daily. Rotate device access if limited devices are available.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Shared Reading Strategy</h4><p>For the Reading module: display the story on a classroom screen/projector and read aloud as a class. Ask comprehension questions verbally before students answer individually on the app. This is a classic shared reading approach aligned with NCF 2022.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Math Simulation with Objects</h4><p>For Math module word problems: use physical objects (stones, erasers, pencils) to simulate the problem before entering the digital answer. This bridges the concrete-to-abstract gap that many struggling learners need.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div><h4>Progress Review</h4><p>At end of month, review Progress tab with each FLN student individually. Celebrate badge achievements. Record module progress percentages in your class register as formative assessment data.</p></div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 9 -->
+  <div class="chapter" id="ch9">
+    <div class="chapter-header">
+      <div class="chapter-icon">👨‍👩‍👧</div>
+      <div><span class="chapter-num">CHAPTER 09</span><h2>For Parents — Home Use</h2></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>Daily Practice Routine</h4><p>Set aside 20 minutes each evening for app practice. Suggested routine: 7 minutes Reading (2-3 phonics tiles + story), 7 minutes Math (5-6 problems), 6 minutes Writing (one writing prompt, saved).</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Reviewing Progress Together</h4><p>Once a week, open the Progress tab with your child and review the progress bars together. Celebrate new badges. Ask your child to explain one story they read or one math problem they solved.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>No Internet Required</h4><p>Once installed, the app works fully offline. It can be used during power cuts (on a charged device), during travel, or anywhere — making home learning truly accessible in all conditions.</p></div>
+    </div>
+  </div>
+
+  <!-- CHAPTER 10 -->
+  <div class="chapter" id="ch10">
+    <div class="chapter-header">
+      <div class="chapter-icon">🌐</div>
+      <div><span class="chapter-num">CHAPTER 10</span><h2>Hosting & Android Distribution</h2></div>
+    </div>
+    <p>To share this app with your school, district, or community:</p>
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div><h4>GitHub Pages (Free)</h4><p>Create a free GitHub account → New repository → Upload all 4 files → Go to Settings → Pages → Source: main branch. Your app will be live at: username.github.io/fln-booster</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div><h4>Netlify (Free, Easiest)</h4><p>Go to netlify.com → Drag your project folder into the browser → Netlify instantly deploys and gives you a public URL. Automatic HTTPS included.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div><h4>Convert to Android APK (PWABuilder)</h4><p>Visit pwabuilder.com → Enter your hosted URL → Click "Build" → Select Android → Download the APK. Install the APK on any Android device, or upload to Google Play Store.</p></div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div><h4>Google Play Store</h4><p>Create a Google Play Developer account ($25 one-time fee) → Upload the APK/AAB from PWABuilder → Fill in store listing (name, description, screenshots) → Submit for review (usually 1-3 days) → Publish.</p></div>
+    </div>
+    <div class="tip-box">
+      <strong>💡 For Schools Without Internet:</strong> Use a USB drive to transfer the project folder to each device. Open with VS Code Live Server or any local server tool. Students on the same WiFi can access the app for installation.
+    </div>
+  </div>
+
+  <a href="about.html" class="back-btn" style="margin-right:10px;">📘 Conceptual Background</a>
+  <a href="index.html" class="back-btn">🏠 Back to App</a>
+  <br/><br/>
+</div>
+</body>
+</html>
