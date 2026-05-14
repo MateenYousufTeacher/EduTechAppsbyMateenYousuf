@@ -1,134 +1,1240 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>FLN Learning Studio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0c831f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KhanyarKart">
+<meta name="description" content="Fastest grocery delivery in Khanyar, Srinagar - 10 minute delivery">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%230c831f'/><text y='140' x='96' font-size='120' text-anchor='middle'>🛒</text></svg>">
+<title>GHSSKhanyarKart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g:#0c831f;--gd:#07691a;--gl:#f0fdf4;--gb:#bbf7d0;--gm:#dcfce7;
+  --y:#f59e0b;--r:#ef4444;--o:#f97316;
+  --s1:#f8fafc;--s2:#f1f5f9;--s3:#e2e8f0;--s4:#cbd5e1;--s5:#94a3b8;
+  --t1:#0f172a;--t2:#1e293b;--t3:#475569;--t4:#94a3b8;
+  --w:#ffffff;
+  --ff:'DM Sans',sans-serif;--fd:'Playfair Display',serif;
+  --sh:0 1px 12px rgba(0,0,0,.07);--shm:0 4px 24px rgba(0,0,0,.11);--shl:0 8px 40px rgba(0,0,0,.16);
+  --tr:all .15s ease;--tr3:all .3s cubic-bezier(.4,0,.2,1);
+}
+html,body{font-family:var(--ff);background:#f1f5f9;color:var(--t1);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overscroll-behavior:none;}
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-thumb{background:var(--s4);border-radius:99px;}
+img{display:block;}
+button{font-family:var(--ff);}
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      margin: 0;
-      padding: 0;
-    }
+.app{max-width:430px;margin:0 auto;background:var(--w);min-height:100vh;position:relative;overflow-x:hidden;padding-bottom:70px;}
 
-    header {
-      background: #0a1628;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+/* HEADER */
+.hd{background:var(--g);position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(12,131,31,.3);}
+.hd-top{display:flex;align-items:center;justify-content:space-between;padding:11px 14px 0;}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;cursor:pointer;}
+.lmark{width:38px;height:38px;background:rgba(255,255,255,.18);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.lname{font-family:var(--fd);font-size:17.5px;color:#fff;line-height:1;}
+.lby{font-size:9px;color:rgba(255,255,255,.65);font-weight:500;line-height:1.5;margin-top:1px;}
+.hd-acts{display:flex;gap:6px;}
+.hbtn{background:rgba(255,255,255,.18);border:none;border-radius:10px;width:37px;height:37px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:var(--tr);position:relative;color:#fff;}
+.hbtn:hover{background:rgba(255,255,255,.28);}
+.hbd{position:absolute;top:-4px;right:-4px;background:var(--y);color:#000;font-size:9px;font-weight:800;border-radius:99px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--g);}
+.hd-del{display:flex;align-items:center;gap:7px;padding:7px 14px;}
+.del-dot{width:7px;height:7px;background:var(--y);border-radius:99px;animation:pulse 1.5s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.del-txt{font-size:11.5px;color:rgba(255,255,255,.88);font-weight:500;}
+.del-txt b{color:#fff;font-weight:700;}
+.del-spd{margin-left:auto;background:rgba(255,255,255,.18);border-radius:99px;padding:3px 10px;font-size:10.5px;color:#fff;font-weight:700;display:flex;align-items:center;gap:4px;white-space:nowrap;}
+.hd-src{padding:7px 14px 11px;}
+.src-wrap{position:relative;}
+.src-ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.55;pointer-events:none;}
+.src-inp{width:100%;padding:10px 36px 10px 35px;border-radius:11px;border:none;font-size:13.5px;font-family:var(--ff);font-weight:500;background:rgba(255,255,255,.97);outline:none;color:var(--t1);}
+.src-inp::placeholder{color:var(--s5);}
+.src-clr{position:absolute;right:9px;top:50%;transform:translateY(-50%);background:var(--s3);border:none;border-radius:99px;width:21px;height:21px;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;color:var(--t3);}
 
-    h1 {
-      margin: 0;
-    }
+/* BANNERS */
+.bnr-wrap{padding:12px 14px 0;}
+.bnr-slide{border-radius:18px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;min-height:108px;position:relative;overflow:hidden;cursor:pointer;}
+.bnr-slide::before{content:'';position:absolute;right:-25px;top:-25px;width:120px;height:120px;background:rgba(255,255,255,.1);border-radius:50%;}
+.bnr-slide::after{content:'';position:absolute;right:40px;bottom:-40px;width:80px;height:80px;background:rgba(255,255,255,.06);border-radius:50%;}
+.bnr-bdg{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.22);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;margin-bottom:7px;letter-spacing:.3px;}
+.bnr-ttl{font-family:var(--fd);font-size:22px;color:#fff;line-height:1.15;}
+.bnr-sub{font-size:11.5px;color:rgba(255,255,255,.82);margin-top:4px;font-weight:500;}
+.bnr-em{font-size:60px;z-index:1;flex-shrink:0;line-height:1;}
+.bnr-dots{display:flex;justify-content:center;gap:5px;margin-top:9px;}
+.bdot{width:5px;height:5px;border-radius:99px;background:var(--s3);transition:var(--tr3);cursor:pointer;}
+.bdot.on{background:var(--g);width:18px;}
 
-    .container {
-      padding: 20px;
-    }
+/* OFFER PILLS */
+.off-row{display:flex;gap:7px;padding:10px 14px;overflow-x:auto;scrollbar-width:none;}
+.off-row::-webkit-scrollbar{display:none;}
+.off-p{flex-shrink:0;display:flex;align-items:center;gap:5px;background:var(--gl);border:1.5px solid var(--gb);border-radius:99px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--g);cursor:pointer;transition:var(--tr);white-space:nowrap;}
+.off-p:hover{background:var(--gm);}
+.off-p.hot{background:#fff7ed;border-color:#fed7aa;color:#c2410c;}
+.off-p.blue{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8;}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
+/* SECTION */
+.sec{padding:14px 14px 0;}
+.sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;}
+.sec-ttl{font-size:16px;font-weight:700;color:var(--t1);}
+.sec-cnt{font-size:11.5px;color:var(--t4);font-weight:600;}
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: 0.3s;
-    }
+/* CAT GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:2px 14px 0;}
+.cat-crd{border-radius:14px;overflow:hidden;cursor:pointer;transition:var(--tr3);position:relative;border:2px solid transparent;}
+.cat-crd:active{transform:scale(.96);}
+.cat-crd.on{border-color:var(--g);}
+.cat-crd:hover:not(.on){transform:translateY(-2px);box-shadow:var(--shm);}
+.cat-img-w{width:100%;aspect-ratio:1;overflow:hidden;background:var(--s2);}
+.cat-img-w img{width:100%;height:100%;object-fit:cover;transition:var(--tr3);}
+.cat-crd:hover .cat-img-w img{transform:scale(1.06);}
+.cat-lbl{background:var(--w);padding:5px 4px 6px;text-align:center;font-size:9.5px;font-weight:700;color:var(--t2);line-height:1.25;}
+.cat-sel-bar{position:absolute;bottom:0;left:0;right:0;background:var(--g);height:2.5px;transform:scaleX(0);transition:var(--tr3);transform-origin:left;}
+.cat-crd.on .cat-sel-bar{transform:scaleX(1);}
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-    }
+/* PILL FILTERS */
+.pill-row{display:flex;gap:7px;padding:10px 14px 0;overflow-x:auto;scrollbar-width:none;}
+.pill-row::-webkit-scrollbar{display:none;}
+.pill{flex-shrink:0;padding:6px 14px;border-radius:99px;border:1.5px solid var(--s3);background:var(--w);font-size:12px;font-weight:600;color:var(--t3);cursor:pointer;transition:var(--tr);white-space:nowrap;}
+.pill.on{background:var(--g);color:#fff;border-color:var(--g);box-shadow:0 2px 8px rgba(12,131,31,.25);}
+.pill:hover:not(.on){background:var(--s1);border-color:var(--s4);}
 
-    .card a {
-      text-decoration: none;
-      color: #0a1628;
-      font-weight: bold;
-      font-size: 16px;
-    }
+/* PRODUCT GRID */
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 14px 0;}
+.pc{background:var(--w);border-radius:16px;border:1.5px solid var(--s3);overflow:hidden;transition:var(--tr3);position:relative;}
+.pc:hover{box-shadow:var(--shl);transform:translateY(-2px);border-color:var(--s4);}
+.pc:active{transform:scale(.98);}
+.pc-img-w{position:relative;background:var(--s1);display:flex;align-items:center;justify-content:center;min-height:128px;overflow:hidden;padding:10px;}
+.pc-img{width:100%;height:108px;object-fit:contain;transition:var(--tr3);}
+.pc:hover .pc-img{transform:scale(1.05);}
+.pc-disc{position:absolute;top:7px;left:7px;background:var(--g);color:#fff;font-size:9px;font-weight:800;padding:2.5px 7px;border-radius:99px;letter-spacing:.2px;}
+.pc-tag{position:absolute;top:7px;right:7px;background:var(--y);color:#000;font-size:8px;font-weight:800;padding:2.5px 6px;border-radius:99px;letter-spacing:.2px;}
+.pc-tag.red{background:#fee2e2;color:var(--r);}
+.pc-tag.blue{background:#dbeafe;color:#1d4ed8;}
+.pc-body{padding:8px 10px 11px;}
+.pc-brand{font-size:9.5px;color:var(--t4);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px;}
+.pc-name{font-size:12.5px;font-weight:700;color:var(--t1);line-height:1.3;margin-bottom:1px;}
+.pc-unit{font-size:10.5px;color:var(--t4);font-weight:500;}
+.pc-rat{display:flex;align-items:center;gap:3px;margin:5px 0 6px;}
+.stars{color:#f59e0b;font-size:10px;letter-spacing:-.5px;}
+.rv{font-size:9.5px;color:var(--t4);}
+.pc-ft{display:flex;align-items:center;justify-content:space-between;}
+.pc-px{display:flex;flex-direction:column;}
+.pc-price{font-size:15px;font-weight:800;color:var(--t1);line-height:1;}
+.pc-mrp{font-size:10px;color:var(--t4);text-decoration:line-through;margin-top:1px;}
 
-    .icon {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-  </style>
+/* ADD / QTY */
+.addbtn{background:var(--w);border:2px solid var(--g);color:var(--g);font-size:22px;font-weight:600;width:34px;height:34px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);line-height:1;}
+.addbtn:hover{background:var(--g);color:#fff;}
+.addbtn:active{transform:scale(.92);}
+.qc{display:flex;align-items:center;gap:5px;}
+.qb{background:var(--g);color:#fff;border:none;width:28px;height:28px;border-radius:7px;cursor:pointer;font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:var(--tr);line-height:1;}
+.qb:hover{background:var(--gd);}
+.qb:active{transform:scale(.9);}
+.qn{font-size:13px;font-weight:800;min-width:18px;text-align:center;color:var(--g);}
+
+/* CART BAR */
+.cbar{position:fixed;bottom:58px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:402px;background:var(--g);border-radius:15px;padding:11px 16px;display:flex;align-items:center;justify-content:space-between;z-index:180;cursor:pointer;transition:var(--tr);box-shadow:0 6px 28px rgba(12,131,31,.38),0 2px 6px rgba(0,0,0,.1);}
+.cbar.show{animation:slideUp3 .3s ease;}
+@keyframes slideUp3{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.cbar:hover{background:var(--gd);}
+.cbar:active{transform:translateX(-50%) scale(.98);}
+.cb-l{display:flex;align-items:center;gap:9px;}
+.cb-cnt{background:rgba(255,255,255,.2);border-radius:8px;padding:4px 10px;}
+.cb-cnt span{color:#fff;font-size:12.5px;font-weight:800;}
+.cb-tx{color:#fff;font-size:13.5px;font-weight:700;}
+.cb-r{display:flex;align-items:center;gap:6px;}
+.cb-pr{color:#fff;font-size:14.5px;font-weight:800;}
+.cb-ar{color:#fff;font-size:18px;}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--w);border-top:1px solid var(--s3);display:flex;z-index:200;}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 4px 6px;cursor:pointer;background:none;border:none;gap:2px;transition:var(--tr);position:relative;}
+.bn-ic{font-size:21px;line-height:1.1;}
+.bn-lb{font-size:9.5px;font-weight:600;color:var(--t4);}
+.bn.on .bn-lb{color:var(--g);}
+.bn-ln{position:absolute;top:0;left:50%;transform:translateX(-50%);width:24px;height:2.5px;background:var(--g);border-radius:0 0 3px 3px;}
+
+/* OVERLAY */
+.ovl{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center;animation:fIn .2s ease;backdrop-filter:blur(3px);}
+@keyframes fIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--w);width:100%;max-width:430px;border-radius:22px 22px 0 0;max-height:92vh;overflow-y:auto;animation:sUp .28s cubic-bezier(.32,0,.67,0);}
+@keyframes sUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mhd{position:sticky;top:0;background:var(--w);display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px;border-bottom:1px solid var(--s2);z-index:1;}
+.mttl{font-size:18px;font-weight:800;color:var(--t1);}
+.mcls{background:var(--s2);border:none;width:30px;height:30px;border-radius:99px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:var(--t3);transition:var(--tr);}
+.mcls:hover{background:var(--s3);}
+.mbody{padding:14px 18px 32px;}
+
+/* CART */
+.ci{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--s2);}
+.ci:last-child{border-bottom:none;}
+.ci-img{width:56px;height:56px;border-radius:11px;object-fit:contain;background:var(--s1);padding:5px;flex-shrink:0;}
+.ci-info{flex:1;min-width:0;}
+.ci-brand{font-size:9px;color:var(--t4);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+.ci-name{font-size:12.5px;font-weight:700;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ci-unit{font-size:10px;color:var(--t4);margin-top:1px;}
+.ci-pr{font-size:14px;font-weight:800;color:var(--t1);flex-shrink:0;text-align:right;}
+
+/* BILL */
+.bill{background:var(--s1);border-radius:13px;padding:13px 14px;margin-top:13px;}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:4.5px 0;font-size:12.5px;color:var(--t3);}
+.brow b{color:var(--t1);}
+.brow.tot{font-size:15px;font-weight:800;color:var(--t1);border-top:1.5px solid var(--s3);margin-top:6px;padding-top:10px;}
+.brow.sav{color:var(--g);font-weight:700;}
+.free-del{background:var(--gm);border-radius:9px;padding:7px 11px;font-size:11.5px;font-weight:700;color:var(--g);margin-bottom:10px;display:flex;align-items:center;gap:5px;}
+
+/* COUPON */
+.cpn-row{display:flex;gap:7px;align-items:center;background:var(--gl);border:1.5px dashed var(--gb);border-radius:11px;padding:10px 12px;margin:10px 0;}
+.cpn-ic{font-size:20px;}
+.cpn-inp{flex:1;background:none;border:none;font-family:var(--ff);font-size:13px;font-weight:600;color:var(--t1);outline:none;text-transform:uppercase;letter-spacing:.5px;}
+.cpn-inp::placeholder{text-transform:none;letter-spacing:0;color:var(--t4);font-weight:500;}
+.apbtn{background:var(--g);color:#fff;border:none;border-radius:8px;padding:7px 13px;font-size:12.5px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:var(--tr);white-space:nowrap;}
+.apbtn:hover{background:var(--gd);}
+.cpn-applied{display:flex;align-items:center;justify-content:space-between;background:var(--gm);border:1.5px solid var(--gb);border-radius:11px;padding:10px 13px;margin:10px 0;}
+.cpn-sav{color:var(--g);font-size:12.5px;font-weight:700;}
+.cpn-rm{background:none;border:none;color:var(--r);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--ff);}
+.cpn-list{margin-top:8px;display:flex;flex-direction:column;gap:7px;}
+.cpn-item{border:1.5px dashed var(--s4);border-radius:11px;padding:10px 13px;cursor:pointer;transition:var(--tr);}
+.cpn-item:hover{border-color:var(--g);background:var(--gl);}
+.cpn-code{font-size:12.5px;font-weight:800;color:var(--g);font-family:monospace;letter-spacing:1.5px;}
+.cpn-desc{font-size:11px;color:var(--t3);margin-top:2px;}
+.cpn-min{font-size:10px;color:var(--t4);margin-top:2px;}
+.cpn-act-lbl{font-size:12px;font-weight:700;color:var(--t2);margin:10px 0 6px;}
+
+/* FORM */
+.fg{margin-bottom:11px;}
+.fl{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.4px;}
+.fi{width:100%;padding:11px 13px;border:1.5px solid var(--s3);border-radius:11px;font-size:13.5px;font-family:var(--ff);font-weight:500;outline:none;transition:var(--tr);color:var(--t1);background:var(--w);}
+.fi:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(12,131,31,.09);}
+.fi-2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.err-msg{color:var(--r);font-size:11.5px;margin-top:4px;font-weight:600;}
+.form-sw{text-align:center;margin-top:12px;font-size:12.5px;color:var(--t4);}
+.form-sw button{background:none;border:none;color:var(--g);font-weight:700;cursor:pointer;font-family:var(--ff);}
+
+/* PAYMENT */
+.pay-opt{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1.5px solid var(--s3);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:var(--tr);}
+.pay-opt.on{border-color:var(--g);background:var(--gl);}
+.pay-ic{font-size:24px;width:32px;text-align:center;}
+.pay-nm{font-size:13px;font-weight:700;color:var(--t1);}
+.pay-sb{font-size:11px;color:var(--t4);margin-top:1px;}
+.pay-chk{color:var(--g);font-size:18px;margin-left:auto;}
+
+/* ORDERS */
+.ord-crd{background:var(--w);border:1.5px solid var(--s3);border-radius:14px;padding:13px;margin-bottom:9px;transition:var(--tr);}
+.ord-crd:hover{box-shadow:var(--shm);border-color:var(--s4);}
+.ord-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.ord-id{font-size:11px;font-weight:700;color:var(--t3);font-family:monospace;}
+.ord-st{font-size:10px;font-weight:800;color:var(--g);background:var(--gm);padding:3px 9px;border-radius:99px;}
+.ord-dt{font-size:10.5px;color:var(--t4);margin-bottom:7px;}
+.ord-its{font-size:11.5px;color:var(--t2);line-height:1.7;}
+.ord-ft{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--s2);padding-top:9px;margin-top:9px;}
+.ord-tot{font-size:14px;font-weight:800;}
+.ord-sv{font-size:11px;color:var(--g);font-weight:700;}
+
+/* USER */
+.u-crd{background:linear-gradient(135deg,var(--g),#15803d);border-radius:16px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.u-av{width:46px;height:46px;border-radius:99px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.u-nm{color:#fff;font-size:15px;font-weight:700;line-height:1;}
+.u-em{color:rgba(255,255,255,.72);font-size:11px;margin-top:3px;}
+.lobtn{margin-left:auto;background:rgba(255,255,255,.2);border:none;border-radius:9px;padding:7px 13px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--ff);transition:var(--tr);}
+.lobtn:hover{background:rgba(255,255,255,.3);}
+.mn-it{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--s2);cursor:pointer;transition:var(--tr);}
+.mn-it:last-child{border-bottom:none;}
+.mn-it:hover{padding-left:3px;}
+.mn-ic{font-size:20px;width:32px;text-align:center;flex-shrink:0;}
+.mn-lb{font-size:13.5px;font-weight:600;flex:1;color:var(--t1);}
+.mn-ar{color:var(--s5);font-size:16px;}
+
+/* SUCCESS */
+.suc-wrap{text-align:center;padding:20px 0 10px;}
+.suc-ic{font-size:58px;margin-bottom:10px;animation:pop .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.suc-ttl{font-family:var(--fd);font-size:24px;color:var(--t1);margin-bottom:6px;}
+.suc-sub{font-size:13px;color:var(--t3);font-weight:500;}
+.tracker{display:flex;align-items:flex-start;margin:18px 0;gap:0;}
+.tr-step{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;}
+.tr-dot{width:30px;height:30px;border-radius:99px;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.tr-line{height:2.5px;flex:1;background:var(--gb);margin-top:14px;}
+.tr-lb{font-size:9.5px;font-weight:700;color:var(--t3);text-align:center;max-width:52px;line-height:1.3;}
+.eta-box{background:var(--gl);border:1.5px solid var(--gb);border-radius:12px;padding:13px;text-align:center;margin-top:4px;}
+.eta-ttl{font-size:14px;font-weight:800;color:var(--g);margin-bottom:3px;}
+.eta-sub{font-size:11.5px;color:var(--t3);}
+
+/* EMPTY */
+.empty{text-align:center;padding:50px 20px;}
+.ei{font-size:50px;margin-bottom:12px;}
+.empty h3{font-size:17px;font-weight:700;color:var(--t1);margin-bottom:5px;}
+.empty p{font-size:12.5px;color:var(--t4);}
+
+/* DIVIDER */
+.div8{height:8px;background:var(--s2);margin:14px 0 0;}
+
+/* FOOTER */
+.foot{text-align:center;padding:16px 16px 8px;border-top:1px solid var(--s2);margin-top:8px;}
+.foot p{font-size:11px;color:var(--t4);line-height:1.8;font-weight:500;}
+.foot strong{color:var(--g);font-weight:700;}
+
+/* TOAST */
+.toast{position:fixed;top:72px;left:50%;transform:translateX(-50%);background:var(--t1);color:#fff;padding:9px 17px;border-radius:99px;font-size:12.5px;font-weight:700;z-index:9999;white-space:nowrap;animation:tst .22s ease;pointer-events:none;box-shadow:var(--shl);}
+@keyframes tst{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* SECTION HDR */
+.sub-hd{font-size:13.5px;font-weight:800;color:var(--t2);margin:12px 0 9px;display:flex;align-items:center;gap:6px;}
+
+/* HIDDEN */
+.hidden{display:none!important;}
+
+/* ERROR BOX */
+.err-box{background:#fee2e2;color:var(--r);border-radius:9px;padding:8px 12px;margin-bottom:12px;font-size:12px;font-weight:700;}
+
+/* PWA install banner */
+.pwa-banner{background:var(--g);color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:600;gap:8px;}
+.pwa-banner button{background:rgba(255,255,255,.2);border:none;border-radius:8px;padding:6px 12px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--ff);}
+.pwa-banner .dismiss{background:none;padding:4px 8px;opacity:.7;}
+</style>
 </head>
-
 <body>
-
-<header>
-  <h1>📚 FLN Learning Studio</h1>
-  <p>Foundational Literacy & Numeracy Tools</p>
-</header>
-
-<div class="container">
-
-  <div class="grid">
-
-    <div class="card">
-      <div class="icon">📊</div>
-      <a href="Comprehensive FLN Diagnostic & Intervention Suite/">FLN Suite</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">🔗</div>
-      <a href="FGL-Bridge PWA/">FGL Bridge</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">📈</div>
-      <a href="FLN Diagnostic Intelligence Portal/">Intelligence Portal</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">📚</div>
-      <a href="FLN Diagnostic Intelligence Portal 1/">Portal 2</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">📖</div>
-      <a href="FLN Reading & Competency Mastery Lab/">Reading Lab</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">⚡</div>
-      <a href="FLN Recovery & Competency Acceleration Studio/">Recovery</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">✍️</div>
-      <a href="Foundational Literacy Booster/">Literacy Booster</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">🔢</div>
-      <a href="Foundational Literacy and Numeracy Booster/">FLN Booster</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">➗</div>
-      <a href="Foundational Math Trainer/">Math Trainer</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">🧠</div>
-      <a href="Foundational Numeracy Mastery Lab/">Numeracy Lab</a>
-    </div>
-
-    <div class="card">
-      <div class="icon">🏫</div>
-      <a href="NIPUN/">NIPUN Module</a>
-    </div>
-
+<div id="pwa-install-banner" class="pwa-banner hidden">
+  <span>📱 Install KhanyarKart as an app!</span>
+  <div style="display:flex;gap:6px;">
+    <button id="pwa-install-btn">Install</button>
+    <button class="dismiss" id="pwa-dismiss">✕</button>
   </div>
-
 </div>
 
+<div class="app" id="app">
+
+  <!-- HEADER -->
+  <div class="hd">
+    <div class="hd-top">
+      <div class="logo" onclick="goHome()">
+        <div class="lmark">🛒</div>
+        <div>
+          <div class="lname">GHSSKhanyarKart</div>
+          <div class="lby">Commerce Students · Dr. Mateen Yousuf</div>
+        </div>
+      </div>
+      <div class="hd-acts">
+        <button class="hbtn" onclick="openModal('orders')">📦</button>
+        <button class="hbtn" id="user-btn" onclick="handleUserBtn()">
+          👤<span class="hbd hidden" id="user-badge">✓</span>
+        </button>
+      </div>
+    </div>
+    <div class="hd-del">
+      <div class="del-dot"></div>
+      <span class="del-txt">Delivering to <b>Khanyar, Srinagar</b></span>
+      <div class="del-spd">⚡ 10 min</div>
+    </div>
+    <div class="hd-src">
+      <div class="src-wrap">
+        <span class="src-ic">🔍</span>
+        <input class="src-inp" id="search-inp" placeholder="Search groceries, snacks, brands..." oninput="handleSearch(this.value)">
+        <button class="src-clr hidden" id="search-clr" onclick="clearSearch()">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME CONTENT (hidden when searching) -->
+  <div id="home-section">
+    <!-- BANNER -->
+    <div class="bnr-wrap">
+      <div class="bnr-slide" id="banner-slide" style="background:linear-gradient(135deg,#15803d,#22c55e)">
+        <div>
+          <div class="bnr-bdg" id="bnr-badge">⚡ Express</div>
+          <div class="bnr-ttl" id="bnr-title">10 Min Delivery</div>
+          <div class="bnr-sub" id="bnr-sub">Fresh groceries at your doorstep</div>
+        </div>
+        <div class="bnr-em" id="bnr-em">🚀</div>
+      </div>
+      <div class="bnr-dots" id="bnr-dots"></div>
+    </div>
+
+    <!-- OFFER STRIP -->
+    <div class="off-row" id="offer-pills"></div>
+
+    <!-- CATEGORIES -->
+    <div class="sec">
+      <div class="sec-hd"><span class="sec-ttl">Shop by Category</span></div>
+    </div>
+    <div class="cat-grid" id="cat-grid"></div>
+    <div class="div8"></div>
+  </div>
+
+  <!-- FILTER PILLS -->
+  <div class="pill-row" id="pill-row"></div>
+
+  <!-- PRODUCTS HEADER -->
+  <div class="sec" style="padding-top:10px">
+    <div class="sec-hd">
+      <span class="sec-ttl" id="products-title">All Products</span>
+      <span class="sec-cnt" id="products-count"></span>
+    </div>
+  </div>
+
+  <!-- PRODUCTS GRID -->
+  <div class="pg" id="products-grid"></div>
+
+  <!-- EMPTY STATE -->
+  <div class="empty hidden" id="empty-state">
+    <div class="ei">🤔</div>
+    <h3>Nothing found</h3>
+    <p>Try searching something else</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <p><strong>GHSSKhanyarKart</strong> — Fastest Delivery in Khanyar, Srinagar<br>
+    Developed by <strong>Students of Commerce</strong><br>
+    Under the supervision of <strong>Dr. Mateen Yousuf</strong></p>
+  </div>
+
+  <!-- CART BAR -->
+  <div class="cbar hidden" id="cart-bar" onclick="handleCartBarClick()">
+    <div class="cb-l">
+      <div class="cb-cnt"><span id="cart-bar-count">0 items</span></div>
+      <span class="cb-tx">View Cart</span>
+    </div>
+    <div class="cb-r">
+      <span class="cb-pr" id="cart-bar-price">₹0</span>
+      <span class="cb-ar">›</span>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bnav">
+    <button class="bn on" id="nav-home" onclick="navClick('home')">
+      <div class="bn-ln"></div>
+      <span class="bn-ic">🏠</span>
+      <span class="bn-lb">Home</span>
+    </button>
+    <button class="bn" id="nav-search" onclick="navClick('search')">
+      <span class="bn-ic">🔍</span>
+      <span class="bn-lb">Search</span>
+    </button>
+    <button class="bn" id="nav-orders" onclick="navClick('orders')">
+      <span class="bn-ic">📦</span>
+      <span class="bn-lb">Orders</span>
+    </button>
+    <button class="bn" id="nav-account" onclick="navClick('account')">
+      <span class="bn-ic">👤</span>
+      <span class="bn-lb">Account</span>
+    </button>
+  </div>
+</div>
+
+<!-- MODALS CONTAINER -->
+<div id="modals-container"></div>
+
+<!-- TOAST -->
+<div class="toast hidden" id="toast-el"></div>
+
+<script>
+// ===================== DATA =====================
+const IMG = {
+  tomato:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200&q=80",
+  spinach:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=200&q=80",
+  banana:"https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&q=80",
+  apple:"https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=200&q=80",
+  onion:"https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=200&q=80",
+  potato:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=200&q=80",
+  carrot:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=200&q=80",
+  milk:"https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&q=80",
+  eggs:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=200&q=80",
+  butter:"https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=200&q=80",
+  yogurt:"https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200&q=80",
+  paneer:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=200&q=80",
+  cheese:"https://images.unsplash.com/photo-1452195100486-9cc805987862?w=200&q=80",
+  bread:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&q=80",
+  croissant:"https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=200&q=80",
+  bun:"https://images.unsplash.com/photo-1549931319-a545dcf3bc7b?w=200&q=80",
+  cookies:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=200&q=80",
+  cake:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=200&q=80",
+  muffin:"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=200&q=80",
+  lays:"https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=200&q=80",
+  doritos:"https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=200&q=80",
+  popcorn:"https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=200&q=80",
+  nuts:"https://images.unsplash.com/photo-1543226888-9a0c3ed20346?w=200&q=80",
+  chocolate:"https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=200&q=80",
+  biscuits:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&q=80",
+  cola:"https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=200&q=80",
+  juice:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=200&q=80",
+  water:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=200&q=80",
+  tea:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80",
+  coffee:"https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200&q=80",
+  energy:"https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=200&q=80",
+  rice:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&q=80",
+  flour:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=200&q=80",
+  dal:"https://images.unsplash.com/photo-1585937421612-70a008356c36?w=200&q=80",
+  sugar:"https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=200&q=80",
+  oil:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=200&q=80",
+  salt:"https://images.unsplash.com/photo-1555315043-7082b5e45c79?w=200&q=80",
+  chicken:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=200&q=80",
+  mutton:"https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=200&q=80",
+  prawns:"https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=200&q=80",
+  fish:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&q=80",
+  dishwash:"https://images.unsplash.com/photo-1585421514738-01798e348b17?w=200&q=80",
+  detergent:"https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=200&q=80",
+  cleaner:"https://images.unsplash.com/photo-1563453392212-326f5e854473?w=200&q=80",
+  soap:"https://images.unsplash.com/photo-1600857062241-98e5dba7f99c?w=200&q=80",
+  shampoo:"https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=200&q=80",
+  toothpaste:"https://images.unsplash.com/photo-1559674357-5d78e7f9bcc6?w=200&q=80",
+  handwash:"https://images.unsplash.com/photo-1584515933487-779824d29309?w=200&q=80",
+  diapers:"https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&q=80",
+  babyfood:"https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=200&q=80",
+  fries:"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=200&q=80",
+  icecream:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80",
+  momos:"https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=200&q=80",
+  noodles:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=200&q=80",
+  pasta:"https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=200&q=80",
+  soup:"https://images.unsplash.com/photo-1547592166-23ac45744acd?w=200&q=80",
+  oats:"https://images.unsplash.com/photo-1614961233913-a5113a4a34ed?w=200&q=80",
+  cornflakes:"https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?w=200&q=80",
+};
+
+const CAT_IMG={
+  fruits:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=300&q=80",
+  dairy:"https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=300&q=80",
+  bakery:"https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&q=80",
+  chips:"https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=300&q=80",
+  beverages:"https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&q=80",
+  staples:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&q=80",
+  meat:"https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=300&q=80",
+  cleaning:"https://images.unsplash.com/photo-1585421514738-01798e348b17?w=300&q=80",
+  personal:"https://images.unsplash.com/photo-1600857062241-98e5dba7f99c?w=300&q=80",
+  baby:"https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&q=80",
+  frozen:"https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=300&q=80",
+  instant:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=80",
+};
+
+const CATEGORIES=[
+  {id:"fruits",name:"Fruits & Veggies",color:"#16a34a",light:"#dcfce7"},
+  {id:"dairy",name:"Dairy & Eggs",color:"#2563eb",light:"#dbeafe"},
+  {id:"bakery",name:"Bakery",color:"#d97706",light:"#fef3c7"},
+  {id:"chips",name:"Chips & Snacks",color:"#dc2626",light:"#fee2e2"},
+  {id:"beverages",name:"Beverages",color:"#7c3aed",light:"#ede9fe"},
+  {id:"staples",name:"Staples & Grains",color:"#92400e",light:"#fef3c7"},
+  {id:"meat",name:"Meat & Seafood",color:"#be123c",light:"#ffe4e6"},
+  {id:"cleaning",name:"Cleaning",color:"#0891b2",light:"#cffafe"},
+  {id:"personal",name:"Personal Care",color:"#db2777",light:"#fce7f3"},
+  {id:"baby",name:"Baby Products",color:"#65a30d",light:"#f0fdf4"},
+  {id:"frozen",name:"Frozen Foods",color:"#0284c7",light:"#e0f2fe"},
+  {id:"instant",name:"Instant & Breakfast",color:"#ea580c",light:"#ffedd5"},
+];
+
+const PRODUCTS=[
+  {id:1,cat:"fruits",name:"Fresh Tomatoes",brand:"Farm Fresh",price:35,mrp:45,unit:"500g",img:IMG.tomato,rating:4.5,reviews:1243,tags:["organic"]},
+  {id:2,cat:"fruits",name:"Baby Spinach",brand:"Organic India",price:55,mrp:70,unit:"250g",img:IMG.spinach,rating:4.3,reviews:876,tags:["organic","healthy"]},
+  {id:3,cat:"fruits",name:"Cavendish Bananas",brand:"Fresho",price:49,mrp:60,unit:"6 pcs",img:IMG.banana,rating:4.7,reviews:3421,tags:[]},
+  {id:4,cat:"fruits",name:"Red Shimla Apples",brand:"Fresho",price:149,mrp:180,unit:"1 kg",img:IMG.apple,rating:4.6,reviews:2134,tags:["imported"]},
+  {id:5,cat:"fruits",name:"Nashik Onions",brand:"Local Farm",price:39,mrp:50,unit:"1 kg",img:IMG.onion,rating:4.2,reviews:654,tags:[]},
+  {id:6,cat:"fruits",name:"Agra Potatoes",brand:"Local Farm",price:29,mrp:35,unit:"1 kg",img:IMG.potato,rating:4.4,reviews:987,tags:[]},
+  {id:7,cat:"fruits",name:"Organic Carrots",brand:"Organic India",price:45,mrp:60,unit:"500g",img:IMG.carrot,rating:4.5,reviews:543,tags:["organic"]},
+  {id:8,cat:"dairy",name:"Amul Full Cream Milk",brand:"Amul",price:68,mrp:68,unit:"1 L",img:IMG.milk,rating:4.8,reviews:5432,tags:["bestseller"]},
+  {id:9,cat:"dairy",name:"Farm Fresh Eggs",brand:"Country Eggs",price:99,mrp:120,unit:"12 pcs",img:IMG.eggs,rating:4.9,reviews:8765,tags:["bestseller","farm"]},
+  {id:10,cat:"dairy",name:"Amul Butter",brand:"Amul",price:55,mrp:60,unit:"100g",img:IMG.butter,rating:4.7,reviews:3212,tags:[]},
+  {id:11,cat:"dairy",name:"Epigamia Greek Yogurt",brand:"Epigamia",price:75,mrp:90,unit:"400g",img:IMG.yogurt,rating:4.5,reviews:1876,tags:["probiotic"]},
+  {id:12,cat:"dairy",name:"Nandini Paneer",brand:"Nandini",price:89,mrp:100,unit:"200g",img:IMG.paneer,rating:4.6,reviews:2341,tags:["fresh"]},
+  {id:13,cat:"dairy",name:"Britannia Cheese Slices",brand:"Britannia",price:95,mrp:105,unit:"200g",img:IMG.cheese,rating:4.4,reviews:1234,tags:[]},
+  {id:14,cat:"bakery",name:"Whole Wheat Bread",brand:"Britannia",price:45,mrp:50,unit:"400g",img:IMG.bread,rating:4.4,reviews:2134,tags:[]},
+  {id:15,cat:"bakery",name:"Butter Croissants",brand:"Monginis",price:79,mrp:95,unit:"4 pcs",img:IMG.croissant,rating:4.6,reviews:876,tags:["fresh","today"]},
+  {id:16,cat:"bakery",name:"Burger Buns",brand:"Modern",price:40,mrp:45,unit:"6 pcs",img:IMG.bun,rating:4.3,reviews:654,tags:[]},
+  {id:17,cat:"bakery",name:"Oreo Cookies",brand:"Cadbury",price:35,mrp:40,unit:"120g",img:IMG.cookies,rating:4.9,reviews:9876,tags:["bestseller"]},
+  {id:18,cat:"bakery",name:"Blueberry Muffins",brand:"Theobroma",price:89,mrp:110,unit:"2 pcs",img:IMG.muffin,rating:4.7,reviews:1234,tags:["fresh"]},
+  {id:19,cat:"bakery",name:"Black Forest Cake",brand:"Monginis",price:299,mrp:350,unit:"500g",img:IMG.cake,rating:4.8,reviews:3456,tags:["bestseller"]},
+  {id:20,cat:"chips",name:"Lay's Classic Salted",brand:"Lay's",price:20,mrp:20,unit:"26g",img:IMG.lays,rating:4.5,reviews:12345,tags:["popular"]},
+  {id:21,cat:"chips",name:"Lay's Magic Masala",brand:"Lay's",price:20,mrp:20,unit:"26g",img:IMG.lays,rating:4.7,reviews:8765,tags:["popular","spicy"]},
+  {id:22,cat:"chips",name:"Doritos Nacho Cheese",brand:"Doritos",price:50,mrp:50,unit:"70g",img:IMG.doritos,rating:4.6,reviews:4321,tags:[]},
+  {id:23,cat:"chips",name:"Act II Butter Popcorn",brand:"Act II",price:30,mrp:35,unit:"30g",img:IMG.popcorn,rating:4.4,reviews:3456,tags:[]},
+  {id:24,cat:"chips",name:"KitKat Chocolate",brand:"Nestlé",price:30,mrp:35,unit:"2 pcs",img:IMG.chocolate,rating:4.8,reviews:9876,tags:[]},
+  {id:25,cat:"chips",name:"Haldiram's Mixed Nuts",brand:"Haldiram's",price:120,mrp:140,unit:"200g",img:IMG.nuts,rating:4.6,reviews:2341,tags:["healthy"]},
+  {id:26,cat:"chips",name:"Parle-G Biscuits",brand:"Parle",price:10,mrp:10,unit:"100g",img:IMG.biscuits,rating:4.5,reviews:15000,tags:["bestseller"]},
+  {id:27,cat:"beverages",name:"Coca-Cola Can",brand:"Coca-Cola",price:45,mrp:50,unit:"330ml",img:IMG.cola,rating:4.8,reviews:13421,tags:["chilled"]},
+  {id:28,cat:"beverages",name:"Tropicana Orange Juice",brand:"Tropicana",price:99,mrp:120,unit:"1 L",img:IMG.juice,rating:4.5,reviews:4321,tags:[]},
+  {id:29,cat:"beverages",name:"Bisleri Mineral Water",brand:"Bisleri",price:20,mrp:20,unit:"1 L",img:IMG.water,rating:4.7,reviews:8765,tags:[]},
+  {id:30,cat:"beverages",name:"Tata Tea Premium",brand:"Tata Tea",price:89,mrp:99,unit:"250g",img:IMG.tea,rating:4.6,reviews:5432,tags:[]},
+  {id:31,cat:"beverages",name:"Nescafé Classic Coffee",brand:"Nescafé",price:189,mrp:210,unit:"50g",img:IMG.coffee,rating:4.7,reviews:6543,tags:["premium"]},
+  {id:32,cat:"beverages",name:"Red Bull Energy Drink",brand:"Red Bull",price:130,mrp:130,unit:"250ml",img:IMG.energy,rating:4.5,reviews:3456,tags:["energy"]},
+  {id:33,cat:"staples",name:"India Gate Basmati Rice",brand:"India Gate",price:149,mrp:175,unit:"1 kg",img:IMG.rice,rating:4.7,reviews:6543,tags:["premium"]},
+  {id:34,cat:"staples",name:"Aashirvaad Atta",brand:"ITC",price:85,mrp:99,unit:"2 kg",img:IMG.flour,rating:4.5,reviews:5432,tags:["popular"]},
+  {id:35,cat:"staples",name:"Toor Dal (Arhar)",brand:"Patanjali",price:110,mrp:130,unit:"500g",img:IMG.dal,rating:4.4,reviews:3234,tags:[]},
+  {id:36,cat:"staples",name:"Refined Sugar",brand:"Uttam",price:49,mrp:55,unit:"1 kg",img:IMG.sugar,rating:4.3,reviews:1234,tags:[]},
+  {id:37,cat:"staples",name:"Fortune Sunflower Oil",brand:"Fortune",price:175,mrp:199,unit:"1 L",img:IMG.oil,rating:4.5,reviews:4321,tags:[]},
+  {id:38,cat:"staples",name:"Tata Rock Salt",brand:"Tata",price:55,mrp:60,unit:"1 kg",img:IMG.salt,rating:4.6,reviews:2341,tags:["natural"]},
+  {id:39,cat:"meat",name:"Fresh Chicken Breast",brand:"Licious",price:249,mrp:299,unit:"500g",img:IMG.chicken,rating:4.6,reviews:3456,tags:["fresh","cleaned"]},
+  {id:40,cat:"meat",name:"Mutton Keema (Minced)",brand:"Licious",price:399,mrp:449,unit:"500g",img:IMG.mutton,rating:4.7,reviews:2341,tags:["fresh"]},
+  {id:41,cat:"meat",name:"Tiger Prawns (Cleaned)",brand:"FreshToHome",price:299,mrp:350,unit:"250g",img:IMG.prawns,rating:4.5,reviews:1876,tags:["cleaned"]},
+  {id:42,cat:"meat",name:"Rohu Fish Fillet",brand:"FreshToHome",price:199,mrp:240,unit:"300g",img:IMG.fish,rating:4.4,reviews:1234,tags:["fresh"]},
+  {id:43,cat:"meat",name:"Desi Eggs (White)",brand:"Country Eggs",price:79,mrp:90,unit:"6 pcs",img:IMG.eggs,rating:4.8,reviews:5432,tags:["farm"]},
+  {id:44,cat:"cleaning",name:"Vim Dishwash Liquid",brand:"Vim",price:89,mrp:99,unit:"500ml",img:IMG.dishwash,rating:4.5,reviews:3456,tags:[]},
+  {id:45,cat:"cleaning",name:"Surf Excel Easy Wash",brand:"Surf Excel",price:129,mrp:149,unit:"1 kg",img:IMG.detergent,rating:4.7,reviews:8765,tags:["bestseller"]},
+  {id:46,cat:"cleaning",name:"Colin Glass Cleaner",brand:"Colin",price:89,mrp:99,unit:"500ml",img:IMG.cleaner,rating:4.4,reviews:2134,tags:[]},
+  {id:47,cat:"cleaning",name:"Lizol Floor Cleaner",brand:"Lizol",price:99,mrp:115,unit:"1 L",img:IMG.cleaner,rating:4.5,reviews:3456,tags:["disinfects"]},
+  {id:48,cat:"cleaning",name:"Harpic Toilet Cleaner",brand:"Harpic",price:79,mrp:90,unit:"500ml",img:IMG.cleaner,rating:4.6,reviews:4321,tags:[]},
+  {id:49,cat:"personal",name:"Dove Moisturising Soap",brand:"Dove",price:55,mrp:65,unit:"100g",img:IMG.soap,rating:4.8,reviews:9876,tags:["moisturising"]},
+  {id:50,cat:"personal",name:"Head & Shoulders Shampoo",brand:"H&S",price:185,mrp:199,unit:"340ml",img:IMG.shampoo,rating:4.7,reviews:6543,tags:["anti-dandruff"]},
+  {id:51,cat:"personal",name:"Colgate Total Toothpaste",brand:"Colgate",price:69,mrp:80,unit:"150g",img:IMG.toothpaste,rating:4.6,reviews:5432,tags:[]},
+  {id:52,cat:"personal",name:"Dettol Handwash",brand:"Dettol",price:99,mrp:115,unit:"250ml",img:IMG.handwash,rating:4.9,reviews:12345,tags:["antibacterial"]},
+  {id:53,cat:"personal",name:"Nivea Body Lotion",brand:"Nivea",price:199,mrp:230,unit:"200ml",img:IMG.shampoo,rating:4.5,reviews:3456,tags:[]},
+  {id:54,cat:"baby",name:"Pampers Pants Diapers",brand:"Pampers",price:449,mrp:499,unit:"20 pcs",img:IMG.diapers,rating:4.8,reviews:8765,tags:["dry & soft"]},
+  {id:55,cat:"baby",name:"J&J Baby Shampoo",brand:"Johnson's",price:175,mrp:199,unit:"200ml",img:IMG.shampoo,rating:4.7,reviews:5432,tags:["tear-free"]},
+  {id:56,cat:"baby",name:"Nestlé Cerelac Wheat",brand:"Nestlé",price:249,mrp:275,unit:"300g",img:IMG.babyfood,rating:4.8,reviews:4321,tags:["fortified"]},
+  {id:57,cat:"baby",name:"Mamy Poko Baby Wipes",brand:"Mamy Poko",price:149,mrp:175,unit:"80 pcs",img:IMG.diapers,rating:4.9,reviews:6543,tags:["gentle"]},
+  {id:58,cat:"baby",name:"Himalaya Baby Powder",brand:"Himalaya",price:110,mrp:125,unit:"100g",img:IMG.babyfood,rating:4.6,reviews:3456,tags:[]},
+  {id:59,cat:"frozen",name:"McCain Golden Fries",brand:"McCain",price:145,mrp:165,unit:"400g",img:IMG.fries,rating:4.7,reviews:8765,tags:["crispy"]},
+  {id:60,cat:"frozen",name:"Vadilal Vanilla Ice Cream",brand:"Vadilal",price:125,mrp:140,unit:"500ml",img:IMG.icecream,rating:4.9,reviews:13421,tags:["popular"]},
+  {id:61,cat:"frozen",name:"Haldiram's Frozen Momos",brand:"Haldiram's",price:99,mrp:120,unit:"20 pcs",img:IMG.momos,rating:4.6,reviews:5432,tags:[]},
+  {id:62,cat:"frozen",name:"Frozen Sweet Corn",brand:"McCain",price:79,mrp:95,unit:"500g",img:IMG.fries,rating:4.4,reviews:2341,tags:[]},
+  {id:63,cat:"frozen",name:"Naturals Ice Cream",brand:"Naturals",price:159,mrp:180,unit:"500ml",img:IMG.icecream,rating:4.8,reviews:6543,tags:["premium"]},
+  {id:64,cat:"instant",name:"Maggi 2-Minute Noodles",brand:"Maggi",price:14,mrp:14,unit:"70g",img:IMG.noodles,rating:4.8,reviews:25432,tags:["bestseller"]},
+  {id:65,cat:"instant",name:"Maggi Atta Noodles",brand:"Maggi",price:14,mrp:14,unit:"70g",img:IMG.noodles,rating:4.6,reviews:8765,tags:[]},
+  {id:66,cat:"instant",name:"Barilla Penne Pasta",brand:"Barilla",price:149,mrp:175,unit:"500g",img:IMG.pasta,rating:4.5,reviews:3456,tags:["imported"]},
+  {id:67,cat:"instant",name:"Knorr Classic Soup Mix",brand:"Knorr",price:55,mrp:65,unit:"43g",img:IMG.soup,rating:4.4,reviews:2134,tags:[]},
+  {id:68,cat:"instant",name:"Quaker Oats",brand:"Quaker",price:115,mrp:135,unit:"500g",img:IMG.oats,rating:4.7,reviews:6543,tags:["healthy"]},
+  {id:69,cat:"instant",name:"Kellogg's Corn Flakes",brand:"Kellogg's",price:175,mrp:199,unit:"475g",img:IMG.cornflakes,rating:4.6,reviews:5432,tags:[]},
+  {id:70,cat:"instant",name:"Patanjali Rolled Oats",brand:"Patanjali",price:89,mrp:110,unit:"500g",img:IMG.oats,rating:4.3,reviews:2341,tags:["organic"]},
+];
+
+const COUPONS=[
+  {code:"KHANYAR10",discount:10,type:"percent",min:99,desc:"10% off on orders above ₹99",max:50},
+  {code:"WELCOME50",discount:50,type:"flat",min:199,desc:"Flat ₹50 off on first order",max:50},
+  {code:"FRESH20",discount:20,type:"percent",min:299,desc:"20% off – fresh produce special",max:100},
+  {code:"SAVE100",discount:100,type:"flat",min:499,desc:"₹100 off on orders above ₹499",max:100},
+  {code:"MATEEN15",discount:15,type:"percent",min:149,desc:"15% off – Dr. Mateen's Special",max:75},
+];
+
+const BANNERS=[
+  {title:"10 Min Delivery",sub:"Fresh groceries at your doorstep",color:"linear-gradient(135deg,#15803d,#22c55e)",badge:"⚡ Express",em:"🚀"},
+  {title:"Up to 50% Off",sub:"On daily essentials & fresh produce",color:"linear-gradient(135deg,#b45309,#f59e0b)",badge:"🔥 Hot Deals",em:"🥑"},
+  {title:"Free Delivery",sub:"On every order above ₹299",color:"linear-gradient(135deg,#6d28d9,#a78bfa)",badge:"🎁 Free Ship",em:"🛵"},
+];
+
+const TAG_MAP={bestseller:"🔥 Best",popular:"⭐ Top",organic:"🌿 Organic",farm:"🐓 Farm",fresh:"✨ Fresh",imported:"✈️ Import",energy:"⚡",premium:"👑 Premium",healthy:"💚",spicy:"🌶️ Spicy",chilled:"❄️ Chilled"};
+
+// ===================== STATE =====================
+let cart = {};
+let currentCat = "all";
+let currentSearch = "";
+let bannerIdx = 0;
+let bannerTimer = null;
+let toastTimer = null;
+
+// ===================== LOCALSTORAGE =====================
+const LS = {
+  get(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d;}catch{return d;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+};
+const getUsers=()=>LS.get("ghkart_users",[]);
+const saveUsers=u=>LS.set("ghkart_users",u);
+const getSession=()=>LS.get("ghkart_sess",null);
+const setSession=u=>LS.set("ghkart_sess",u);
+const clearSess=()=>localStorage.removeItem("ghkart_sess");
+const getOrders=()=>LS.get("ghkart_orders",[]);
+const saveOrders=o=>LS.set("ghkart_orders",o);
+const discPct=p=>p.mrp>p.price?Math.round((p.mrp-p.price)/p.mrp*100):0;
+const cartCount=()=>Object.values(cart).reduce((s,q)=>s+q,0);
+const cartTotal=()=>Object.entries(cart).reduce((s,[id,q])=>{const p=PRODUCTS.find(x=>x.id===+id);return s+(p?p.price*q:0);},0);
+
+// ===================== TOAST =====================
+function showToast(msg){
+  const t=document.getElementById('toast-el');
+  t.textContent=msg;
+  t.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.add('hidden'),2300);
+}
+
+// ===================== CART =====================
+function setQty(id,qty){
+  id=+id;
+  if(qty<=0)delete cart[id];
+  else cart[id]=qty;
+  updateCartBar();
+  renderProducts();
+}
+
+function updateCartBar(){
+  const cnt=cartCount();
+  const tot=cartTotal();
+  const bar=document.getElementById('cart-bar');
+  if(cnt>0){
+    bar.classList.remove('hidden');
+    document.getElementById('cart-bar-count').textContent=`${cnt} item${cnt!==1?'s':''}`;
+    document.getElementById('cart-bar-price').textContent=`₹${tot}`;
+  } else {
+    bar.classList.add('hidden');
+  }
+}
+
+function handleCartBarClick(){
+  const user=getSession();
+  if(!user){showToast("Login to view cart");openModal('login');}
+  else openModal('cart');
+}
+
+// ===================== BANNERS =====================
+function initBanners(){
+  const dots=document.getElementById('bnr-dots');
+  dots.innerHTML=BANNERS.map((_,i)=>`<div class="bdot${i===0?' on':''}" onclick="setBanner(${i})"></div>`).join('');
+  setBanner(0);
+  startBannerTimer();
+}
+
+function setBanner(i){
+  bannerIdx=i;
+  const b=BANNERS[i];
+  document.getElementById('banner-slide').style.background=b.color;
+  document.getElementById('bnr-badge').textContent=b.badge;
+  document.getElementById('bnr-title').textContent=b.title;
+  document.getElementById('bnr-sub').textContent=b.sub;
+  document.getElementById('bnr-em').textContent=b.em;
+  document.querySelectorAll('.bdot').forEach((d,j)=>d.classList.toggle('on',j===i));
+}
+
+function startBannerTimer(){
+  clearInterval(bannerTimer);
+  if(!currentSearch) bannerTimer=setInterval(()=>setBanner((bannerIdx+1)%BANNERS.length),4200);
+}
+
+// ===================== CATEGORIES =====================
+function initCategories(){
+  const grid=document.getElementById('cat-grid');
+  grid.innerHTML=CATEGORIES.map(c=>`
+    <div class="cat-crd${currentCat===c.id?' on':''}" onclick="toggleCat('${c.id}')">
+      <div class="cat-img-w"><img src="${CAT_IMG[c.id]}" alt="${c.name}" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="cat-lbl">${c.name}</div>
+      <div class="cat-sel-bar"></div>
+    </div>
+  `).join('');
+}
+
+function toggleCat(id){
+  currentCat=currentCat===id?'all':id;
+  initCategories();
+  renderPills();
+  renderProducts();
+}
+
+// ===================== PILLS =====================
+function renderPills(){
+  const row=document.getElementById('pill-row');
+  const pills=[{id:'all',name:'All'},...CATEGORIES];
+  row.innerHTML=pills.map(c=>`<div class="pill${currentCat===c.id?' on':''}" onclick="setCatFromPill('${c.id}')">${c.name}</div>`).join('');
+}
+
+function setCatFromPill(id){
+  currentCat=id;
+  initCategories();
+  renderPills();
+  renderProducts();
+}
+
+// ===================== OFFERS =====================
+function initOfferPills(){
+  const row=document.getElementById('offer-pills');
+  row.innerHTML=COUPONS.map(c=>`
+    <div class="off-p" onclick="handleCouponClick('${c.code}')">🏷️ ${c.code}</div>
+  `).join('')+`
+    <div class="off-p hot">🔥 Free delivery ≥₹299</div>
+    <div class="off-p blue">🎁 New user offers</div>
+  `;
+}
+
+function handleCouponClick(code){
+  const user=getSession();
+  if(!user){showToast("Login to use coupons");openModal('login');}
+  else showToast(`Use code ${code} at checkout!`);
+}
+
+// ===================== PRODUCTS =====================
+function renderProducts(){
+  const grid=document.getElementById('products-grid');
+  const empty=document.getElementById('empty-state');
+  const title=document.getElementById('products-title');
+  const countEl=document.getElementById('products-count');
+
+  const filtered=PRODUCTS.filter(p=>{
+    const mc=currentCat==='all'||p.cat===currentCat;
+    const ms=p.name.toLowerCase().includes(currentSearch.toLowerCase())||p.brand.toLowerCase().includes(currentSearch.toLowerCase());
+    return mc&&ms;
+  });
+
+  if(currentSearch) title.textContent=`"${currentSearch}"`;
+  else if(currentCat==='all') title.textContent='All Products';
+  else title.textContent=CATEGORIES.find(c=>c.id===currentCat)?.name||'';
+  countEl.textContent=`${filtered.length} items`;
+
+  if(filtered.length===0){
+    grid.innerHTML='';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  grid.innerHTML=filtered.map(p=>{
+    const qty=cart[p.id]||0;
+    const d=discPct(p);
+    const topTag=p.tags.find(t=>TAG_MAP[t]);
+    const tagClass=topTag==='spicy'?' red':topTag==='imported'?' blue':'';
+    return `
+    <div class="pc">
+      <div class="pc-img-w">
+        ${d>0?`<div class="pc-disc">${d}% OFF</div>`:''}
+        ${topTag?`<div class="pc-tag${tagClass}">${TAG_MAP[topTag]}</div>`:''}
+        <img class="pc-img" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="pc-body">
+        <div class="pc-brand">${p.brand}</div>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-unit">${p.unit}</div>
+        <div class="pc-rat">
+          <span class="stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</span>
+          <span class="rv">(${p.reviews.toLocaleString('en-IN')})</span>
+        </div>
+        <div class="pc-ft">
+          <div class="pc-px">
+            <span class="pc-price">₹${p.price}</span>
+            ${p.mrp>p.price?`<span class="pc-mrp">₹${p.mrp}</span>`:''}
+          </div>
+          ${qty===0
+            ?`<button class="addbtn" onclick="setQty(${p.id},1);showToast('Added ${p.name.replace(/'/g,"\\'")}')">+</button>`
+            :`<div class="qc">
+                <button class="qb" onclick="setQty(${p.id},${qty-1})">−</button>
+                <span class="qn">${qty}</span>
+                <button class="qb" onclick="setQty(${p.id},${qty+1})">+</button>
+              </div>`
+          }
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===================== SEARCH =====================
+function handleSearch(val){
+  currentSearch=val;
+  const clr=document.getElementById('search-clr');
+  clr.classList.toggle('hidden',!val);
+  const homeSection=document.getElementById('home-section');
+  homeSection.classList.toggle('hidden',!!val);
+  if(val) clearInterval(bannerTimer); else startBannerTimer();
+  renderProducts();
+}
+
+function clearSearch(){
+  const inp=document.getElementById('search-inp');
+  inp.value='';
+  handleSearch('');
+}
+
+// ===================== NAVIGATION =====================
+function goHome(){
+  closeAllModals();
+  setNavActive('home');
+  clearSearch();
+  currentCat='all';
+  initCategories();
+  renderPills();
+  renderProducts();
+}
+
+function navClick(id){
+  if(id==='home'){goHome();}
+  else if(id==='search'){closeAllModals();document.getElementById('search-inp').focus();}
+  else if(id==='orders'){openModal('orders');}
+  else if(id==='account'){const user=getSession();if(!user)openModal('login');else openModal('account');}
+  setNavActive(id);
+}
+
+function setNavActive(id){
+  document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
+  const navEl=document.getElementById(`nav-${id}`);
+  if(navEl) navEl.classList.add('on');
+  // remove existing indicator
+  document.querySelectorAll('.bn-ln').forEach(l=>l.remove());
+  if(navEl){
+    const ln=document.createElement('div');
+    ln.className='bn-ln';
+    navEl.insertBefore(ln,navEl.firstChild);
+  }
+}
+
+function handleUserBtn(){
+  const user=getSession();
+  if(!user)openModal('login');
+  else openModal('account');
+}
+
+function updateUserBadge(){
+  const user=getSession();
+  const badge=document.getElementById('user-badge');
+  badge.classList.toggle('hidden',!user);
+}
+
+// ===================== MODALS =====================
+function closeAllModals(){
+  document.getElementById('modals-container').innerHTML='';
+  setNavActive('home');
+}
+
+function openModal(type,extra){
+  const container=document.getElementById('modals-container');
+  container.innerHTML='';
+  const user=getSession();
+
+  if(type==='login'){
+    container.innerHTML=buildLoginModal();
+  } else if(type==='cart' && user){
+    container.innerHTML=buildCartModal();
+  } else if(type==='checkout' && user){
+    container.innerHTML=buildCheckoutModal();
+  } else if(type==='orders'){
+    container.innerHTML=buildOrdersModal();
+    setNavActive('orders');
+  } else if(type==='account' && user){
+    container.innerHTML=buildAccountModal();
+    setNavActive('account');
+  }
+}
+
+// Click outside to close
+document.getElementById('modals-container').addEventListener('click',function(e){
+  if(e.target===this||e.target.classList.contains('ovl')){
+    closeAllModals();
+  }
+});
+
+// ===================== AUTH MODAL =====================
+let authIsLogin=true;
+function buildLoginModal(){
+  return `<div class="ovl" id="auth-ovl" onclick="if(event.target.id==='auth-ovl')closeAllModals()">
+    <div class="modal">
+      <div class="mhd"><span class="mttl">${authIsLogin?'Sign In':'Create Account'}</span><button class="mcls" onclick="closeAllModals()">✕</button></div>
+      <div class="mbody">
+        <div style="text-align:center;font-size:46px;margin-bottom:6px">🛒</div>
+        <div style="text-align:center;font-size:13px;color:var(--t4);margin-bottom:16px;font-weight:500">${authIsLogin?'Welcome back to GHSSKhanyarKart':'Join GHSSKhanyarKart today'}</div>
+        <div id="auth-err" class="err-box hidden"></div>
+        ${!authIsLogin?`<div class="fg"><label class="fl">Full Name</label><input class="fi" id="auth-name" placeholder="Your full name"></div>`:''}
+        <div class="fg"><label class="fl">Email Address</label><input class="fi" id="auth-email" type="email" placeholder="you@example.com"></div>
+        ${!authIsLogin?`<div class="fg"><label class="fl">Mobile Number</label><input class="fi" id="auth-phone" placeholder="+91 XXXXX XXXXX"></div>`:''}
+        <div class="fg"><label class="fl">Password</label><input class="fi" id="auth-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()"></div>
+        <button class="apbtn" style="width:100%;padding:13px;font-size:14px;border-radius:11px;margin-top:4px" onclick="submitAuth()">${authIsLogin?'Sign In →':'Create Account →'}</button>
+        <div class="form-sw">${authIsLogin?'New here? ':'Have an account? '}<button onclick="toggleAuthMode()">${authIsLogin?'Create Account':'Sign In'}</button></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleAuthMode(){
+  authIsLogin=!authIsLogin;
+  openModal('login');
+}
+
+function submitAuth(){
+  const errEl=document.getElementById('auth-err');
+  errEl.classList.add('hidden');
+  const email=(document.getElementById('auth-email')||{}).value||'';
+  const pass=(document.getElementById('auth-pass')||{}).value||'';
+  if(!email||!pass){showAuthErr("Email and password required");return;}
+  const users=getUsers();
+  if(authIsLogin){
+    const found=users.find(u=>u.email===email&&u.password===pass);
+    if(!found){showAuthErr("Invalid email or password");return;}
+    setSession(found);updateUserBadge();closeAllModals();showToast(`Welcome, ${found.name}! 👋`);
+  } else {
+    const name=(document.getElementById('auth-name')||{}).value||'';
+    const phone=(document.getElementById('auth-phone')||{}).value||'';
+    if(!name||!phone){showAuthErr("All fields required");return;}
+    if(users.find(u=>u.email===email)){showAuthErr("Email already registered");return;}
+    const nu={id:Date.now(),name,email,password:pass,phone};
+    saveUsers([...users,nu]);setSession(nu);updateUserBadge();closeAllModals();showToast(`Welcome, ${name}! 👋`);
+  }
+}
+
+function showAuthErr(msg){
+  const el=document.getElementById('auth-err');
+  if(el){el.textContent=msg;el.classList.remove('hidden');}
+}
+
+// ===================== CART MODAL =====================
+function buildCartModal(){
+  const items=Object.entries(cart).map(([id,q])=>({p:PRODUCTS.find(x=>x.id===+id),q})).filter(x=>x.p);
+  const tot=cartTotal();
+  const del=tot>=299?0:25;
+  const tax=Math.round(tot*.05);
+  const savings=items.reduce((s,{p,q})=>s+(p.mrp-p.price)*q,0);
+
+  const itemsHTML=items.length===0
+    ?`<div class="empty"><div class="ei">🛒</div><h3>Cart is empty</h3><p>Add items to get started</p></div>`
+    :`${del===0?`<div class="free-del">🎉 You get FREE delivery on this order!</div>`:tot<299?`<div style="background:#fff7ed;border-radius:9px;padding:7px 11px;margin-bottom:10px;font-size:11.5px;font-weight:600;color:#c2410c">Add ₹${299-tot} more for free delivery 🛵</div>`:''}
+    ${items.map(({p,q})=>`
+      <div class="ci">
+        <img class="ci-img" src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">
+        <div class="ci-info">
+          <div class="ci-brand">${p.brand}</div>
+          <div class="ci-name">${p.name}</div>
+          <div class="ci-unit">${p.unit}</div>
+          <div class="qc" style="margin-top:6px">
+            <button class="qb" onclick="setQty(${p.id},${q-1});openModal('cart')">−</button>
+            <span class="qn">${q}</span>
+            <button class="qb" onclick="setQty(${p.id},${q+1});openModal('cart')">+</button>
+          </div>
+        </div>
+        <div class="ci-pr">₹${p.price*q}</div>
+      </div>`).join('')}
+    <div class="bill">
+      <div class="brow"><span>Subtotal (${items.length} items)</span><b>₹${tot}</b></div>
+      <div class="brow"><span>Delivery Fee</span><b style="color:${del===0?'var(--g)':'inherit'}">${del===0?'FREE 🎉':`₹${del}`}</b></div>
+      <div class="brow"><span>Taxes & Charges (5%)</span><b>₹${tax}</b></div>
+      ${savings>0?`<div class="brow sav"><span>🏷️ Total Savings</span><span>−₹${savings}</span></div>`:''}
+      <div class="brow tot"><span>Total Payable</span><b>₹${tot+del+tax}</b></div>
+    </div>
+    <button class="apbtn" style="width:100%;padding:13px;font-size:14px;border-radius:11px;margin-top:12px" onclick="openModal('checkout')">Proceed to Checkout →</button>`;
+
+  return `<div class="ovl" id="cart-ovl" onclick="if(event.target.id==='cart-ovl')closeAllModals()">
+    <div class="modal">
+      <div class="mhd"><span class="mttl">Your Cart 🛒</span><button class="mcls" onclick="closeAllModals()">✕</button></div>
+      <div class="mbody">${itemsHTML}</div>
+    </div>
+  </div>`;
+}
+
+// ===================== CHECKOUT MODAL =====================
+let checkoutState={
+  addr:{house:"",area:"Khanyar",city:"Srinagar",pincode:"190001"},
+  pay:"cod",
+  applied:null,
+  placed:false
+};
+
+function buildCheckoutModal(){
+  const tot=cartTotal();
+  const del=tot>=299?0:25;
+  const tax=Math.round(tot*.05);
+  const cpnSave=checkoutState.applied?Math.min(checkoutState.applied.type==="percent"?Math.round(tot*checkoutState.applied.discount/100):checkoutState.applied.discount,checkoutState.applied.max):0;
+  const grand=tot+del+tax-cpnSave;
+  const user=getSession();
+
+  if(checkoutState.placed){
+    return `<div class="ovl">
+      <div class="modal">
+        <div class="mbody" style="padding-top:28px">
+          <div class="suc-wrap">
+            <div class="suc-ic">🎉</div>
+            <div class="suc-ttl">Order Placed!</div>
+            <div class="suc-sub">Delivering to ${checkoutState.addr.area}, ${checkoutState.addr.city}</div>
+          </div>
+          <div class="tracker">
+            ${[["✅","Confirmed"],["📦","Packed"],["🛵","On Way"],["🏠","Delivered"]].map(([ic,lb],i)=>`
+              <div style="display:flex;align-items:flex-start;flex:1">
+                <div class="tr-step"><div class="tr-dot">${ic}</div><div class="tr-lb">${lb}</div></div>
+                ${i<3?'<div class="tr-line"></div>':''}
+              </div>`).join('')}
+          </div>
+          <div class="eta-box">
+            <div class="eta-ttl">⚡ Arriving in ~10 minutes</div>
+            <div class="eta-sub">Total paid: ₹${grand}${cpnSave>0?` (saved ₹${cpnSave})`:''}</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  const availCoupons=COUPONS.filter(c=>tot>=c.min);
+  const a=checkoutState.addr;
+  const cpnSection=checkoutState.applied
+    ?`<div class="cpn-applied">
+        <div><div class="cpn-sav">✅ ${checkoutState.applied.code} — saving ₹${cpnSave}</div><div style="font-size:11px;color:var(--t4);margin-top:2px">${checkoutState.applied.desc}</div></div>
+        <button class="cpn-rm" onclick="removeCoupon()">Remove</button>
+      </div>`
+    :`<div class="cpn-row">
+        <span class="cpn-ic">🏷️</span>
+        <input class="cpn-inp" id="cpn-inp" placeholder="Enter coupon code" onkeydown="if(event.key==='Enter')applyCouponManual()">
+        <button class="apbtn" onclick="applyCouponManual()">Apply</button>
+      </div>
+      <div id="cpn-err" class="err-msg hidden"></div>
+      ${availCoupons.length>0?`
+        <div class="cpn-act-lbl">✅ Available for your order:</div>
+        <div class="cpn-list">
+          ${availCoupons.map(c=>`<div class="cpn-item" onclick="applyCouponCode('${c.code}')">
+            <div class="cpn-code">${c.code}</div>
+            <div class="cpn-desc">${c.desc}</div>
+            <div class="cpn-min">Min. order ₹${c.min} · Max discount ₹${c.max}</div>
+          </div>`).join('')}
+        </div>`:''}`;
+
+  return `<div class="ovl" id="chk-ovl" onclick="if(event.target.id==='chk-ovl')closeAllModals()">
+    <div class="modal">
+      <div class="mhd"><span class="mttl">Checkout</span><button class="mcls" onclick="closeAllModals()">✕</button></div>
+      <div class="mbody">
+        <div class="sub-hd">📍 Delivery Address</div>
+        <div class="fg"><label class="fl">House / Street / Lane</label><input class="fi" id="addr-house" placeholder="e.g. House No. 12, Alamgari Bazaar" value="${a.house}" oninput="checkoutState.addr.house=this.value"></div>
+        <div class="fi-2">
+          <div class="fg"><label class="fl">Area</label><input class="fi" id="addr-area" value="${a.area}" oninput="checkoutState.addr.area=this.value"></div>
+          <div class="fg"><label class="fl">Pincode</label><input class="fi" id="addr-pin" value="${a.pincode}" oninput="checkoutState.addr.pincode=this.value"></div>
+        </div>
+        <div class="fg"><label class="fl">City</label><input class="fi" id="addr-city" value="${a.city}" oninput="checkoutState.addr.city=this.value"></div>
+
+        <div class="sub-hd">🏷️ Coupons & Discounts</div>
+        ${cpnSection}
+
+        <div class="sub-hd">💳 Payment Method</div>
+        ${[["cod","💵","Cash on Delivery","Pay when your order arrives"],["upi","📱","UPI / QR Code","Google Pay, PhonePe, Paytm"],["card","💳","Debit / Credit Card","Visa, Mastercard, RuPay"]].map(([v,ic,nm,sb])=>`
+          <div class="pay-opt${checkoutState.pay===v?' on':''}" onclick="selectPayment('${v}')">
+            <span class="pay-ic">${ic}</span>
+            <div><div class="pay-nm">${nm}</div><div class="pay-sb">${sb}</div></div>
+            ${checkoutState.pay===v?'<span class="pay-chk">✓</span>':''}
+          </div>`).join('')}
+
+        <div class="bill">
+          <div class="brow"><span>Item Total</span><b>₹${tot}</b></div>
+          <div class="brow"><span>Delivery Fee</span><b style="color:${del===0?'var(--g)':'inherit'}">${del===0?'FREE ✓':`₹${del}`}</b></div>
+          <div class="brow"><span>Taxes (5%)</span><b>₹${tax}</b></div>
+          ${cpnSave>0?`<div class="brow sav"><span>🏷️ Coupon (${checkoutState.applied?.code})</span><span>−₹${cpnSave}</span></div>`:''}
+          <div class="brow tot"><span>Grand Total</span><b>₹${grand}</b></div>
+        </div>
+        <button class="apbtn" style="width:100%;padding:13px;font-size:14px;border-radius:11px;margin-top:12px" onclick="placeOrder()">Place Order · ₹${grand} →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function selectPayment(v){checkoutState.pay=v;openModal('checkout');}
+function removeCoupon(){checkoutState.applied=null;openModal('checkout');}
+
+function applyCouponManual(){
+  const code=(document.getElementById('cpn-inp')||{}).value||'';
+  applyCouponCode(code);
+}
+
+function applyCouponCode(code){
+  const errEl=document.getElementById('cpn-err');
+  const tot=cartTotal();
+  const c=COUPONS.find(x=>x.code===code.toUpperCase());
+  if(!c){if(errEl){errEl.textContent="Invalid coupon code";errEl.classList.remove('hidden');}return;}
+  if(tot<c.min){if(errEl){errEl.textContent=`Minimum order ₹${c.min} required`;errEl.classList.remove('hidden');}return;}
+  checkoutState.applied=c;
+  openModal('checkout');
+}
+
+function placeOrder(){
+  const house=(document.getElementById('addr-house')||{}).value||checkoutState.addr.house;
+  if(!house.trim()){alert("Please enter your house/street address");return;}
+  checkoutState.addr.house=house;
+  const tot=cartTotal();
+  const del=tot>=299?0:25;
+  const tax=Math.round(tot*.05);
+  const cpnSave=checkoutState.applied?Math.min(checkoutState.applied.type==="percent"?Math.round(tot*checkoutState.applied.discount/100):checkoutState.applied.discount,checkoutState.applied.max):0;
+  const grand=tot+del+tax-cpnSave;
+
+  const o={
+    id:"KK"+Date.now(),
+    date:new Date().toLocaleString("en-IN"),
+    items:Object.entries(cart).map(([id,q])=>{const p=PRODUCTS.find(x=>x.id===+id);return{name:p.name,brand:p.brand,qty:q,price:p.price};}),
+    total:grand,saved:cpnSave,address:checkoutState.addr,status:"Delivered"
+  };
+  const upd=[o,...getOrders()];
+  saveOrders(upd);
+  cart={};
+  updateCartBar();
+  renderProducts();
+  checkoutState.placed=true;
+  openModal('checkout');
+  setTimeout(()=>{closeAllModals();checkoutState={addr:{house:"",area:"Khanyar",city:"Srinagar",pincode:"190001"},pay:"cod",applied:null,placed:false};showToast("🎉 Order placed! Arriving in 10 min");},3500);
+}
+
+// ===================== ORDERS MODAL =====================
+function buildOrdersModal(){
+  const orders=getOrders();
+  const body=orders.length===0
+    ?`<div class="empty"><div class="ei">📦</div><h3>No orders yet</h3><p>Your past orders will appear here</p></div>`
+    :orders.map(o=>`
+      <div class="ord-crd">
+        <div class="ord-hd"><span class="ord-id">${o.id}</span><span class="ord-st">✅ ${o.status}</span></div>
+        <div class="ord-dt">🕐 ${o.date}</div>
+        <div class="ord-its">${o.items.map(i=>`${i.name} ×${i.qty}`).join(' · ')}</div>
+        <div class="ord-ft">
+          <span class="ord-tot">₹${o.total}</span>
+          ${o.saved>0?`<span class="ord-sv">🏷️ Saved ₹${o.saved}</span>`:''}
+        </div>
+      </div>`).join('');
+
+  return `<div class="ovl" id="ord-ovl" onclick="if(event.target.id==='ord-ovl')closeAllModals()">
+    <div class="modal">
+      <div class="mhd"><span class="mttl">My Orders 📦</span><button class="mcls" onclick="closeAllModals()">✕</button></div>
+      <div class="mbody">${body}</div>
+    </div>
+  </div>`;
+}
+
+// ===================== ACCOUNT MODAL =====================
+function buildAccountModal(){
+  const user=getSession();
+  return `<div class="ovl" id="acc-ovl" onclick="if(event.target.id==='acc-ovl')closeAllModals()">
+    <div class="modal">
+      <div class="mhd"><span class="mttl">My Account</span><button class="mcls" onclick="closeAllModals()">✕</button></div>
+      <div class="mbody">
+        <div class="u-crd">
+          <div class="u-av">👤</div>
+          <div>
+            <div class="u-nm">${user.name}</div>
+            <div class="u-em">${user.email}</div>
+            ${user.phone?`<div class="u-em">📱 ${user.phone}</div>`:''}
+          </div>
+          <button class="lobtn" onclick="doLogout()">Logout</button>
+        </div>
+        ${[["📦","My Orders","openModal('orders')"],["🏷️","Coupons & Offers","closeAllModals()"],["📍","Saved Addresses","closeAllModals()"],["💳","Payment Methods","closeAllModals()"],["🔔","Notifications","closeAllModals()"],["❓","Help & Support","closeAllModals()"]].map(([ic,lb,fn])=>`
+          <div class="mn-it" onclick="${fn}">
+            <span class="mn-ic">${ic}</span><span class="mn-lb">${lb}</span><span class="mn-ar">›</span>
+          </div>`).join('')}
+        <div class="foot" style="margin-top:14px">
+          <p><strong>GHSSKhanyarKart v2.0</strong><br>Developed by <strong>Students of Commerce</strong><br>Under supervision of <strong>Dr. Mateen Yousuf</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function doLogout(){
+  clearSess();updateUserBadge();closeAllModals();showToast("Logged out");
+}
+
+// ===================== PWA =====================
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('pwa-install-banner').classList.remove('hidden');
+});
+document.getElementById('pwa-install-btn').addEventListener('click',()=>{
+  if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('pwa-install-banner').classList.add('hidden');});}
+});
+document.getElementById('pwa-dismiss').addEventListener('click',()=>{
+  document.getElementById('pwa-install-banner').classList.add('hidden');
+});
+
+// Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+// ===================== INIT =====================
+function init(){
+  updateUserBadge();
+  initBanners();
+  initOfferPills();
+  initCategories();
+  renderPills();
+  renderProducts();
+}
+
+init();
+</script>
 </body>
 </html>
